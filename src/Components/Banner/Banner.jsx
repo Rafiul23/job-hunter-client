@@ -5,14 +5,18 @@ const Banner = () => {
   return (
     <div className="hero min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
-      <Image src={BannerImage} alt='corporate image' height={250} width={500} className='w-1/2' />
-        <div className='w-1/2'> 
+      <Image src={BannerImage} alt='corporate image' height={250} width={500} className="w-1/2 rounded-lg" />
+    
+      <div className='w-1/2 text-[#033f63]'> 
+          
           <h1 className="text-5xl font-bold">Exciting Job Offers!</h1>
-          <p className="py-6">
+          <p className="py-6 text-2xl">
            Your dream jobs are waiting for you...
           </p>
           <button className="btn bg-[#033F63] text-white">Get Started</button>
-        </div>
+         
+        
+      </div>
       </div>
     </div>
   );
