@@ -1,4 +1,5 @@
 import Banner from '@/Components/Banner/Banner';
+import Category from '@/Components/Category/Category';
 import Sponsors from '@/Components/Sponsors/Sponsors';
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <div>
      <Banner /> 
      <Sponsors />
+     <Category />
     </div>
   );
 };
