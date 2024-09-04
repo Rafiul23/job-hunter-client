@@ -9,11 +9,11 @@ const Sponsors = () => {
         <div className='py-10'>
             <h1 className="text-5xl text-[#033f63] font-bold text-center my-4">Our Sponsors</h1>
 
-            <div className='flex justify-between max-w-6xl mt-4 flex-wrap mx-auto'>
-                <Image src={airbnb} width={100} height={100} alt='airbnb' />
-                <Image src={google} width={100} height={100} alt='google' />
-                <Image src={netflix} width={100} height={100} alt='netflix' />
-                <Image src={tesla} width={100} height={100} alt='tesla' />
+            <div className='flex justify-between max-w-6xl mt-8 flex-wrap mx-auto'>
+                <Image src={airbnb} width={150} height={150} alt='airbnb'  />
+                <Image src={google} width={150} height={150} alt='google'  />
+                <Image src={netflix} width={150} height={150} alt='netflix'  />
+                <Image src={tesla} width={150} height={150} alt='tesla'  />
             </div>
         </div>
     );
