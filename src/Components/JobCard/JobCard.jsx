@@ -10,7 +10,7 @@ const JobCard = ({ job }) => {
             <div className='px-2 py-1 bg-gray-200 rounded-md font-semibold text-[#033f63]'>{onsite_or_remote}</div>
             <div className='px-2 py-1 bg-gray-200 rounded-md font-semibold text-[#033f63]'>{job_type}</div>
         </div>
-        <p>Company: {company_name}</p>
+        <p>Company: <span className="font-bold text-[#033f63]">{company_name}</span></p>
         <p>Salary: {salary_range}</p>
         <p className="font-bold text-red-500">Deadline: {deadline}</p>
         <div className="card-actions justify-end">
