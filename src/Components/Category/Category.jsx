@@ -1,16 +1,9 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { getAllCategories } from "../Utilities/getAllCategories";
 
-const Category = () => {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    fetch("categories.json")
-      .then((res) => res.json())
-      .then((data) => setCategories(data));
-  }, []);
+const Category = async() => {
+  
+  const categories = await getAllCategories();
 
   return (
     <div className="py-10">
