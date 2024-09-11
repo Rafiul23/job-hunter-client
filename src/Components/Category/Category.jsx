@@ -13,7 +13,7 @@ const Category = async() => {
 
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
         {categories.map((category) => (
-          <Link href='/jobs' key={category?._id}>
+          <Link href={`/jobs?category=${category?.category}`} key={category?._id}>
           <div
             className="border-2 p-2  hover:text-[#033f63] hover:font-semibold rounded-lg"
             

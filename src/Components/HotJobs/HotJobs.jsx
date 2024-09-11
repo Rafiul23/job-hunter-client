@@ -1,17 +1,10 @@
-"use client";
 
-import { useEffect, useState } from "react";
 import JobCard from "../JobCard/JobCard";
 
-const HotJobs = () => {
+const HotJobs = async() => {
 
-    const [hotJobs, setHotJobs] = useState([]);
-
-    useEffect(()=>{
-        fetch('hotjobs.json')
-        .then(res => res.json())
-        .then(data => setHotJobs(data))
-    }, [])
+    const res = await fetch('http://localhost:5000/hotjobs');
+    const hotJobs = await res.json();
 
   return (
     <div className="py-10">

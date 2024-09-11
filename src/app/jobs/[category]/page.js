@@ -1,10 +1,12 @@
-import Image from "next/image";
-import corporateImage from "../../assets/globalisation-1014524_1280.png";
 import { getJobsByCategory } from "@/Components/Utilities/getJobsByCategory";
+import Image from "next/image";
+import corporateImage from '../../../assets/globalisation-1014524_1280.png';
 
-const Jobs = async({params, searchParams}) => {
+const JobsByCategory = async ({ params, searchParams }) => {
 
   const jobsByCategory = await getJobsByCategory(searchParams?.category);
+
+  
 
   return (
     <div className="py-10">
@@ -22,4 +24,4 @@ const Jobs = async({params, searchParams}) => {
   );
 };
 
-export default Jobs;
+export default JobsByCategory;
