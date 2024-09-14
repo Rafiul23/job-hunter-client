@@ -22,20 +22,21 @@ const JobDetailsPage = async ({ params }) => {
       </h1>
       
       <div className='grid md:grid-cols-4 grid-cols-1 gap-6'>
-        <div className="col-span-3">
+        <div className="col-span-3 space-y-4">
           <h2 className='font-bold text-2xl'>Company Name: {company_name}</h2>
-          <p>Job Description: {job_description}</p>
-          <p>Educational Qualification: {qualifications}</p>
-          <p>Experience: {experience}</p>
-          <p>Deadline: {deadline}</p>
-          <p>Send your resume at {employer_email}</p>
+          <p><span className='font-bold'>Job Description:</span> {job_description}</p>
+          <p><span className='font-bold'>Educational Qualification:</span> {qualifications}</p>
+          <p><span className='font-bold'>Experience:</span> {experience}</p>
+          <p className='font-bold text-red-500'>Deadline: {deadline}</p>
+          <p>Send your resume at <span className='font-bold'>{employer_email}</span></p>
         </div>
-        <div className='col-span-1'>
+        <div className='col-span-1 space-y-4 p-4 bg-gray-200 rounded-xl'>
           <h4>Job Category: {category}</h4>
           <p>Location: {location}</p>
           <p>Salary Range: {salary_range}</p>
           <p>Job Type: {job_type}</p>
           <p>Job Nature: {onsite_or_remote}</p>
+          <button className='btn bg-[#033f63] w-full text-white'>Add to Favourite</button>
         </div>
       </div>
       
