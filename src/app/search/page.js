@@ -12,13 +12,15 @@ const Search = () => {
       e.preventDefault();
 
         const searchContent = e.target.search.value;
-        console.log(searchContent);
+        if(searchContent === ''){
+          return;
+        } else {
 
         const res = await fetch(`http://localhost:5000/search?title=${searchContent}`);
         
         const searchResult = await res.json(); 
         setDisplayJobs(searchResult);
-    
+        }
   }
 
     return (
