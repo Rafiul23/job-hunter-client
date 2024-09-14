@@ -9,9 +9,10 @@ const Search = () => {
   const [displayJobs, setDisplayJobs] = useState([]);
 
   const handleSearchJobs = async(e) =>{
-      e.preventDefault();
+        e.preventDefault();
 
         const searchContent = e.target.search.value;
+
         if(searchContent === ''){
           return;
         } else {

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const JobCard = ({ job }) => {
 
     const {company_name, job_title, _id, salary_range, job_type, deadline, onsite_or_remote } = job;
@@ -14,7 +16,9 @@ const JobCard = ({ job }) => {
         <p>Salary: {salary_range}</p>
         <p className="font-bold text-red-500">Deadline: {deadline}</p>
         <div className="card-actions justify-end">
+          <Link href={`/jobs/${_id}`}>
           <button className="text-[#033f63] font-bold">View More</button>
+          </Link>
         </div>
       </div>
     </div>
