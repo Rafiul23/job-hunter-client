@@ -1,10 +1,13 @@
-
 import JobCard from "../JobCard/JobCard";
 
 const HotJobs = async() => {
 
-    const res = await fetch('http://localhost:5000/hotjobs');
-    const hotJobs = await res.json();
+    const res = await fetch('http://localhost:5000/jobs');
+    const jobs = await res.json();
+    const totalLength = jobs.length;
+    const start = totalLength - 20;
+    const hotJobs = jobs?.slice(start, totalLength);
+
 
   return (
     <div className="py-10">
