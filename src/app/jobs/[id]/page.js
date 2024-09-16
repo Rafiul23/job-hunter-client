@@ -21,7 +21,7 @@ const JobDetailsPage = async ({ params }) => {
         Job Dtalis of: {job_title}
       </h1>
       
-      <div className='grid md:grid-cols-4 grid-cols-1 gap-6'>
+      <div className='grid md:grid-cols-4 grid-cols-1 mt-5 gap-6'>
         <div className="col-span-3 space-y-4">
           <h2 className='font-bold text-2xl'>Company Name: {company_name}</h2>
           <p><span className='font-bold'>Job Description:</span> {job_description}</p>
