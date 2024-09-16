@@ -65,7 +65,7 @@ const SignUp = () => {
           </div>
 
         </div>
-        <div className="w-full">
+        <div className="w-full flex justify-center items-center">
           <Image src={loginImage} alt="sign up image" width={500} height={500} />
         </div>
       </div>

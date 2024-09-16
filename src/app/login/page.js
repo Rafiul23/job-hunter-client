@@ -12,7 +12,7 @@ const Login = () => {
   return (
     <div className="py-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="w-full">
+        <div className="w-full flex justify-center items-center">
           <Image src={loginImage} alt="login image" width={500} height={500} />
         </div>
         <div className="card bg-base-100 w-full shadow-xl">
