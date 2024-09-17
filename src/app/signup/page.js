@@ -29,6 +29,7 @@ const SignUp = () => {
       axios.post('http://localhost:5000/user', userInfo)
       .then(res=> {
         if(res.data.insertedId){
+          e.target.reset();
           Swal.fire({
             position: "top-end",
             icon: "success",
