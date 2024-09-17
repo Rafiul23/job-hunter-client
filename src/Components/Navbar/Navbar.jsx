@@ -49,10 +49,10 @@ const Navbar = () => {
             {navlinks}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Job Hunter</a>
+        <a className="btn btn-ghost text-2xl" href='/'>Job Hunter</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{navlinks}</ul>
+        <ul className="flex gap-6 px-1">{navlinks}</ul>
       </div>
       <div className="navbar-end">
         <Link href='/login' className="btn">Login</Link>

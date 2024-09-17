@@ -4,10 +4,44 @@ import loginImage from "../../assets/login.png";
 import Link from "next/link";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import axios from "axios";
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
 
     const [hidden, setHidden] = useState(true);
+
+    const handleSignUp = async (e)=>{
+      e.preventDefault();
+      const form = e.target;
+      const name = form.name.value;
+      const email = form.email.value;
+      const password = form.password.value;
+
+      const userInfo = {
+        name,
+        email,
+        password
+      }
+
+      console.log(userInfo);
+       
+      axios.post('http://localhost:5000/user', userInfo)
+      .then(res=> {
+        if(res.data.insertedId){
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "New user created successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      })
+
+      
+    }
+
 
   return (
     <div className="py-10">
@@ -15,7 +49,7 @@ const SignUp = () => {
         
         <div className="card bg-base-100 w-full shadow-xl">
 
-          <form className="card-body">
+          <form className="card-body" onSubmit={handleSignUp}>
             <h2 className='text-3xl text-center text-[#033f63] py-6 font-bold'>Sign Up Now!</h2>
             <div className="form-control">
               <label className="label">
@@ -24,6 +58,7 @@ const SignUp = () => {
               <input
                 type="text"
                 placeholder="Your Full Name"
+                name='name'
                 className="input input-bordered"
                 required
               />
@@ -35,6 +70,7 @@ const SignUp = () => {
               <input
                 type="email"
                 placeholder="Email"
+                name='email'
                 className="input input-bordered"
                 required
               />
@@ -46,6 +82,7 @@ const SignUp = () => {
               <input
                 type={ hidden ? "password" : "text"}
                 placeholder="Password"
+                name='password'
                 className="input input-bordered"
                 required
               />
