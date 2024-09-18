@@ -1,6 +1,15 @@
+'use client';
 import Link from "next/link";
+import {useSession, signOut} from 'next-auth/react';
 
 const Navbar = () => {
+  const session = useSession();
+  console.log(session);
+
+  const userEmail = session ? session?.data?.user?.email : '';
+  const userName = session ? session?.data?.user?.name : '';
+
+
   const navlinks = (
     <>
       <li>
@@ -55,7 +64,14 @@ const Navbar = () => {
         <ul className="flex gap-6 px-1">{navlinks}</ul>
       </div>
       <div className="navbar-end">
-        <Link href='/login' className="btn">Login</Link>
+        <div className='mx-2 '>
+        <p>{userName}</p>
+        <p>{userEmail}</p>
+        </div>
+        {
+          !session.data ? <Link href='/login' className="btn">Login</Link>
+           : <button onClick={()=> signOut()} className="btn">Logout</button>
+        }
       </div>
     </div>
   );
