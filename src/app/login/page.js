@@ -3,11 +3,25 @@ import Image from "next/image";
 import loginImage from "../../assets/login.png";
 import Link from "next/link";
 import { useState } from "react";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { signIn } from "next-auth/react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
+  const [hidden, setHidden] = useState(true);
 
-    const [hidden, setHidden] = useState(true);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    const res = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+    console.log(res);
+  };
 
   return (
     <div className="py-10">
@@ -16,9 +30,10 @@ const Login = () => {
           <Image src={loginImage} alt="login image" width={500} height={500} />
         </div>
         <div className="card bg-base-100 w-full shadow-xl">
-
-          <form className="card-body">
-            <h2 className='text-3xl text-center text-[#033f63] py-6 font-bold'>Login Now!</h2>
+          <form className="card-body" onSubmit={handleLogin}>
+            <h2 className="text-3xl text-center text-[#033f63] py-6 font-bold">
+              Login Now!
+            </h2>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -26,6 +41,7 @@ const Login = () => {
               <input
                 type="email"
                 placeholder="Email"
+                name="email"
                 className="input input-bordered"
                 required
               />
@@ -35,12 +51,21 @@ const Login = () => {
                 <span className="label-text">Password</span>
               </label>
               <input
-                type={ hidden ? "password" : "text"}
+                type={hidden ? "password" : "text"}
                 placeholder="Password"
+                name="password"
                 className="input input-bordered"
                 required
               />
-              <p className='pt-6'>New to Job Hunter? Please, <Link href='/signup' className='text-[#033f63] font-bold underline'>Sign Up!</Link> </p>
+              <p className="pt-6">
+                New to Job Hunter? Please,{" "}
+                <Link
+                  href="/signup"
+                  className="text-[#033f63] font-bold underline"
+                >
+                  Sign Up!
+                </Link>{" "}
+              </p>
             </div>
             <div className="form-control mt-6">
               <button className="btn bg-[#033f63] text-white">Login</button>
@@ -54,7 +79,6 @@ const Login = () => {
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </div>
