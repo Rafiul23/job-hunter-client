@@ -1,14 +1,14 @@
-'use client';
+"use client";
 import Link from "next/link";
-import {useSession, signOut} from 'next-auth/react';
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const session = useSession();
   console.log(session);
 
-  const userEmail = session ? session?.data?.user?.email : '';
-  const userName = session ? session?.data?.user?.name : '';
-
+  const userEmail = session ? session?.data?.user?.email : "";
+  const userName = session ? session?.data?.user?.name : "";
+  // const userImage = session ? session?.data?.user?.image : "";
 
   const navlinks = (
     <>
@@ -58,20 +58,28 @@ const Navbar = () => {
             {navlinks}
           </ul>
         </div>
-        <a className="btn btn-ghost text-2xl" href='/'>Job Hunter</a>
+        <a className="btn btn-ghost text-2xl" href="/">
+          Job Hunter
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="flex gap-6 px-1">{navlinks}</ul>
       </div>
       <div className="navbar-end">
-        <div className='mx-2 '>
-        <p>{userName}</p>
-        <p>{userEmail}</p>
+        <div className="mx-4 ">
+          {/* <Image src={userImage} height={10} width={10} alt="user" /> */}
+          <p>{userName}</p>
+          <p>{userEmail}</p>
         </div>
-        {
-          !session.data ? <Link href='/login' className="btn">Login</Link>
-           : <button onClick={()=> signOut()} className="btn">Logout</button>
-        }
+        {!session.data ? (
+          <Link href="/login" className="btn">
+            Login
+          </Link>
+        ) : (
+          <button onClick={() => signOut()} className="btn">
+            Logout
+          </button>
+        )}
       </div>
     </div>
   );

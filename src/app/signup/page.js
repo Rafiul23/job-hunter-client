@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from "axios";
 import Swal from 'sweetalert2';
+import SocialLogin from "@/Components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
 
@@ -100,12 +101,19 @@ const SignUp = () => {
                 {hidden ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}
               </button>
             </div>
+            
+          </div>
+
+          <p className='text-center my-2'>Or</p>
+          <div className='py-5 text-center'>
+            <SocialLogin></SocialLogin>
           </div>
 
         </div>
         <div className="w-full flex justify-center items-center">
           <Image src={loginImage} alt="sign up image" width={500} height={500} />
         </div>
+        
       </div>
     </div>
   );

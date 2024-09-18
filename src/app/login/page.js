@@ -5,9 +5,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import {useRouter} from 'next/navigation';
+import Swal from 'sweetalert2'
+import SocialLogin from "@/Components/SocialLogin/SocialLogin";
+
 
 const Login = () => {
   const [hidden, setHidden] = useState(true);
+  const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,7 +25,16 @@ const Login = () => {
       password,
       redirect: false,
     });
-    console.log(res);
+    if(res.status === 200){
+      router.push('/');
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login successful",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    };
   };
 
   return (
@@ -78,6 +92,10 @@ const Login = () => {
                 {hidden ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}
               </button>
             </div>
+          </div>
+          <p className='text-center my-2'>Or</p>
+          <div className='py-5 text-center'>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 
 const handler = NextAuth({
@@ -13,6 +14,7 @@ const handler = NextAuth({
         email: {},
         password: {},
       },
+     
       async authorize(credentials) {
 
         const { email, password } = credentials;
@@ -37,6 +39,10 @@ const handler = NextAuth({
         return currentUser;
       },
     }),
+    GoogleProvider({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET
+      }),
   ],
   callbacks: {},
   pages: {
