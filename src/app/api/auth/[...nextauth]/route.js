@@ -4,10 +4,12 @@ import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 
 const handler = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
   },
+
   providers: [
     CredentialsProvider({
       credentials: {
@@ -16,35 +18,33 @@ const handler = NextAuth({
       },
      
       async authorize(credentials) {
-
         const { email, password } = credentials;
-
-        if (!email || !password) {
-          return null;
-        }
-        const res = await fetch(
-          `http://localhost:5000/user?email=${email}`
-        );
+        
+        const res = await fetch(`http://localhost:5000/user?email=${email}`);
         const currentUser = await res.json();
+        
         if (!currentUser) {
-          return null;
+          return null; 
         }
-        const passwordMatch = bcrypt.compareSync(
-          password,
-          currentUser.password
-        );
+      
+        const passwordMatch = bcrypt.compareSync(password, currentUser.password);
         if (!passwordMatch) {
           return null;
         }
         return currentUser;
-      },
+      }
+      
     }),
     GoogleProvider({
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET
       }),
   ],
-  callbacks: {},
+
+  callbacks: {
+    // 
+  
+  },
   pages: {
     signIn: "/login",
   },

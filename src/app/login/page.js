@@ -5,10 +5,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import {useRouter} from 'next/navigation';
-import Swal from 'sweetalert2'
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
-
 
 const Login = () => {
   const [hidden, setHidden] = useState(true);
@@ -20,21 +19,28 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
+    console.log(email, password);
+
     const res = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
-    if(res.status === 200){
-      router.push('/');
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Login successful",
-        showConfirmButton: false,
-        timer: 1500
-      });
-    };
+
+    // const result = await res.json();
+
+    // console.log(result);
+
+    // if (res.status === 200) {
+    //   router.push("/");
+    //   Swal.fire({
+    //     position: "center",
+    //     icon: "success",
+    //     title: "Login successful",
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //   });
+    // }
   };
 
   return (
@@ -93,8 +99,8 @@ const Login = () => {
               </button>
             </div>
           </div>
-          <p className='text-center my-2'>Or</p>
-          <div className='py-5 text-center'>
+          <p className="text-center my-2">Or</p>
+          <div className="py-5 text-center">
             <SocialLogin></SocialLogin>
           </div>
         </div>
