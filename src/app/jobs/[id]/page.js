@@ -4,6 +4,8 @@ import corporateImage from "../../../assets/globalisation-1014524_1280.png";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2';
+
 
 const JobDetailsPage = ({ params }) => {
   
@@ -15,7 +17,7 @@ const JobDetailsPage = ({ params }) => {
     .get(`http://localhost:5000/job/${params.id}`)
     .then((res) => setJobDetails(res.data));
 
-   const joburl = `http://localhost:3000/jobs/${params.id}`;
+   const jobLink = `http://localhost:3000/jobs/${params.id}`;
    
   // const res = await fetch(`http://localhost:5000/job/${params.id}`);
   // const jobDetails = await res.json();
@@ -42,9 +44,22 @@ const JobDetailsPage = ({ params }) => {
       job_title,
       job_id: _id,
       userEmail,
-      joburl,
+      jobLink,
       deadline
     };
+
+    axios.post('http://localhost:5000/favourite', jobInfo)
+    .then(res =>{
+      if(res.data.insertedId){
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Added to Favourite",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    })
   };
 
   return (
