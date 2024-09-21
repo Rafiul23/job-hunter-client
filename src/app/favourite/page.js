@@ -1,9 +1,12 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import corporateImage from "../../assets/globalisation-1014524_1280.png";
 import axios from "axios";
+import { FaRegTrashCan } from "react-icons/fa6";
+import Swal from 'sweetalert2';
+
 
 const FavouritePage = () => {
   const [favouriteJobs, setFavouriteJobs] = useState([]);
@@ -11,12 +14,44 @@ const FavouritePage = () => {
   const session = useSession();
   const userEmail = session ? session?.data?.user?.email : "";
 
-  
-    axios.get(`http://localhost:5000/favourite?email=${userEmail}`)
+  useEffect(()=>{
+    loadFavjobs(userEmail);
+  }, [userEmail])
+
+  const loadFavjobs = (email) =>{
+    axios.get(`http://localhost:5000/favourite?email=${email}`)
     .then((res) => {
       setFavouriteJobs(res.data);
     });
+  }
 
+  const handleDeleteFavJobs = (_id)=>{
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            axios.delete(`http://localhost:5000/favourite/${_id}`)
+            .then(res =>{
+                if(res.data.deletedCount > 0){
+                    loadFavjobs(userEmail);
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "This job has been removed from your favourite list.",
+                        icon: "success"
+                      });
+                }
+            })
+        }
+      });
+    
+       
+  }
 
   return (
     <div className="py-10">
@@ -41,6 +76,7 @@ const FavouritePage = () => {
                 <th>Job Title</th>
                 <th>Deadline</th>
                 <th>Job Link</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -51,6 +87,7 @@ const FavouritePage = () => {
                     <td>{job?.job_title}</td>
                     <td className='text-red-500 font-bold'>{job?.deadline}</td>
                     <td className='underline text-blue-500 font-semibold'><a href={job?.jobLink}>Link</a></td>
+                    <td className='text-red-500 font-bold'><button onClick={()=> handleDeleteFavJobs(job._id)}><FaRegTrashCan /></button></td>
                   </tr>)
               }
              
