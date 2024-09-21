@@ -39,6 +39,16 @@ const JobDetailsPage = ({ params }) => {
   } = jobDetails;
 
   const handleAddToFav = () => {
+
+    if(userEmail === employer_email){
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong",
+        footer: "You won't be able to add your job to your favourite list"
+      });
+    }
+
     const jobInfo = {
       company_name,
       job_title,
@@ -54,7 +64,7 @@ const JobDetailsPage = ({ params }) => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Added to Favourite",
+          title: "Added to Favourite list",
           showConfirmButton: false,
           timer: 1500
         });
