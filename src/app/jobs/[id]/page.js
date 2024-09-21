@@ -13,11 +13,11 @@ const JobDetailsPage = ({ params }) => {
   const session = useSession();
   const userEmail = session ? session?.data?.user?.email : "";
 
-  axios
-    .get(`http://localhost:5000/job/${params.id}`)
+  
+    axios.get(`http://localhost:5000/job/${params?.id}`)
     .then((res) => setJobDetails(res.data));
 
-   const jobLink = `http://localhost:3000/jobs/${params.id}`;
+   const jobLink = `http://localhost:3000/jobs/${params?.id}`;
    
   // const res = await fetch(`http://localhost:5000/job/${params.id}`);
   // const jobDetails = await res.json();
@@ -48,7 +48,7 @@ const JobDetailsPage = ({ params }) => {
       deadline
     };
 
-    axios.post('http://localhost:5000/favourite', jobInfo)
+    axios.post(`http://localhost:5000/favourite?email=${userEmail}&id=${params?.id}`, jobInfo)
     .then(res =>{
       if(res.data.insertedId){
         Swal.fire({
@@ -57,6 +57,13 @@ const JobDetailsPage = ({ params }) => {
           title: "Added to Favourite",
           showConfirmButton: false,
           timer: 1500
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong",
+          footer: `${res.data?.message}`
         });
       }
     })
