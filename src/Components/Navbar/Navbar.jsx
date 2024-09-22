@@ -1,15 +1,22 @@
 "use client";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import {useState} from 'react';
+import axios from 'axios';
 
 const Navbar = () => {
   const session = useSession();
   // console.log(session);
-  const user = session ? session?.data?.user : "";
+  const [user, setUser] = useState([]);
+  
   const userEmail = session ? session?.data?.user?.email : "";
   const userName = session ? session?.data?.user?.name : "";
   // const userImage = session ? session?.data?.user?.image : "";
 
+  axios.get(`http://localhost:5000/user?email=${userEmail}`)
+  .then(res => setUser(res.data))
+
+  console.log(user);
   const navlinks = (
     <>
       <li>
