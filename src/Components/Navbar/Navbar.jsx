@@ -5,7 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 const Navbar = () => {
   const session = useSession();
   // console.log(session);
-
+  const user = session ? session?.data?.user : "";
   const userEmail = session ? session?.data?.user?.email : "";
   const userName = session ? session?.data?.user?.name : "";
   // const userImage = session ? session?.data?.user?.image : "";
@@ -22,7 +22,10 @@ const Navbar = () => {
         <Link href="/favourite">Favourite Jobs</Link>
       </li>
       <li>
-        <Link href="/dashboard">Dashboard</Link>
+        {
+          user?.role === 'admin' ? <Link href="/admindashboard">Dashboard</Link> :
+          <Link href="/userdashboard">Dashboard</Link>
+        }
       </li>
     </>
   );
