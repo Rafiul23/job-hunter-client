@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import {useState, useEffect} from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Navbar = () => {
   const session = useSession();
@@ -13,13 +13,13 @@ const Navbar = () => {
   const userName = session ? session?.data?.user?.name : "";
   // const userImage = session ? session?.data?.user?.image : "";
 
- useEffect(()=>{
-  axios.get(`http://localhost:5000/user?email=${userEmail}`)
-  .then(res => setUser(res.data))
- }, [userEmail])
+  useEffect(() => {
+    axios.get(`http://localhost:5000/user?email=${userEmail}`)
+      .then((res) => setUser(res.data));
+  }, [userEmail]);
 
-  // console.log(user);
-  
+  console.log(user);
+
   const navlinks = (
     <>
       <li>
@@ -32,10 +32,11 @@ const Navbar = () => {
         <Link href="/favourite">Favourite Jobs</Link>
       </li>
       <li>
-        {
-          user?.role === 'admin' ? <Link href="/admindashboard">Dashboard</Link> :
+        {user?.role === "admin" ? (
+          <Link href="/adminprofile">Dashboard</Link>
+        ) : (
           <Link href="/userdashboard">Dashboard</Link>
-        }
+        )}
       </li>
     </>
   );
