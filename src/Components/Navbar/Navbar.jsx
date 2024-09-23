@@ -7,7 +7,7 @@ import axios from "axios";
 const Navbar = () => {
   const session = useSession();
   // console.log(session);
-  const [user, setUser] = useState([]);
+  const [User, setUser] = useState([]);
 
   const userEmail = session ? session?.data?.user?.email : "";
   const userName = session ? session?.data?.user?.name : "";
@@ -18,7 +18,7 @@ const Navbar = () => {
       .then((res) => setUser(res.data));
   }, [userEmail]);
 
-  console.log(user);
+  console.log(User);
 
   const navlinks = (
     <>
@@ -32,12 +32,9 @@ const Navbar = () => {
         <Link href="/favourite">Favourite Jobs</Link>
       </li>
       <li>
-        {user?.role === "admin" ? (
-          <Link href="/adminprofile">Dashboard</Link>
-        ) : (
-          <Link href="/userdashboard">Dashboard</Link>
-        )}
+      <Link href="/dashboard">Dashboard</Link>
       </li>
+
     </>
   );
 
