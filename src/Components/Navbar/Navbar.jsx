@@ -7,7 +7,7 @@ import axios from "axios";
 const Navbar = () => {
   const session = useSession();
   // console.log(session);
-  const [User, setUser] = useState([]);
+  const [user, setUser] = useState([]);
 
   const userEmail = session ? session?.data?.user?.email : "";
   const userName = session ? session?.data?.user?.name : "";
@@ -18,7 +18,7 @@ const Navbar = () => {
       .then((res) => setUser(res.data));
   }, [userEmail]);
 
-  console.log(User);
+  console.log(user);
 
   const navlinks = (
     <>
