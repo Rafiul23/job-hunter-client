@@ -14,7 +14,7 @@ const UserSideBar = () => {
           <button>Applied Jobs</button>
         </Link>
         <hr />
-        <Link href={`/update/${_id}`}>
+        <Link href={'/update/:id'}>
           <button>Edit Profile</button>
         </Link>
         <hr />
