@@ -55,20 +55,17 @@ const Search = () => {
         </form>
       </div>
 
-      {displayJobs.length === 0 ? 
-      
-      (
+      {displayJobs.length === 0 ? (
         <div className="text-red-500 text-center font-semibold py-4 text-xl">
           {message}
         </div>
-      )
-      : (
+      ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-4">
           {displayJobs?.map((job) => (
             <JobCard job={job} key={job._id}></JobCard>
           ))}
         </div>
-      )  }
+      )}
     </div>
   );
 };

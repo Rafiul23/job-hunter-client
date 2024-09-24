@@ -1,24 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { signOut } from "next-auth/react";
+import useUser from '@/hooks/useUser';
+
 
 const Navbar = () => {
-  const session = useSession();
-  // console.log(session);
-  const [user, setUser] = useState([]);
-
-  const userEmail = session ? session?.data?.user?.email : "";
-  const userName = session ? session?.data?.user?.name : "";
-  // const userImage = session ? session?.data?.user?.image : "";
-
-  useEffect(() => {
-    axios.get(`http://localhost:5000/user?email=${userEmail}`)
-      .then((res) => setUser(res.data));
-  }, [userEmail]);
-
-  console.log(user);
+  const user = useUser();
+   console.log(user);
+   const {email, name} = user;
 
   const navlinks = (
     <>
@@ -79,10 +68,10 @@ const Navbar = () => {
       <div className="navbar-end">
         <div className="mx-4 ">
           {/* <Image src={userImage} height={10} width={10} alt="user" /> */}
-          <p>{userName}</p>
-          <p>{userEmail}</p>
+          <p>{name}</p>
+          <p>{email}</p>
         </div>
-        {!session.data ? (
+        {!user ? (
           <Link href="/login" className="btn">
             Login
           </Link>
