@@ -7,6 +7,7 @@ import { useState } from "react";
 const Search = () => {
 
   const [displayJobs, setDisplayJobs] = useState([]);
+  const [message, setMessage] = useState('');
 
   const handleSearchJobs = async(e) =>{
         e.preventDefault();
@@ -20,7 +21,11 @@ const Search = () => {
         const res = await fetch(`http://localhost:5000/search?title=${searchContent}`);
         
         const searchResult = await res.json(); 
-        setDisplayJobs(searchResult);
+        if(searchResult.length > 0){
+          setDisplayJobs(searchResult);
+        } else {
+          setMessage('No result found!')
+        }
         }
   }
 
@@ -54,7 +59,7 @@ const Search = () => {
             }
         </div>
         :
-         <div className='text-red-500 text-center font-semibold py-4 text-xl'>No result found yet</div>
+         <div className='text-red-500 text-center font-semibold py-4 text-xl'>{message}</div>
         }
     </div>
     );
