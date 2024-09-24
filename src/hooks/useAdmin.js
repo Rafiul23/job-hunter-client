@@ -6,6 +6,7 @@ import axios from "axios";
 const useAdmin = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const { data: session, status } = useSession();
+ 
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -27,7 +28,7 @@ const useAdmin = () => {
     checkAdmin();
   }, [session, status]);
 
-  return isAdmin;
+  return {isAdmin, status};
 };
 
 export default useAdmin;

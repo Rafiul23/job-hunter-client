@@ -5,7 +5,7 @@ import useUser from '@/hooks/useUser';
 
 
 const Navbar = () => {
-  const user = useUser();
+  const {user, loading} = useUser();
   //  console.log(user);
    const {email, name} = user;
 
@@ -67,9 +67,12 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <div className="mx-4 ">
-          {/* <Image src={userImage} height={10} width={10} alt="user" /> */}
-          <p>{name}</p>
-          <p>{email}</p>
+          
+          {
+            loading ? <progress className="progress progress-success w-56"></progress> :
+            <p>{name}</p>
+          }
+         
         </div>
         {!user ? (
           <Link href="/login" className="btn">
