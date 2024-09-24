@@ -2,7 +2,7 @@
 import useUser from "@/hooks/useUser";
 import Image from "next/image";
 
-const AdminProfile = () => {
+const UserProfile = () => {
   const { user, loading } = useUser();
   const { name, email, image, role } = user || {};
 
@@ -17,17 +17,19 @@ const AdminProfile = () => {
             <p className="text-xl py-2">Role: {role}</p>
             <p className="text-xl">Email: {email}</p>
           </div>
-          <Image
+          {
+            image && <Image
             src={image}
             className="rounded-full"
             height={150}
             width={150}
-            alt="admin"
-          />
+            alt="user"
+          /> 
+          }
         </div>
       </div>
     );
   }
 };
 
-export default AdminProfile;
+export default UserProfile;
