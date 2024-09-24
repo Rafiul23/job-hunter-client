@@ -22,7 +22,8 @@ const SignUp = () => {
       const userInfo = {
         name,
         email,
-        password
+        password,
+        role: 'user'
       }
 
       console.log(userInfo);

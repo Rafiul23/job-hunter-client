@@ -6,7 +6,7 @@ import useUser from '@/hooks/useUser';
 
 const Navbar = () => {
   const user = useUser();
-   console.log(user);
+  //  console.log(user);
    const {email, name} = user;
 
   const navlinks = (
@@ -58,7 +58,7 @@ const Navbar = () => {
             {navlinks}
           </ul>
         </div>
-        <a className="btn btn-ghost text-2xl" href="/">
+        <a className="btn btn-ghost text-3xl" href="/">
           Job Hunter
         </a>
       </div>
