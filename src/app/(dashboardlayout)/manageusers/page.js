@@ -69,7 +69,29 @@ const ManageUsers = () => {
   }
 
   const handleDeleteUser = (_id)=>{
-
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You can not revert this user!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete this user!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            axios.delete(`http://localhost:5000/user/${_id}`)
+            .then(res =>{
+                if(res.data.deletedCount > 0){
+                    loadUsers();
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "You have deleted this user.",
+                        icon: "success"
+                      });
+                }
+            })
+        }
+      });
   }
 
   return (
