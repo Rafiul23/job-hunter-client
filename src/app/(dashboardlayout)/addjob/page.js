@@ -1,12 +1,14 @@
 "use client";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Swal from 'sweetalert2';
+
 
 const AddJob = () => {
   const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState('');
-  const [nature, setNature] = useState('');
-  const [type, setType] = useState('');
+  const [category, setCategory] = useState('Accounting and Finance');
+  const [nature, setNature] = useState('Onsite');
+  const [type, setType] = useState('Full Time');
 
   const handleSetCategory = e =>{
     setCategory(e.target.value);
@@ -21,19 +23,66 @@ const AddJob = () => {
 
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/categories")
+    axios.get("http://localhost:5000/categories")
       .then((res) => setCategories(res.data));
   }, []);
 
-  console.log(categories);
+//   console.log(categories);
+
+const handleAddJob = e =>{
+    e.preventDefault();
+    const form = e.target;
+
+    const company_name = form.company_name.value;
+    const job_title = form.job_title.value;
+    const job_description = form.job_description.value;
+    const location = form.location.value;
+    const experience = form.experience.value;
+    const qualifications = form.qualifications.value;
+    const salary_range = form.salary_range.value;
+    const deadline = form.deadline.value;
+    const onsite_or_remote = nature;
+    const job_type = type;
+    const employer_email = form.employer_email.value;
+    const job_post = form.job_post.value;
+
+    const newJob = {
+        company_name,
+        job_title,
+        job_description,
+        location,
+        experience,
+        qualifications,
+        salary_range,
+        deadline,
+        category,
+        onsite_or_remote,
+        job_type,
+        employer_email,
+        job_post
+    };
+
+    axios.post('http://localhost:5000/job', newJob)
+    .then(res =>{
+        if(res.data.insertedId){
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Added a new job successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+        }
+    })
+
+}
 
   return (
     <div className="py-5">
       <h2 className="text-3xl text-center font-bold mb-2 text-[#033f63]">
         Add a Job
       </h2>
-      <form className="p-4 bg-base-200">
+      <form onSubmit={handleAddJob} className="p-4 bg-base-200">
         <div className="flex md:flex-row flex-col gap-4 mb-2">
           {/* input for company name */}
           <div className="form-control md:w-1/2 w-full">
@@ -140,7 +189,8 @@ const AddJob = () => {
             <label className="label">
               <span className="label-text font-bold">Category:</span>
             </label>
-            <select onChange={handleSetCategory} value={category} className="select select-bordered w-full max-w-xs">
+            <select onChange={handleSetCategory}  value={category} className="select select-bordered w-full max-w-xs">
+                <option disabled>Select Category</option>
               {
                 categories.map(category =>
                     <option key={category._id} value={category.category}>{category.category}</option>
@@ -213,6 +263,7 @@ const AddJob = () => {
             cols="30"
             rows="6"
             type="text"
+            name='job_description'
             placeholder="Job Description"
             className="textarea"
             required

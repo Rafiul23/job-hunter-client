@@ -36,7 +36,29 @@ const JobDetailsPage = ({ params }) => {
     onsite_or_remote,
     job_type,
     employer_email,
+    job_post
   } = jobDetails;
+
+  const currentDate = new Date();
+  const deadlineDate = new Date(deadline);
+
+  const handleApplyJob = ()=>{
+    if(currentDate > deadlineDate){
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong",
+        footer: "Deadline is over!"
+      });
+    } else if(userEmail === employer_email){
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong",
+        footer: "You won't be able to apply to your own job!"
+      });
+    };
+  }
 
   const handleAddToFav = () => {
 
@@ -47,7 +69,9 @@ const JobDetailsPage = ({ params }) => {
         text: "Something went wrong",
         footer: "You won't be able to add your job to your favourite list"
       });
-    }
+    };
+
+
 
     const jobInfo = {
       company_name,
@@ -107,9 +131,13 @@ const JobDetailsPage = ({ params }) => {
           </p>
           <p className="font-bold text-red-500">Deadline: {deadline}</p>
           <p>
-            Send your resume at{" "}
+            Send your resume at
             <span className="font-bold">{employer_email}</span>
           </p>
+          <p>No of Post: {job_post}</p>
+          <div className='py-4 text-center'>
+            <button className='btn bg-[#033f63] text-white w-1/2'>Apply</button>
+          </div>
         </div>
         <div className="col-span-1 space-y-4 p-4 bg-gray-200 rounded-xl">
           <h4 className="font-bold text-xl">Job Category: {category}</h4>
