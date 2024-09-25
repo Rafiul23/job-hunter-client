@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { FaRegTrashCan } from "react-icons/fa6";
+import Swal from 'sweetalert2';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -20,7 +21,29 @@ const ManageUsers = () => {
   };
 
   const handleBlockUser = (_id)=>{
-
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You can unblock this user later!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, block this user!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            axios.patch(`http://localhost:5000/user/${_id}`)
+            .then(res =>{
+                if(res.data.modifiedCount > 0){
+                    loadUsers();
+                    Swal.fire({
+                        title: "Blocked!",
+                        text: "You have blocked this user.",
+                        icon: "success"
+                      });
+                }
+            })
+        }
+      });
   }
 
   const handleDeleteUser = (_id)=>{
