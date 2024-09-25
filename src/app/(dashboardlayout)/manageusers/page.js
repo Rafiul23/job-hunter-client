@@ -17,7 +17,29 @@ const ManageUsers = () => {
   };
 
   const handleActiveUser = (_id)=>{
-
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to unblock this user?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, unblock this user!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            axios.patch(`http://localhost:5000/user/active/${_id}`)
+            .then(res =>{
+                if(res.data.modifiedCount > 0){
+                    loadUsers();
+                    Swal.fire({
+                        title: "Unblocked!",
+                        text: "You have unblocked this user.",
+                        icon: "success"
+                      });
+                }
+            })
+        }
+      });
   };
 
   const handleBlockUser = (_id)=>{
@@ -31,7 +53,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, block this user!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.patch(`http://localhost:5000/user/${_id}`)
+            axios.patch(`http://localhost:5000/user/block/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
