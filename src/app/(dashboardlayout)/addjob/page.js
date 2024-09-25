@@ -4,6 +4,21 @@ import { useState, useEffect } from "react";
 
 const AddJob = () => {
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState('');
+  const [nature, setNature] = useState('');
+  const [type, setType] = useState('');
+
+  const handleSetCategory = e =>{
+    setCategory(e.target.value);
+  };
+  const handleSetNature = e =>{
+    setNature(e.target.value);
+  };
+  const handleSetType = e =>{
+    setType(e.target.value);
+  };
+
+
 
   useEffect(() => {
     axios
@@ -125,7 +140,7 @@ const AddJob = () => {
             <label className="label">
               <span className="label-text font-bold">Category:</span>
             </label>
-            <select className="select select-bordered w-full max-w-xs">
+            <select onChange={handleSetCategory} value={category} className="select select-bordered w-full max-w-xs">
               {
                 categories.map(category =>
                     <option key={category._id} value={category.category}>{category.category}</option>
@@ -142,7 +157,7 @@ const AddJob = () => {
             <label className="label">
               <span className="label-text font-bold">Job Nature:</span>
             </label>
-            <select className='select select-bordered w-full max-w-xs'>
+            <select onChange={handleSetNature} value={nature} className='select select-bordered w-full max-w-xs'>
               <option value='Onsite'>Onsite</option>
               <option value='Remote'>Remote</option>
               <option value='Hybrid'>Hybrid</option>
@@ -153,7 +168,7 @@ const AddJob = () => {
             <label className="label">
               <span className="label-text font-bold">Job Type:</span>
             </label>
-            <select className='select select-bordered w-full max-w-xs'>
+            <select onChange={handleSetType} value={type} className='select select-bordered w-full max-w-xs'>
               <option value='Full Time'>Full Time</option>
               <option value='Part Time'>Part Time</option>
             </select>
