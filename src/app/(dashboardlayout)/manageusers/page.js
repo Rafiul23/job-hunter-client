@@ -8,8 +8,20 @@ const ManageUsers = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/users").then((res) => setUsers(res.data));
+    loadUsers();
   }, []);
+
+  const loadUsers = () =>{
+    axios.get("http://localhost:5000/users").then(res => setUsers(res.data))
+  };
+
+  const handleActiveUser = (_id)=>{
+
+  };
+
+  const handleBlockUser = (_id)=>{
+
+  }
 
   const handleDeleteUser = (_id)=>{
 
@@ -64,8 +76,8 @@ const ManageUsers = () => {
                 </td>
                 <td>
                     {
-                        user?.status === 'active' ? <button className='btn btn-sm bg-red-500 text-white'>Block</button> :
-                        <button className='btn btn-sm bg-green-600 text-white'>Unblock</button>
+                        user?.status === 'active' ? <button onClick={()=> handleBlockUser(user?._id)} className='btn btn-sm bg-red-500 text-white'>Block</button> :
+                        <button onClick={()=> handleActiveUser(user?._id)} className='btn btn-sm bg-green-600 text-white'>Unblock</button>
                     }
                 </td>
                 
