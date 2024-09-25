@@ -83,7 +83,7 @@ const AddJob = ()=>{
           <label className="label">
             <span className="label-text font-bold">Job Nature:</span>
           </label>
-          <input type="date" placeholder="Job Nature" name='onsite_or_remote' className="input input-bordered" required />
+          <input type="text" placeholder="Job Nature" name='onsite_or_remote' className="input input-bordered" required />
         </div>
         {/* input for job_type */}
         <div className="form-control md:w-1/2 w-full">
@@ -91,6 +91,24 @@ const AddJob = ()=>{
             <span className="label-text font-bold">Job Type:</span>
           </label>
           <input type="text" placeholder="Job Type" name='job_type' className="input input-bordered" required />
+        </div>
+        </div>
+
+        <div className='flex md:flex-row flex-col gap-4 mb-2'>
+
+        {/* input for employer_email */}
+        <div className="form-control md:w-1/2 w-full">
+          <label className="label">
+            <span className="label-text font-bold">Employer Email:</span>
+          </label>
+          <input type="text" placeholder="Employer's Email" name='employer_email' className="input input-bordered" required />
+        </div>
+        {/* input for job_post */}
+        <div className="form-control md:w-1/2 w-full">
+          <label className="label">
+            <span className="label-text font-bold">Job Post:</span>
+          </label>
+          <input type="number" placeholder="No of Post" name='job_post' className="input input-bordered" required />
         </div>
         </div>
 
