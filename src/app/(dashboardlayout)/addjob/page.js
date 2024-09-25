@@ -112,6 +112,14 @@ const AddJob = ()=>{
         </div>
         </div>
 
+        {/* input for job_description  */}
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text font-bold">Job Description:</span>
+          </label>
+          <textarea cols='30' rows='6' type='text' placeholder='Job Description' className="textarea" required ></textarea>
+        </div>
+
         </form>
         </div>
     )
