@@ -7,7 +7,8 @@ import useUser from '@/hooks/useUser';
 const Navbar = () => {
   const {user, loading} = useUser();
   //  console.log(user);
-   const {email, name} = user;
+   const { name} = user;
+   console.log(user);
 
   const navlinks = (
     <>
@@ -74,7 +75,7 @@ const Navbar = () => {
           }
          
         </div>
-        {!user ? (
+        {user.length === 0 ? (
           <Link href="/login" className="btn">
             Login
           </Link>
