@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MdOutlineSkipPrevious, MdOutlineSkipNext } from "react-icons/md";
 
 const ManageJobs = () => {
@@ -9,11 +9,12 @@ const ManageJobs = () => {
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
 
-  axios
-    .get("http://localhost:5000/jobsCount")
+  axios.get("http://localhost:5000/jobsCount")
     .then((res) => setTotalCount(res.data));
 
-  axios.get("http://localhost:5000/jobs").then((res) => setJobs(res.data));
+  useEffect(()=>{
+    axios.get(`http://localhost:5000/jobs?page=${currentPage}&size=${jobsPerPage}`).then((res) => setJobs(res.data));
+  }, [currentPage, jobsPerPage])
 
   const { count } = totalCount;
   const numberOfPages = Math.ceil(count / jobsPerPage);
@@ -36,7 +37,7 @@ const ManageJobs = () => {
   };
 
   const handleNextPage = ()=>{
-    if(currentPage < pages.length){
+    if(currentPage < pages.length - 1){
         setCurrentPage(currentPage + 1);
     }
   }
