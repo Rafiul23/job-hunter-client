@@ -12,6 +12,7 @@ const JobDetailsPage = ({ params }) => {
   const [jobDetails, setJobDetails] = useState([]);
   const session = useSession();
   const userEmail = session ? session?.data?.user?.email : "";
+  const [disable, setDisable] = useState(false);
 
   
     axios.get(`http://localhost:5000/job/${params?.id}`)
@@ -42,6 +43,15 @@ const JobDetailsPage = ({ params }) => {
   const currentDate = new Date();
   const deadlineDate = new Date(deadline);
 
+  axios.get(`http://localhost:5000/fav-exist?email=${userEmail}&id=${params?.id}`)
+  .then(res => {
+    if(res.data.message){
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  })
+
   const handleApplyJob = ()=>{
     
      if(userEmail === employer_email){
@@ -54,6 +64,8 @@ const JobDetailsPage = ({ params }) => {
     };
   }
 
+
+
   const handleAddToFav = () => {
 
     if(userEmail === employer_email){
@@ -65,8 +77,6 @@ const JobDetailsPage = ({ params }) => {
       });
     };
 
-
-
     const jobInfo = {
       company_name,
       job_title,
@@ -76,7 +86,7 @@ const JobDetailsPage = ({ params }) => {
       deadline
     };
 
-    axios.post(`http://localhost:5000/favourite?email=${userEmail}&id=${params?.id}`, jobInfo)
+    axios.post('http://localhost:5000/favourite', jobInfo)
     .then(res =>{
       if(res.data.insertedId){
         Swal.fire({
@@ -86,14 +96,7 @@ const JobDetailsPage = ({ params }) => {
           showConfirmButton: false,
           timer: 1500
         });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong",
-          footer: `${res.data?.message}`
-        });
-      }
+      } 
     })
   };
 
@@ -145,7 +148,7 @@ const JobDetailsPage = ({ params }) => {
             <span className="font-bold">Job Nature:</span> {onsite_or_remote}
           </p>
           <p><span className='font-bold'>No of Post:</span> {job_post ? job_post : 3}</p>
-          <button onClick={handleAddToFav} className="btn bg-[#033f63] w-full text-white">
+          <button onClick={handleAddToFav} disabled={disable} className="btn bg-[#033f63] w-full text-white">
             Add to Favourite
           </button>
           
