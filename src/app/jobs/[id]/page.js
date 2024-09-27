@@ -13,6 +13,7 @@ const JobDetailsPage = ({ params }) => {
   const session = useSession();
   const userEmail = session ? session?.data?.user?.email : "";
   const [disable, setDisable] = useState(false);
+  const [applyDisable, setApplyDisable] = useState(false);
 
   
     axios.get(`http://localhost:5000/job/${params?.id}`)
@@ -49,6 +50,15 @@ const JobDetailsPage = ({ params }) => {
       setDisable(true);
     } else {
       setDisable(false);
+    }
+  })
+
+  axios.get(`http://localhost:5000/applied-exist?email=${userEmail}&id=${params?.id}`)
+  .then(res => {
+    if(res.data.message){
+      setApplyDisable(true);
+    } else {
+      setApplyDisable(false);
     }
   })
 
@@ -153,7 +163,7 @@ const JobDetailsPage = ({ params }) => {
           </button>
           
           {
-            currentDate > deadlineDate ? <button disabled className='btn bg-green-600 text-white w-full'>Apply</button> : <button onClick={handleApplyJob} className='btn bg-green-600 text-white w-full'>Apply</button>
+            currentDate > deadlineDate ? <button disabled className='btn bg-red-500 text-white w-full'>Apply</button> : <button disabled={applyDisable} onClick={handleApplyJob} className='btn bg-green-600 text-white w-full'>Apply</button>
           }
           </div>
           
