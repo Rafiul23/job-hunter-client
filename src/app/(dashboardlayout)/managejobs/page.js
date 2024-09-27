@@ -8,12 +8,23 @@ const ManageJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
-
-  axios.get("http://localhost:5000/jobsCount")
-    .then((res) => setTotalCount(res.data));
+  const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
-    axios.get(`http://localhost:5000/jobs?page=${currentPage}&size=${jobsPerPage}`).then((res) => setJobs(res.data));
+    axios.get("http://localhost:5000/jobsCount")
+    .then((res) => setTotalCount(res.data))
+    .catch((err)=> console.log(err))
+  }, [])
+
+  useEffect(()=>{
+    axios.get(`http://localhost:5000/jobs?page=${currentPage}&size=${jobsPerPage}`).then((res) => {
+        setJobs(res.data);
+        setLoading(false);
+    })
+    .catch((err)=> {
+        console.log(err);
+        setLoading(false);
+    })
   }, [currentPage, jobsPerPage])
 
   const { count } = totalCount;
@@ -40,6 +51,10 @@ const ManageJobs = () => {
     if(currentPage < pages.length - 1){
         setCurrentPage(currentPage + 1);
     }
+  }
+
+  if(loading){
+    return <progress className="progress progress-success w-56"></progress>
   }
 
   return (
