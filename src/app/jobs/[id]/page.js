@@ -43,14 +43,8 @@ const JobDetailsPage = ({ params }) => {
   const deadlineDate = new Date(deadline);
 
   const handleApplyJob = ()=>{
-    if(currentDate > deadlineDate){
-      return Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong",
-        footer: "Deadline is over!"
-      });
-    } else if(userEmail === employer_email){
+    
+     if(userEmail === employer_email){
       return Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -116,7 +110,7 @@ const JobDetailsPage = ({ params }) => {
       </h1>
 
       <div className="grid md:grid-cols-4 grid-cols-1 mt-5 gap-6">
-        <div className="col-span-3 space-y-4">
+        <div className="col-span-3 space-y-2">
           <h2 className="font-bold text-2xl">Company Name: {company_name}</h2>
           <p>
             <span className="font-bold">Job Description:</span>{" "}
@@ -131,15 +125,12 @@ const JobDetailsPage = ({ params }) => {
           </p>
           <p className="font-bold text-red-500">Deadline: {deadline}</p>
           <p>
-            Send your resume at
-            <span className="font-bold">{employer_email}</span>
+            Send your resume at <span className="font-bold">{employer_email}</span>
           </p>
-          <p>No of Post: {job_post}</p>
-          <div className='py-4 text-center'>
-            <button className='btn bg-[#033f63] text-white w-1/2'>Apply</button>
-          </div>
         </div>
-        <div className="col-span-1 space-y-4 p-4 bg-gray-200 rounded-xl">
+        
+        <div className="col-span-1">
+          <div className='space-y-4  p-4 bg-gray-200 rounded-xl'>
           <h4 className="font-bold text-xl">Job Category: {category}</h4>
           <p>
             <span className="font-bold">Location:</span> {location}
@@ -153,9 +144,16 @@ const JobDetailsPage = ({ params }) => {
           <p>
             <span className="font-bold">Job Nature:</span> {onsite_or_remote}
           </p>
+          <p><span className='font-bold'>No of Post:</span> {job_post ? job_post : 3}</p>
           <button onClick={handleAddToFav} className="btn bg-[#033f63] w-full text-white">
             Add to Favourite
           </button>
+          
+          {
+            currentDate > deadlineDate ? <button disabled className='btn bg-green-600 text-white w-full'>Apply</button> : <button onClick={handleApplyJob} className='btn bg-green-600 text-white w-full'>Apply</button>
+          }
+          </div>
+          
         </div>
       </div>
     </div>
