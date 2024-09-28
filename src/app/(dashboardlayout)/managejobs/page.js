@@ -2,6 +2,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { MdOutlineSkipPrevious, MdOutlineSkipNext } from "react-icons/md";
+import { FaRegTrashCan } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 const ManageJobs = () => {
   const [totalCount, setTotalCount] = useState([]);
@@ -11,13 +13,20 @@ const ManageJobs = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/jobsCount")
-      .then((res) => setTotalCount(res.data))
-      .catch((err) => console.log(err));
+    loadTotalCount();
   }, []);
 
   useEffect(() => {
+    loadJobs(currentPage, jobsPerPage);
+  }, [currentPage, jobsPerPage]);
+
+  const loadTotalCount = ()=>{
+    axios.get("http://localhost:5000/jobsCount")
+      .then((res) => setTotalCount(res.data))
+      .catch((err) => console.log(err));
+  }
+
+  const loadJobs = (currentPage, jobsPerPage) => {
     axios.get(
         `http://localhost:5000/jobs/paginated?page=${currentPage}&size=${jobsPerPage}`
       )
@@ -29,7 +38,7 @@ const ManageJobs = () => {
         console.log(err);
         setLoading(false);
       });
-  }, [currentPage, jobsPerPage]);
+  };
 
   const { count } = totalCount;
   const numberOfPages = Math.ceil(count / jobsPerPage);
@@ -57,6 +66,34 @@ const ManageJobs = () => {
     }
   };
 
+  const handleDeleteJob = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:5000/job-delete/${_id}`).then((res) => {
+          if(res.data.deletedCount > 0){
+            loadTotalCount();
+            setCurrentPage(0);
+            setJobsPerPage(10);
+            loadJobs(currentPage, jobsPerPage);
+              Swal.fire({
+                  title: "Deleted!",
+                  text: "The job has been deleted.",
+                  icon: "success"
+                });
+          }
+        });
+      }
+    });
+  };
+
   if (loading) {
     return <progress className="progress progress-success w-56"></progress>;
   }
@@ -64,7 +101,7 @@ const ManageJobs = () => {
   return (
     <div className="py-5">
       <h2 className="text-3xl text-center font-bold mb-2 text-[#033f63]">
-        Manage Jobs
+        Manage Jobs {count}
       </h2>
 
       <div className="py-4">
@@ -88,15 +125,25 @@ const ManageJobs = () => {
                   <td>{job?.company_name}</td>
                   <td>{job?.job_title}</td>
                   <td className="text-red-500 font-bold">{job?.deadline}</td>
-                  {/* <td className='underline text-blue-500 font-semibold'><a href={job?.jobLink}>Link</a></td>
-                    <td className='text-red-500 font-bold'><button onClick={()=> handleDeleteFavJobs(job._id)}><FaRegTrashCan /></button></td> */}
+                  <td>
+                    <button className="btn bg-[#033f63] text-white">
+                      Update
+                    </button>
+                  </td>
+                  <td className="text-red-500 font-bold">
+                    <button onClick={() => handleDeleteJob(job._id)}>
+                      <FaRegTrashCan />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-      <p className="text-center py-2">Current Page: {currentPage}</p>
+      <p className="text-center py-2">
+        Current Page: {currentPage} out of {numberOfPages - 1}
+      </p>
       <div className="space-x-2 flex justify-center py-4">
         <button className="btn" onClick={handlePrevPage}>
           <MdOutlineSkipPrevious />

@@ -8,7 +8,7 @@ const Navbar = () => {
   const {user, loading} = useUser();
   //  console.log(user);
    const { name} = user;
-   console.log(user);
+  //  console.log(user);
 
   const navlinks = (
     <>
