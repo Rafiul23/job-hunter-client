@@ -10,22 +10,26 @@ const ManageJobs = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  useEffect(()=>{
-    axios.get("http://localhost:5000/jobsCount")
-    .then((res) => setTotalCount(res.data))
-    .catch((err)=> console.log(err))
-  }, [])
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/jobsCount")
+      .then((res) => setTotalCount(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
-  useEffect(()=>{
-    axios.get(`http://localhost:5000/jobs?page=${currentPage}&size=${jobsPerPage}`).then((res) => {
+  useEffect(() => {
+    axios.get(
+        `http://localhost:5000/jobs/paginated?page=${currentPage}&size=${jobsPerPage}`
+      )
+      .then((res) => {
         setJobs(res.data);
         setLoading(false);
-    })
-    .catch((err)=> {
+      })
+      .catch((err) => {
         console.log(err);
         setLoading(false);
-    })
-  }, [currentPage, jobsPerPage])
+      });
+  }, [currentPage, jobsPerPage]);
 
   const { count } = totalCount;
   const numberOfPages = Math.ceil(count / jobsPerPage);
@@ -41,20 +45,20 @@ const ManageJobs = () => {
     setCurrentPage(0);
   };
 
-  const handlePrevPage = ()=>{
-    if(currentPage > 0){
-        setCurrentPage(currentPage -1);
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
-  const handleNextPage = ()=>{
-    if(currentPage < pages.length - 1){
-        setCurrentPage(currentPage + 1);
+  const handleNextPage = () => {
+    if (currentPage < pages.length - 1) {
+      setCurrentPage(currentPage + 1);
     }
-  }
+  };
 
-  if(loading){
-    return <progress className="progress progress-success w-56"></progress>
+  if (loading) {
+    return <progress className="progress progress-success w-56"></progress>;
   }
 
   return (
@@ -94,7 +98,9 @@ const ManageJobs = () => {
       </div>
       <p className="text-center py-2">Current Page: {currentPage}</p>
       <div className="space-x-2 flex justify-center py-4">
-        <button className='btn' onClick={handlePrevPage}><MdOutlineSkipPrevious /></button>
+        <button className="btn" onClick={handlePrevPage}>
+          <MdOutlineSkipPrevious />
+        </button>
         {pages.map((page) => (
           <button
             onClick={() => setCurrentPage(page)}
@@ -106,7 +112,9 @@ const ManageJobs = () => {
             {page}
           </button>
         ))}
-        <button onClick={handleNextPage} className='btn'><MdOutlineSkipNext/></button>
+        <button onClick={handleNextPage} className="btn">
+          <MdOutlineSkipNext />
+        </button>
         <select
           className="select select-bordered w-[80px]"
           value={jobsPerPage}
