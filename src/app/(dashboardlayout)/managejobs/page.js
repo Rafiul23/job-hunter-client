@@ -20,14 +20,16 @@ const ManageJobs = () => {
     loadJobs(currentPage, jobsPerPage);
   }, [currentPage, jobsPerPage]);
 
-  const loadTotalCount = ()=>{
-    axios.get("http://localhost:5000/jobsCount")
+  const loadTotalCount = () => {
+    axios
+      .get("http://localhost:5000/jobsCount")
       .then((res) => setTotalCount(res.data))
       .catch((err) => console.log(err));
-  }
+  };
 
   const loadJobs = (currentPage, jobsPerPage) => {
-    axios.get(
+    axios
+      .get(
         `http://localhost:5000/jobs/paginated?page=${currentPage}&size=${jobsPerPage}`
       )
       .then((res) => {
@@ -77,17 +79,17 @@ const ManageJobs = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/job-delete/${_id}`).then((res) => {
-          if(res.data.deletedCount > 0){
+        axios.delete(`http://localhost:5000/jobs/${_id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
             loadTotalCount();
             setCurrentPage(0);
             setJobsPerPage(10);
             loadJobs(currentPage, jobsPerPage);
-              Swal.fire({
-                  title: "Deleted!",
-                  text: "The job has been deleted.",
-                  icon: "success"
-                });
+            Swal.fire({
+              title: "Deleted!",
+              text: "The job has been deleted.",
+              icon: "success",
+            });
           }
         });
       }
