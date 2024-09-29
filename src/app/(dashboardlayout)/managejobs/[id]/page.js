@@ -185,10 +185,20 @@ const UpdateJobPage = ({ params }) => {
             <label className="label">
               <span className="label-text font-bold">Job Nature:</span>
             </label>
-            <select onChange={handleSetNewNature} defaultValue={nature} value={newNature} className='select select-bordered w-full max-w-xs'>
+            <select onChange={handleSetNewNature} defaultValue={onsite_or_remote} value={newNature} className='select select-bordered w-full max-w-xs'>
               <option value='Onsite'>Onsite</option>
               <option value='Remote'>Remote</option>
               <option value='Hybrid'>Hybrid</option>
+            </select>
+          </div>
+           {/* input for job_type */}
+           <div className="form-control md:w-1/2 w-full">
+            <label className="label">
+              <span className="label-text font-bold">Job Type:</span>
+            </label>
+            <select onChange={handleSetNewType} defaultValue={job_type} value={newType} className='select select-bordered w-full max-w-xs'>
+              <option value='Full Time'>Full Time</option>
+              <option value='Part Time'>Part Time</option>
             </select>
           </div>
         </div>
