@@ -80,7 +80,20 @@ const UpdateJobPage = ({ params }) => {
               required
             />
           </div>
-
+            {/* input for experience */}
+          <div className="form-control md:w-1/2 w-full">
+            <label className="label">
+              <span className="label-text font-bold">Experience:</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Experience"
+              defaultValue={experience}
+              name="experience"
+              className="input input-bordered"
+              required
+            />
+          </div>
         </div>
       </form>
     </div>
