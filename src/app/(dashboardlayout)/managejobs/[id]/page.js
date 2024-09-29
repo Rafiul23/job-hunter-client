@@ -1,13 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const UpdateJobPage = ({ params }) => {
   const [job, setJob] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [newCategory, setNewCategory] = useState('');
+  const [nature, setNature] = useState('Onsite');
+  const [type, setType] = useState('Full Time');
 
-  axios
-    .get(`http://localhost:5000/job/${params?.id}`)
+  axios.get(`http://localhost:5000/job/${params?.id}`)
     .then((res) => setJob(res.data));
+
+    const handleSetNewCategory = e =>{
+        setNewCategory(e.target.value);
+      };
+    
+    useEffect(() => {
+        axios.get("http://localhost:5000/categories")
+          .then((res) => setCategories(res.data));
+      }, []);
 
   const {
     company_name,
@@ -141,6 +153,21 @@ const UpdateJobPage = ({ params }) => {
               className="input input-bordered"
               required
             />
+          </div>
+          {/* input for category */}
+          <div className="form-control md:w-1/2 w-full">
+            <label className="label">
+              <span className="label-text font-bold">Category: <span className='text-red-500'>Please! Select category before update *</span></span>
+            </label>
+            <select onChange={handleSetNewCategory}  defaultValue={category} value={newCategory} className="select select-bordered w-full max-w-xs">
+                <option disabled>Select Category</option>
+              {
+                categories.map(category =>
+                    <option key={category._id} value={category.category}>{category.category}</option>
+                )
+              }
+              
+            </select>
           </div>
         </div>
       </form>
