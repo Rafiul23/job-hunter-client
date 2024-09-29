@@ -65,7 +65,23 @@ const UpdateJobPage = ({ params }) => {
           </div>
         </div>
 
-        
+        <div className='flex md:flex-row flex-col gap-4 mb-2'>
+            {/* input for location */}
+          <div className="form-control md:w-1/2 w-full">
+            <label className="label">
+              <span className="label-text font-bold">Location:</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Location"
+              defaultValue={location}
+              name="location"
+              className="input input-bordered"
+              required
+            />
+          </div>
+
+        </div>
       </form>
     </div>
   );
