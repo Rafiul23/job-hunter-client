@@ -232,7 +232,7 @@ const handleAddJob = e =>{
               <span className="label-text font-bold">Employer Email:</span>
             </label>
             <input
-              type="text"
+              type="email"
               placeholder="Employer's Email"
               name="employer_email"
               className="input input-bordered"
