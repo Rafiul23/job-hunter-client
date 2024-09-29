@@ -95,6 +95,23 @@ const UpdateJobPage = ({ params }) => {
             />
           </div>
         </div>
+
+        <div className='flex md:flex-row flex-col gap-4 mb-2'>
+            {/* input for qualifications */}
+          <div className="form-control md:w-1/2 w-full">
+            <label className="label">
+              <span className="label-text font-bold">Qualifications:</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Qualifications"
+              name="qualifications"
+              defaultValue={qualifications}
+              className="input input-bordered"
+              required
+            />
+          </div>
+        </div>
       </form>
     </div>
   );
