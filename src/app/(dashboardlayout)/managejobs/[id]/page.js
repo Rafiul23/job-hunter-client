@@ -47,6 +47,20 @@ const UpdateJobPage = ({ params }) => {
               className="input input-bordered"
               required
             />
+            {/* input for job title */}
+          <div className="form-control md:w-1/2 w-full">
+            <label className="label">
+              <span className="label-text font-bold">Job Title</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Job Title"
+              name="job_title"
+              defaultValue={job_title}
+              className="input input-bordered"
+              required
+            />
+          </div>
           </div>
         </div>
       </form>
