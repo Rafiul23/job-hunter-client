@@ -126,6 +126,23 @@ const UpdateJobPage = ({ params }) => {
             />
           </div>
         </div>
+
+        <div className='flex md:flex-row flex-col gap-4 mb-2'>
+             {/* input for deadline */}
+          <div className="form-control md:w-1/2 w-full">
+            <label className="label">
+              <span className="label-text font-bold">Deadline:</span>
+            </label>
+            <input
+              type="date"
+              placeholder="Deadline"
+              defaultValue={deadline}
+              name="deadline"
+              className="input input-bordered"
+              required
+            />
+          </div>
+        </div>
       </form>
     </div>
   );
