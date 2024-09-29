@@ -270,7 +270,7 @@ const handleAddJob = e =>{
           ></textarea>
         </div>
         <div className='py-4 text-center'>
-            <button className='btn bg-[#033f63] text-white'>Add Job</button>
+            <button className='btn bg-[#033f63] text-white w-1/2'>Add Job</button>
         </div>
       </form>
     </div>

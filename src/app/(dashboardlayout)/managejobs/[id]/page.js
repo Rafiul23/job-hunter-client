@@ -165,7 +165,7 @@ const UpdateJobPage = ({ params }) => {
           {/* input for category */}
           <div className="form-control md:w-1/2 w-full">
             <label className="label">
-              <span className="label-text font-bold">Category: <span className='text-red-500'>Please! Select category before update *</span></span>
+              <span className="label-text font-bold">Category:</span>
             </label>
             <select onChange={handleSetNewCategory}  defaultValue={category} value={newCategory} className="select select-bordered w-full max-w-xs">
                 <option disabled>Select Category</option>
@@ -232,6 +232,26 @@ const UpdateJobPage = ({ params }) => {
               required
             />
           </div>
+        </div>
+
+        {/* input for job_description  */}
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text font-bold">Job Description:</span>
+          </label>
+          <textarea
+            cols="30"
+            rows="6"
+            type="text"
+            name='job_description'
+            defaultValue={job_description}
+            placeholder="Job Description"
+            className="textarea"
+            required
+          ></textarea>
+        </div>
+        <div className='py-4 text-center'>
+            <button className='btn bg-[#033f63] text-white w-1/2'>Update Job</button>
         </div>
       </form>
     </div>
