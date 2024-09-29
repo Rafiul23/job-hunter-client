@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { MdOutlineSkipPrevious, MdOutlineSkipNext } from "react-icons/md";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import Link from 'next/link';
 
 const ManageJobs = () => {
   const [totalCount, setTotalCount] = useState([]);
