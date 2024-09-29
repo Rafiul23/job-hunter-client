@@ -218,6 +218,20 @@ const UpdateJobPage = ({ params }) => {
               required
             />
           </div>
+          {/* input for job_post */}
+          <div className="form-control md:w-1/2 w-full">
+            <label className="label">
+              <span className="label-text font-bold">Job Post:</span>
+            </label>
+            <input
+              type="number"
+              placeholder="No of Post"
+              name="job_post"
+              defaultValue={job_post}
+              className="input input-bordered"
+              required
+            />
+          </div>
         </div>
       </form>
     </div>
