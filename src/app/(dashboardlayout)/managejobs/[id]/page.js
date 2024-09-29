@@ -47,8 +47,10 @@ const UpdateJobPage = ({ params }) => {
               className="input input-bordered"
               required
             />
-            {/* input for job title */}
-          <div className="form-control md:w-1/2 w-full">
+           
+          </div>
+           {/* input for job title */}
+           <div className="form-control md:w-1/2 w-full">
             <label className="label">
               <span className="label-text font-bold">Job Title</span>
             </label>
@@ -61,8 +63,9 @@ const UpdateJobPage = ({ params }) => {
               required
             />
           </div>
-          </div>
         </div>
+
+        
       </form>
     </div>
   );
