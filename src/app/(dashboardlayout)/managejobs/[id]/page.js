@@ -31,6 +31,12 @@ const UpdateJobPage = ({params})=>{
             <h2 className="text-3xl text-center font-bold mb-2 text-[#033f63]">
             Update {job_title} Job 
             </h2>
+
+            <form className="p-4 bg-base-200">
+               <div className='flex md:flex-row flex-col gap-4 mb-2'>
+
+               </div>
+            </form>
         </div>
     );
 };
