@@ -1,16 +1,22 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 const UpdateJobPage = ({ params }) => {
   const [job, setJob] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState('');
+  const [newCategory, setNewCategory] = useState('Accounting and Finance');
   const [newNature, setNewNature] = useState('Onsite');
   const [newType, setNewType] = useState('Full Time');
 
-  axios.get(`http://localhost:5000/job/${params?.id}`)
-    .then((res) => setJob(res.data));
+ useEffect(()=>{
+    axios.get(`http://localhost:5000/job/${params?.id}`)
+    .then((res) => setJob(res.data))
+    .catch(err =>{
+        console.log(err);
+    })
+ }, [params])
 
     const handleSetNewCategory = e =>{
         setNewCategory(e.target.value);
@@ -30,6 +36,7 @@ const UpdateJobPage = ({ params }) => {
       }, []);
 
   const {
+    _id,
     company_name,
     job_title,
     job_description,
@@ -37,7 +44,6 @@ const UpdateJobPage = ({ params }) => {
     experience,
     qualifications,
     salary_range,
-    _id,
     deadline,
     category,
     onsite_or_remote,
@@ -46,13 +52,68 @@ const UpdateJobPage = ({ params }) => {
     job_post,
   } = job;
 
+  const handleUpdateJob = e =>{
+    e.preventDefault();
+    const form = e.target;
+
+    const company_name = form.company_name.value;
+    const job_title = form.job_title.value;
+    const job_description = form.job_description.value;
+    const location = form.location.value;
+    const experience = form.experience.value;
+    const qualifications = form.qualifications.value;
+    const salary_range = form.salary_range.value;
+    const deadline = form.deadline.value;
+    const onsite_or_remote = newNature;
+    const job_type = newType;
+    const employer_email = form.employer_email.value;
+    const job_post = Number(form.job_post.value);
+  
+
+  const updatedJobData = {
+    company_name,
+    job_title,
+    job_description,
+    location,
+    experience,
+    qualifications,
+    salary_range,
+    deadline,
+    category: newCategory,
+    onsite_or_remote,
+    job_type,
+    employer_email,
+    job_post
+};
+
+// console.log(updatedJobData);
+
+axios.put(`http://localhost:5000/jobs/${_id}`, updatedJobData)
+.then(res =>{
+    if(res.data.modifiedCount > 0){
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your job has been updated",
+            showConfirmButton: false,
+            timer: 1500
+          });
+    };
+})
+.catch(err =>{
+    console.log(err);
+})
+
+};
+
   return (
-    <div className="py-5">
-      <h2 className="text-3xl text-center font-bold mb-2 text-[#033f63]">
+    <div className="py-8">
+      <h2 className="text-3xl text-center font-bold mb-4 text-[#033f63]">
         Update {job_title} Job
       </h2>
+      <p className='py-4 text-center text-red-500 font-bold'>Caution: When updating a job data, every time you need to select the category, job type and job nature. Otherwise, your job category, job nature and job type may be changed by default!!!</p>
 
-      <form className="p-4 bg-base-200">
+      <form onSubmit={handleUpdateJob} className="p-4 bg-base-200">
         <div className="flex md:flex-row flex-col gap-4 mb-2">
           {/* input for company name */}
           <div className="form-control md:w-1/2 w-full">

@@ -44,7 +44,7 @@ const handleAddJob = e =>{
     const onsite_or_remote = nature;
     const job_type = type;
     const employer_email = form.employer_email.value;
-    const job_post = form.job_post.value;
+    const job_post = Number(form.job_post.value);
 
     const newJob = {
         company_name,
@@ -66,7 +66,7 @@ const handleAddJob = e =>{
     .then(res =>{
         if(res.data.insertedId){
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
                 title: "Added a new job successfully",
                 showConfirmButton: false,
