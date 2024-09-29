@@ -111,6 +111,20 @@ const UpdateJobPage = ({ params }) => {
               required
             />
           </div>
+          {/* input for salary_range */}
+          <div className="form-control md:w-1/2 w-full">
+            <label className="label">
+              <span className="label-text font-bold">Salary Range:</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Salary Range"
+              name="salary_range"
+              defaultValue={salary_range}
+              className="input input-bordered"
+              required
+            />
+          </div>
         </div>
       </form>
     </div>
