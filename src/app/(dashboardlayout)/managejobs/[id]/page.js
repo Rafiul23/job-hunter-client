@@ -6,8 +6,8 @@ const UpdateJobPage = ({ params }) => {
   const [job, setJob] = useState([]);
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState('');
-  const [nature, setNature] = useState('Onsite');
-  const [type, setType] = useState('Full Time');
+  const [newNature, setNewNature] = useState('Onsite');
+  const [newType, setNewType] = useState('Full Time');
 
   axios.get(`http://localhost:5000/job/${params?.id}`)
     .then((res) => setJob(res.data));
@@ -15,6 +15,14 @@ const UpdateJobPage = ({ params }) => {
     const handleSetNewCategory = e =>{
         setNewCategory(e.target.value);
       };
+    const handleSetNewNature = e =>{
+        setNewNature(e.target.value);
+      };
+    const handleSetNewType = e =>{
+        setNewType(e.target.value);
+      };
+    
+      
     
     useEffect(() => {
         axios.get("http://localhost:5000/categories")
@@ -167,6 +175,20 @@ const UpdateJobPage = ({ params }) => {
                 )
               }
               
+            </select>
+          </div>
+        </div>
+
+        <div className='flex md:flex-row flex-col gap-4 mb-2'>
+               {/* input for onsite_or_remote */}
+          <div className="form-control md:w-1/2 w-full">
+            <label className="label">
+              <span className="label-text font-bold">Job Nature:</span>
+            </label>
+            <select onChange={handleSetNewNature} defaultValue={nature} value={newNature} className='select select-bordered w-full max-w-xs'>
+              <option value='Onsite'>Onsite</option>
+              <option value='Remote'>Remote</option>
+              <option value='Hybrid'>Hybrid</option>
             </select>
           </div>
         </div>
