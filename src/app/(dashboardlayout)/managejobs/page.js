@@ -128,9 +128,11 @@ const ManageJobs = () => {
                   <td>{job?.job_title}</td>
                   <td className="text-red-500 font-bold">{job?.deadline}</td>
                   <td>
-                    <button className="btn bg-[#033f63] text-white">
+                  <Link href={`/managejobs/${job?._id}`}>
+                  <button className="btn bg-[#033f63] btn-md text-white">
                       Update
                     </button>
+                  </Link>
                   </td>
                   <td className="text-red-500 font-bold">
                     <button onClick={() => handleDeleteJob(job._id)}>

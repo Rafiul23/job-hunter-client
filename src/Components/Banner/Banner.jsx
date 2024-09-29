@@ -23,8 +23,9 @@ const Banner = () => {
           />
         </div>
         <div className="w-1/2">
-          <h1 className="text-5xl font-bold text-[#033f63]">
-            Exciting Job Offers!
+          <h1 className="text-4xl font-bold text-[#033f63]">
+            Elevate your career <br/> to the next step with <br/> 
+            exciting job offers!
           </h1>
           <p className="py-6 text-2xl text-white">
             Your dream jobs are waiting for you...
