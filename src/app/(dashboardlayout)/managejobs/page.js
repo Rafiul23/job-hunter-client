@@ -2,9 +2,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { MdOutlineSkipPrevious, MdOutlineSkipNext } from "react-icons/md";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { FaRegTrashCan, FaArrowUpLong, FaArrowDownLong  } from "react-icons/fa6";
 import Swal from "sweetalert2";
-import Link from 'next/link';
+import Link from "next/link";
 
 const ManageJobs = () => {
   const [totalCount, setTotalCount] = useState([]);
@@ -97,6 +97,10 @@ const ManageJobs = () => {
     });
   };
 
+  const handleUpgradeJob = (_id)=>{
+    
+  }
+
   if (loading) {
     return <progress className="progress progress-success w-56"></progress>;
   }
@@ -119,6 +123,7 @@ const ManageJobs = () => {
                 <th>Deadline</th>
                 <th>Update Job</th>
                 <th>Delete Job</th>
+                <th>Upgrade / <br/> Downgrade</th>
               </tr>
             </thead>
             <tbody>
@@ -129,15 +134,24 @@ const ManageJobs = () => {
                   <td>{job?.job_title}</td>
                   <td className="text-red-500 font-bold">{job?.deadline}</td>
                   <td>
-                  <Link href={`/managejobs/${job?._id}`}>
-                  <button className="btn bg-[#033f63] btn-md text-white">
-                      Update
-                    </button>
-                  </Link>
+                    <Link href={`/managejobs/${job?._id}`}>
+                      <button className="btn bg-[#033f63] btn-md text-white">
+                        Update
+                      </button>
+                    </Link>
                   </td>
-                  <td className="text-red-500 font-bold">
-                    <button onClick={() => handleDeleteJob(job._id)}>
+                  <td>
+                    <button
+                      className="btn text-red-500"
+                      onClick={() => handleDeleteJob(job._id)}
+                    >
                       <FaRegTrashCan />
+                    </button>
+                  </td>
+                  <td>
+                    <button className='btn text-amber-500'
+                    onClick={()=> handleUpgradeJob(job._id)}>
+                      <FaArrowUpLong />
                     </button>
                   </td>
                 </tr>
@@ -149,7 +163,7 @@ const ManageJobs = () => {
       <p className="text-center py-2">
         Current Page: {currentPage} out of {numberOfPages - 1}
       </p>
-      <div className="space-x-2 flex justify-center py-4">
+      <div className="space-x-2 flex justify-center flex-wrap max-w-6xl py-4">
         <button className="btn" onClick={handlePrevPage}>
           <MdOutlineSkipPrevious />
         </button>
