@@ -98,7 +98,7 @@ const ManageJobs = () => {
   const handleUpgradeJob = (_id)=>{
     Swal.fire({
       title: "Are you sure?",
-      text: "Do you want to upgrade this job to hot job!",
+      text: "Do you want to upgrade this job to hot job?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -115,6 +115,34 @@ const ManageJobs = () => {
             Swal.fire({
               title: "Upgraded!",
               text: "The job has become a hot job.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
+
+  const handleDowngradeJob = (_id)=>{
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to downgrade this job from hot job?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, downgrade it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.patch(`http://localhost:5000/jobs/gen/${_id}`).then((res) => {
+          if (res.data.modifiedCount > 0) {
+            loadTotalCount();
+            setCurrentPage(0);
+            setJobsPerPage(10);
+            loadJobs(currentPage, jobsPerPage);
+            Swal.fire({
+              title: "Upgraded!",
+              text: "The job has become a general job.",
               icon: "success",
             });
           }
@@ -174,7 +202,7 @@ const ManageJobs = () => {
                   <td>
                   {
                       job?.status == 'hot' ? <button className='btn text-orange-500'
-                      onClick={()=> handleUpgradeJob(job._id)}>
+                      onClick={()=> handleDowngradeJob(job._id)}>
                         <FaArrowDownLong />
                       </button> : <button className='btn text-orange-500'
                     onClick={()=> handleUpgradeJob(job._id)}>
