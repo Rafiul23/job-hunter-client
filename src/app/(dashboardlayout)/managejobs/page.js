@@ -22,15 +22,13 @@ const ManageJobs = () => {
   }, [currentPage, jobsPerPage]);
 
   const loadTotalCount = () => {
-    axios
-      .get("http://localhost:5000/jobsCount")
+    axios.get("http://localhost:5000/jobsCount")
       .then((res) => setTotalCount(res.data))
       .catch((err) => console.log(err));
   };
 
   const loadJobs = (currentPage, jobsPerPage) => {
-    axios
-      .get(
+    axios.get(
         `http://localhost:5000/jobs/paginated?page=${currentPage}&size=${jobsPerPage}`
       )
       .then((res) => {
@@ -98,7 +96,31 @@ const ManageJobs = () => {
   };
 
   const handleUpgradeJob = (_id)=>{
-    
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to upgrade this job to hot job!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, upgrade it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.patch(`http://localhost:5000/jobs/hot/${_id}`).then((res) => {
+          if (res.data.modifiedCount > 0) {
+            loadTotalCount();
+            setCurrentPage(0);
+            setJobsPerPage(10);
+            loadJobs(currentPage, jobsPerPage);
+            Swal.fire({
+              title: "Upgraded!",
+              text: "The job has become a hot job.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
   }
 
   if (loading) {
@@ -130,8 +152,9 @@ const ManageJobs = () => {
               {jobs.map((job, i) => (
                 <tr key={job._id}>
                   <th>{i + 1}</th>
-                  <td>{job?.company_name}</td>
-                  <td>{job?.job_title}</td>
+                  <td>{job?.company_name} 
+                  </td>
+                  <td className={job?.status === 'hot' ? 'text-orange-500 font-bold' : ""}>{job?.job_title}</td>
                   <td className="text-red-500 font-bold">{job?.deadline}</td>
                   <td>
                     <Link href={`/managejobs/${job?._id}`}>
@@ -149,10 +172,15 @@ const ManageJobs = () => {
                     </button>
                   </td>
                   <td>
-                    <button className='btn text-amber-500'
+                  {
+                      job?.status == 'hot' ? <button className='btn text-orange-500'
+                      onClick={()=> handleUpgradeJob(job._id)}>
+                        <FaArrowDownLong />
+                      </button> : <button className='btn text-orange-500'
                     onClick={()=> handleUpgradeJob(job._id)}>
                       <FaArrowUpLong />
                     </button>
+                    }
                   </td>
                 </tr>
               ))}
@@ -163,7 +191,7 @@ const ManageJobs = () => {
       <p className="text-center py-2">
         Current Page: {currentPage} out of {numberOfPages - 1}
       </p>
-      <div className="space-x-2 flex justify-center flex-wrap max-w-6xl py-4">
+      <div className="space-x-2 flex justify-center flex-wrap min-w-[425px] mx-auto py-4">
         <button className="btn" onClick={handlePrevPage}>
           <MdOutlineSkipPrevious />
         </button>
