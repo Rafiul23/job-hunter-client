@@ -4,23 +4,25 @@ import corporateImage from "../../../assets/globalisation-1014524_1280.png";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import axios from "axios";
-import Swal from 'sweetalert2';
-
+import Swal from "sweetalert2";
+import useUser from "@/hooks/useUser";
 
 const JobDetailsPage = ({ params }) => {
-  
   const [jobDetails, setJobDetails] = useState([]);
   const session = useSession();
   const userEmail = session ? session?.data?.user?.email : "";
   const [disable, setDisable] = useState(false);
   const [applyDisable, setApplyDisable] = useState(false);
+  const {user} = useUser();
+  const {name} = user;
+  const [resumeLink, setResumeLink] = useState("");
+  const [modalOpen, setModalOpen] = useState(false); 
 
-  
-    axios.get(`http://localhost:5000/job/${params?.id}`)
+  axios.get(`http://localhost:5000/job/${params?.id}`)
     .then((res) => setJobDetails(res.data));
 
-   const jobLink = `http://localhost:3000/jobs/${params?.id}`;
-   
+  const jobLink = `http://localhost:3000/jobs/${params?.id}`;
+
   // const res = await fetch(`http://localhost:5000/job/${params.id}`);
   // const jobDetails = await res.json();
 
@@ -38,54 +40,91 @@ const JobDetailsPage = ({ params }) => {
     onsite_or_remote,
     job_type,
     employer_email,
-    job_post
+    job_post,
   } = jobDetails;
 
   const currentDate = new Date();
   const deadlineDate = new Date(deadline);
 
   axios.get(`http://localhost:5000/fav-exist?email=${userEmail}&id=${params?.id}`)
-  .then(res => {
-    if(res.data.message){
-      setDisable(true);
-    } else {
-      setDisable(false);
-    }
-  })
+    .then((res) => {
+      if (res.data.message) {
+        setDisable(true);
+      } else {
+        setDisable(false);
+      }
+    });
 
-  axios.get(`http://localhost:5000/applied-exist?email=${userEmail}&id=${params?.id}`)
-  .then(res => {
-    if(res.data.message){
-      setApplyDisable(true);
-    } else {
-      setApplyDisable(false);
-    }
-  })
+  axios.get(
+      `http://localhost:5000/applied-exist?email=${userEmail}&id=${params?.id}`
+    )
+    .then((res) => {
+      if (res.data.message) {
+        setApplyDisable(true);
+      } else {
+        setApplyDisable(false);
+      }
+    });
 
-  const handleApplyJob = ()=>{
-    
-     if(userEmail === employer_email){
+  const openModal = ()=>{
+    setModalOpen(true);
+  }  
+
+  const closeModal = ()=>{
+    setModalOpen(false);
+  }  
+
+
+  const handleSubmitResume = (e) => {
+    e.preventDefault();
+    console.log(resumeLink);
+    closeModal();
+  };
+
+  const handleApplyJob = () => {
+    if (userEmail === employer_email) {
       return Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Something went wrong",
-        footer: "You won't be able to apply to your own job!"
+        footer: "You won't be able to apply to your own job!",
       });
-    };
-  }
+    }
 
 
+    // const appliedJobData = {
+    //   userEmail,
+    //   company_name,
+    //   job_title,
+    //   job_id: _id,
+    //   apply_date: currentDate,
+    //   resume_link,
+    //   jobLink,
+    // };
+
+    // axios.post("http://localhost:5000/jobs-apply", appliedJobData)
+    //   .then((res) => {
+    //     if (res.data.insertedId) {
+    //       Swal.fire({
+    //         position: "center",
+    //         icon: "success",
+    //         title: "Added to Favourite list",
+    //         showConfirmButton: false,
+    //         timer: 1500,
+    //       });
+    //     }
+    //   });
+  };
 
   const handleAddToFav = () => {
-
-    if(userEmail === employer_email){
+    if (userEmail === employer_email) {
       return Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Something went wrong",
-        footer: "You won't be able to add your job to your favourite list"
+        footer: "You won't be able to add your job to your favourite list",
       });
-    };
+    }
 
     const jobInfo = {
       company_name,
@@ -93,21 +132,20 @@ const JobDetailsPage = ({ params }) => {
       job_id: _id,
       userEmail,
       jobLink,
-      deadline
+      deadline,
     };
 
-    axios.post('http://localhost:5000/favourite', jobInfo)
-    .then(res =>{
-      if(res.data.insertedId){
+    axios.post("http://localhost:5000/favourite", jobInfo).then((res) => {
+      if (res.data.insertedId) {
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: "Added to Favourite list",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
-      } 
-    })
+      }
+    });
   };
 
   return (
@@ -138,35 +176,85 @@ const JobDetailsPage = ({ params }) => {
           </p>
           <p className="font-bold text-red-500">Deadline: {deadline}</p>
           <p>
-            Send your resume at <span className="font-bold">{employer_email}</span>
+            Send your resume at{" "}
+            <span className="font-bold">{employer_email}</span>
           </p>
-        </div>
-        
-        <div className="col-span-1">
-          <div className='space-y-4  p-4 bg-gray-200 rounded-xl'>
-          <h4 className="font-bold text-xl">Job Category: {category}</h4>
-          <p>
-            <span className="font-bold">Location:</span> {location}
-          </p>
-          <p>
-            <span className="font-bold">Salary Range:</span> {salary_range}
-          </p>
-          <p>
-            <span className="font-bold">Job Type:</span> {job_type}
-          </p>
-          <p>
-            <span className="font-bold">Job Nature:</span> {onsite_or_remote}
-          </p>
-          <p><span className='font-bold'>No of Post:</span> {job_post ? job_post : 3}</p>
-          <button onClick={handleAddToFav} disabled={disable} className="btn bg-[#033f63] w-full text-white">
-            Add to Favourite
-          </button>
-          
           {
-            currentDate > deadlineDate ? <button disabled className='btn bg-red-500 text-white w-full'>Apply</button> : <button disabled={applyDisable} onClick={handleApplyJob} className='btn bg-green-600 text-white w-full'>Apply</button>
+            modalOpen && (
+              <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+                <div className="bg-white rounded-lg shadow-lg p-8 relative w-96">
+                  <h2 className="text-2xl mb-4">Submit Resume</h2>
+                  <form onSubmit={handleSubmitResume}>
+                    <label className="block mb-2 text-lg font-medium">
+                      Resume Link:
+                      <input
+                        type="text"
+                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded"
+                        value={resumeLink}
+                        onChange={(e) => setResumeLink(e.target.value)}
+                        required
+                      />
+                    </label>
+                    <button
+                      type="submit"
+                      className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                  <button
+                    onClick={closeModal}
+                    className=" absolute bottom-8 left-32 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )
           }
+        </div>
+
+        <div className="col-span-1">
+          <div className="space-y-4  p-4 bg-gray-200 rounded-xl">
+            <h4 className="font-bold text-xl">Job Category: {category}</h4>
+            <p>
+              <span className="font-bold">Location:</span> {location}
+            </p>
+            <p>
+              <span className="font-bold">Salary Range:</span> {salary_range}
+            </p>
+            <p>
+              <span className="font-bold">Job Type:</span> {job_type}
+            </p>
+            <p>
+              <span className="font-bold">Job Nature:</span> {onsite_or_remote}
+            </p>
+            <p>
+              <span className="font-bold">No of Post:</span>{" "}
+              {job_post ? job_post : 3}
+            </p>
+            <button
+              onClick={handleAddToFav}
+              disabled={disable}
+              className="btn bg-[#033f63] w-full text-white"
+            >
+              Add to Favourite
+            </button>
+
+            {currentDate > deadlineDate ? (
+              <button disabled className="btn bg-red-500 text-white w-full">
+                Apply
+              </button>
+            ) : (
+              <button
+                disabled={applyDisable}
+                onClick={openModal}
+                className="btn bg-green-600 text-white w-full"
+              >
+                Apply
+              </button>
+            )}
           </div>
-          
         </div>
       </div>
     </div>

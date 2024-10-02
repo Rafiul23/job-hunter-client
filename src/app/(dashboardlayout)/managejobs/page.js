@@ -109,8 +109,8 @@ const ManageJobs = () => {
         axios.patch(`http://localhost:5000/jobs/hot/${_id}`).then((res) => {
           if (res.data.modifiedCount > 0) {
             loadTotalCount();
-            setCurrentPage(0);
-            setJobsPerPage(10);
+            // setCurrentPage(0);
+            // setJobsPerPage(10);
             loadJobs(currentPage, jobsPerPage);
             Swal.fire({
               title: "Upgraded!",
