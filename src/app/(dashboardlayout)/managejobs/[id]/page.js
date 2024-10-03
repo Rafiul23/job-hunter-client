@@ -56,17 +56,17 @@ const UpdateJobPage = ({ params }) => {
     e.preventDefault();
     const form = e.target;
 
-    const company_name = form.company_name.value;
-    const job_title = form.job_title.value;
-    const job_description = form.job_description.value;
-    const location = form.location.value;
-    const experience = form.experience.value;
-    const qualifications = form.qualifications.value;
-    const salary_range = form.salary_range.value;
-    const deadline = form.deadline.value;
+    const company_name = form.company_name.value.trim();
+    const job_title = form.job_title.value.trim();
+    const job_description = form.job_description.value.trim();
+    const location = form.location.value.trim();
+    const experience = form.experience.value.trim();
+    const qualifications = form.qualifications.value.trim();
+    const salary_range = form.salary_range.value.trim();
+    const deadline = form.deadline.value.trim();
     const onsite_or_remote = newNature;
     const job_type = newType;
-    const employer_email = form.employer_email.value;
+    const employer_email = form.employer_email.value.trim();
     const job_post = Number(form.job_post.value);
   
 

@@ -11,7 +11,7 @@ const Search = () => {
   const handleSearchJobs = async (e) => {
     e.preventDefault();
 
-    const searchContent = e.target.search.value;
+    const searchContent = e.target.search.value.trim();
 
     if (searchContent === "") {
       return;
