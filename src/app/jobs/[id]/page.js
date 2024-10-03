@@ -110,6 +110,7 @@ const JobDetailsPage = ({ params }) => {
 
     const appliedJobData = {
       userEmail,
+      employer_email,
       company_name,
       job_title,
       job_id: _id,

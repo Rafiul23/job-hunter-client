@@ -5,6 +5,7 @@ import axios from "axios";
 
 const useAdmin = () => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isRecruiter, setIsRecriter] = useState(false);
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(true);
  
@@ -19,6 +20,9 @@ const useAdmin = () => {
           if (res.data?.role === "admin") {
             setIsAdmin(true);
             setLoading(false);
+          } else if (res.data?.role === 'recruiter'){
+            setIsRecriter(true);
+            setLoading(false);
           } else {
             setIsAdmin(false);
             setLoading(false);
@@ -31,7 +35,7 @@ const useAdmin = () => {
     checkAdmin();
   }, [session, status]);
 
-  return {isAdmin, loading};
+  return {isAdmin, loading, isRecruiter};
 };
 
 export default useAdmin;
