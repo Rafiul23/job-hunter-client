@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
+import useUser from '@/hooks/useUser';
 
 const JobDetailsPage = ({ params }) => {
   const [jobDetails, setJobDetails] = useState([]);
@@ -14,6 +15,7 @@ const JobDetailsPage = ({ params }) => {
   const [applyDisable, setApplyDisable] = useState(false);
   const [resumeLink, setResumeLink] = useState("");
   const [modalOpen, setModalOpen] = useState(false); 
+  const user = useUser();
 
   axios.get(`http://localhost:5000/job/${params?.id}`)
     .then((res) => setJobDetails(res.data));
@@ -87,6 +89,15 @@ const JobDetailsPage = ({ params }) => {
   };
 
   const handleApplyJob = () => {
+    if(user?.role === 'admin'){
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong",
+        footer: "You won't be able to apply to any job!",
+      });
+    };
+
     if (userEmail === employer_email) {
       return Swal.fire({
         icon: "error",
@@ -94,7 +105,7 @@ const JobDetailsPage = ({ params }) => {
         text: "Something went wrong",
         footer: "You won't be able to apply to your own job!",
       });
-    }
+    };
 
 
     const appliedJobData = {
