@@ -12,7 +12,7 @@ const ManageJobs = () => {
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
-
+  const [message, setMessage] = useState("");
   useEffect(() => {
     loadTotalCount();
   }, []);
@@ -151,6 +151,29 @@ const ManageJobs = () => {
     });
   }
 
+  const handleSearchJobs = async (e) => {
+    e.preventDefault();
+
+    const searchContent = e.target.search.value.trim();
+
+    if (searchContent === "") {
+      return;
+    } else {
+      const res = await fetch(
+        `http://localhost:5000/search?title=${searchContent}`
+      );
+
+      const searchResult = await res.json();
+
+      // console.log(searchResult);
+      if (searchResult.length === 0) {
+        setMessage("No result found!");
+      } else {
+        setJobs(searchResult);
+      }
+    }
+  };
+
   if (loading) {
     return <progress className="progress progress-success w-56"></progress>;
   }
@@ -161,7 +184,27 @@ const ManageJobs = () => {
         Manage Jobs {count}
       </h2>
 
-      <div className="py-4">
+      <p className="py-2 text-center text-xl"> Search jobs by job title.</p>
+      <div className="py-4 text-center">
+        <form onSubmit={handleSearchJobs}>
+          <input
+            type="text"
+            placeholder="Type here"
+            name="search"
+            className="input input-bordered input-info w-full max-w-xs"
+          />
+          <button className="btn bg-[#033f63] text-white ml-2">Search</button>
+        </form>
+      </div>
+
+      {
+        jobs?.length === 0 ? (
+          <div className="text-red-500 text-center font-semibold py-4 text-xl">
+          {message}
+        </div>
+        ) : (
+      <>
+<div className="py-4">
         <div className="overflow-x-auto">
           <table className="table">
             {/* head */}
@@ -248,6 +291,11 @@ const ManageJobs = () => {
           <option value="20">20</option>
         </select>
       </div>
+      </>
+        )
+      }
+
+      
     </div>
   );
 };
