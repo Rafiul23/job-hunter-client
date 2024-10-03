@@ -1,20 +1,17 @@
 "use client";
 import Image from "next/image";
 import corporateImage from "../../../assets/globalisation-1014524_1280.png";
-import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import useUser from "@/hooks/useUser";
+import { useSession } from "next-auth/react";
 
 const JobDetailsPage = ({ params }) => {
   const [jobDetails, setJobDetails] = useState([]);
   const session = useSession();
   const userEmail = session ? session?.data?.user?.email : "";
-  const [disable, setDisable] = useState(false);
+  const [favDisable, setFavDisable] = useState(false);
   const [applyDisable, setApplyDisable] = useState(false);
-  const {user} = useUser();
-  const {name} = user;
   const [resumeLink, setResumeLink] = useState("");
   const [modalOpen, setModalOpen] = useState(false); 
 
@@ -46,16 +43,21 @@ const JobDetailsPage = ({ params }) => {
   const currentDate = new Date();
   const deadlineDate = new Date(deadline);
 
-  axios.get(`http://localhost:5000/fav-exist?email=${userEmail}&id=${params?.id}`)
-    .then((res) => {
-      if (res.data.message) {
-        setDisable(true);
-      } else {
-        setDisable(false);
-      }
-    });
+ 
+  useEffect(()=>{
+    axios.get(`http://localhost:5000/fav-exist?email=${userEmail}&id=${params?.id}`)
+  .then((res) => {
+    if (res.data.message) {
+      setFavDisable(true);
+    } else {
+      setFavDisable(false);
+    }
+  });
+  }, [session, userEmail, params])
 
-  axios.get(
+  
+   useEffect(()=>{
+    axios.get(
       `http://localhost:5000/applied-exist?email=${userEmail}&id=${params?.id}`
     )
     .then((res) => {
@@ -65,6 +67,8 @@ const JobDetailsPage = ({ params }) => {
         setApplyDisable(false);
       }
     });
+   }, [userEmail, params, session])
+  
 
   const openModal = ()=>{
     setModalOpen(true);
@@ -77,7 +81,8 @@ const JobDetailsPage = ({ params }) => {
 
   const handleSubmitResume = (e) => {
     e.preventDefault();
-    console.log(resumeLink);
+    // console.log(resumeLink);
+    handleApplyJob();
     closeModal();
   };
 
@@ -92,28 +97,29 @@ const JobDetailsPage = ({ params }) => {
     }
 
 
-    // const appliedJobData = {
-    //   userEmail,
-    //   company_name,
-    //   job_title,
-    //   job_id: _id,
-    //   apply_date: currentDate,
-    //   resume_link,
-    //   jobLink,
-    // };
+    const appliedJobData = {
+      userEmail,
+      company_name,
+      job_title,
+      job_id: _id,
+      apply_date: currentDate,
+      resumeLink,
+      jobLink,
+    };
 
-    // axios.post("http://localhost:5000/jobs-apply", appliedJobData)
-    //   .then((res) => {
-    //     if (res.data.insertedId) {
-    //       Swal.fire({
-    //         position: "center",
-    //         icon: "success",
-    //         title: "Added to Favourite list",
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    //     }
-    //   });
+    axios.post("http://localhost:5000/jobs-apply", appliedJobData)
+      .then((res) => {
+        if (res.data.insertedId) {
+          setApplyDisable(true);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Job Applied Successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   };
 
   const handleAddToFav = () => {
@@ -137,6 +143,7 @@ const JobDetailsPage = ({ params }) => {
 
     axios.post("http://localhost:5000/favourite", jobInfo).then((res) => {
       if (res.data.insertedId) {
+        setFavDisable(true);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -185,7 +192,7 @@ const JobDetailsPage = ({ params }) => {
                 <div className="bg-white rounded-lg shadow-lg p-8 relative w-96">
                   <h2 className="text-2xl mb-4">Submit Resume</h2>
                   <form onSubmit={handleSubmitResume}>
-                    <label className="block mb-2 text-lg font-medium">
+                    <label className="block mb-4 text-lg font-medium">
                       Resume Link:
                       <input
                         type="text"
@@ -235,7 +242,7 @@ const JobDetailsPage = ({ params }) => {
             </p>
             <button
               onClick={handleAddToFav}
-              disabled={disable}
+              disabled={favDisable}
               className="btn bg-[#033f63] w-full text-white"
             >
               Add to Favourite

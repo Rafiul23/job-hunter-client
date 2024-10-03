@@ -33,7 +33,7 @@ const FavouritePage = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "Yes, remove it!"
       }).then((result) => {
         if (result.isConfirmed) {
             axios.delete(`http://localhost:5000/favourite/${_id}`)
