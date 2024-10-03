@@ -15,7 +15,7 @@ const JobDetailsPage = ({ params }) => {
   const [applyDisable, setApplyDisable] = useState(false);
   const [resumeLink, setResumeLink] = useState("");
   const [modalOpen, setModalOpen] = useState(false); 
-  const user = useUser();
+  const {user} = useUser();
 
   axios.get(`http://localhost:5000/job/${params?.id}`)
     .then((res) => setJobDetails(res.data));
