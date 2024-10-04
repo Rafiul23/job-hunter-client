@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import useUser from "@/hooks/useUser";
 import axios from "axios";
+import Link from "next/link";
 
 const MyJobsPage = () => {
   const [myJobs, setMyJobs] = useState([]);
@@ -46,7 +47,13 @@ const MyJobsPage = () => {
                     <td className="underline text-blue-500 font-semibold">
                       <a href={`http://localhost:3000/jobs/${job?._id}`}>Link</a>
                     </td>
-                    
+                    <td>
+                    <Link href={`/resumes/${job?._id}`}>
+                        <button className='btn btn-md bg-[#033f63] text-white'>
+                        View Applications    
+                        </button>
+                        </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>
