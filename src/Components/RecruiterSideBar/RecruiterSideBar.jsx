@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 const RecruiterSideBar = () => {
@@ -10,18 +9,12 @@ const RecruiterSideBar = () => {
           <button>Recruiter Profile</button>
         </Link>
         <hr />
-        <Link href='/addjob'>
-          <button>Add Job</button>
+        <Link href="/myjobs">
+          <button>My Jobs</button>
         </Link>
         <hr />
-        <Link href="/managemyjobs">
-          <button>Manage My Jobs</button>
-        </Link>
-        <hr />
-        <Link href="/managemyjobs">
-          <button>Received Applications</button>
-        </Link>
-        <hr />
+        
+        
       </div>
     </div>
   );
