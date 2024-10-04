@@ -34,7 +34,7 @@ const MyJobsPage = () => {
                   <th>Job Title</th>
                   <th>Deadline</th>
                   <th>Job Link</th>
-                  <th>Viwe Applications</th>
+                  <th>View Applications</th>
                 </tr>
               </thead>
               <tbody>
