@@ -1,5 +1,4 @@
 'use client';
-import JobCard from "../JobCard/JobCard";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import {useState, useEffect} from 'react';
