@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
 import useUser from '@/hooks/useUser';
 
 
@@ -67,7 +66,13 @@ const Navbar = () => {
         <ul className="flex gap-6 px-1">{navlinks}</ul>
       </div>
       <div className="navbar-end">
-        <div className="mx-4 ">
+        
+        {user.length === 0 ? (
+          <Link href="/login" className="btn">
+            Login
+          </Link>
+        ) : (
+          <div className="mx-4 ">
           
           {
             loading ? <progress className="progress progress-success w-56"></progress> :
@@ -75,14 +80,6 @@ const Navbar = () => {
           }
          
         </div>
-        {user.length === 0 ? (
-          <Link href="/login" className="btn">
-            Login
-          </Link>
-        ) : (
-          <button onClick={() => signOut()} className="btn">
-            Log Out
-          </button>
         )}
       </div>
     </div>

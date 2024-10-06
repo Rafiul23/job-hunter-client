@@ -1,4 +1,4 @@
-
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 const AdminSideBar = () => {
@@ -22,6 +22,10 @@ const AdminSideBar = () => {
           <button>Manage Jobs</button>
         </Link>
         <hr />
+        <button onClick={() => signOut()} className="btn">
+            Log Out
+          </button>
+        <hr/>
       </div>
     </div>
   );

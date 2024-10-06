@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 const RecruiterSideBar = () => {
   return (
@@ -13,7 +14,10 @@ const RecruiterSideBar = () => {
           <button>My Jobs</button>
         </Link>
         <hr />
-        
+        <button onClick={() => signOut()} className="btn">
+            Log Out
+          </button>
+        <hr/>
         
       </div>
     </div>
