@@ -86,7 +86,7 @@ if(loading){
 }
 
 if(!isAdmin){
-  return signOut()
+  return signOut();
 }
 
   return (

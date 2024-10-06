@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import useAdmin from "@/hooks/useAdmin";
+import { signOut } from "next-auth/react";
 
 const UpdateJobPage = ({ params }) => {
   const [job, setJob] = useState([]);
@@ -9,6 +11,8 @@ const UpdateJobPage = ({ params }) => {
   const [newCategory, setNewCategory] = useState('Accounting and Finance');
   const [newNature, setNewNature] = useState('Onsite');
   const [newType, setNewType] = useState('Full Time');
+  const { isAdmin, loading } = useAdmin();
+
 
  useEffect(()=>{
     axios.get(`http://localhost:5000/job/${params?.id}`)
@@ -105,6 +109,13 @@ axios.put(`http://localhost:5000/jobs/${_id}`, updatedJobData)
 })
 
 };
+
+if(loading) {
+  return <progress className="progress progress-success w-56"></progress>;
+} 
+if(!isAdmin) {
+  return signOut();
+}
 
   return (
     <div className="py-8">

@@ -4,9 +4,12 @@ import axios from "axios";
 import Image from "next/image";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Swal from 'sweetalert2';
+import useAdmin from "@/hooks/useAdmin";
+import { signOut } from "next-auth/react";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
+  const { isAdmin, loading } = useAdmin();
 
   useEffect(() => {
     loadUsers();
@@ -92,6 +95,14 @@ const ManageUsers = () => {
             })
         }
       });
+  }
+
+  if(loading){
+    return <progress className="progress progress-success w-56"></progress>;
+  }
+  
+  if(!isAdmin){
+    return signOut();
   }
 
   return (
