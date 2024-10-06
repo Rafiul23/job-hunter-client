@@ -5,6 +5,8 @@ import { MdOutlineSkipPrevious, MdOutlineSkipNext } from "react-icons/md";
 import { FaRegTrashCan, FaArrowUpLong, FaArrowDownLong  } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import useAdmin from "@/hooks/useAdmin";
+import { signOut } from "next-auth/react";
 
 const ManageJobs = () => {
   const [totalCount, setTotalCount] = useState([]);
@@ -13,7 +15,7 @@ const ManageJobs = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
-  
+  const { isAdmin, loading:isLoading } = useAdmin();
 
   useEffect(() => {
     loadTotalCount();
@@ -176,8 +178,10 @@ const ManageJobs = () => {
     }
   };
 
-  if (loading) {
+  if (loading || isLoading) {
     return <progress className="progress progress-success w-56"></progress>;
+  } else if (!isAdmin){
+    return signOut();
   }
 
   return (
