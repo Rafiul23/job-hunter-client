@@ -1,6 +1,7 @@
 import Image from "next/image";
 import BannerImage from "../../assets/corporate.jpg";
 import Banner_2 from "../../assets/banner.jpg";
+import Link from "next/link";
 
 const Banner = () => {
   return (
@@ -30,7 +31,9 @@ const Banner = () => {
           <p className="py-6 text-2xl text-white">
             Your dream jobs are waiting for you...
           </p>
+          <Link href='/signup'>
           <button className="btn bg-[#033F63] text-white">Get Started</button>
+          </Link>
         </div>
       </div>
     </div>
