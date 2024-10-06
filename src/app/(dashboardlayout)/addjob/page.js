@@ -2,6 +2,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
+import useAdmin from "@/hooks/useAdmin";
+import { signOut } from "next-auth/react";
 
 
 const AddJob = () => {
@@ -9,6 +11,8 @@ const AddJob = () => {
   const [category, setCategory] = useState('Accounting and Finance');
   const [nature, setNature] = useState('Onsite');
   const [type, setType] = useState('Full Time');
+
+  const { isAdmin, loading } = useAdmin();
 
   const handleSetCategory = e =>{
     setCategory(e.target.value);
@@ -75,6 +79,14 @@ const handleAddJob = e =>{
         }
     })
 
+}
+
+if(loading){
+  return <progress className="progress progress-success w-56"></progress>;
+}
+
+if(!isAdmin){
+  return signOut()
 }
 
   return (

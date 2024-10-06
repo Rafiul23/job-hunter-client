@@ -19,7 +19,7 @@ const UserSideBar = () => {
           <button>Edit Profile</button>
         </Link>
         <hr />
-        <button onClick={() => signOut()} className="btn">
+        <button onClick={() => signOut()}>
             Log Out
         </button>
         <hr/>

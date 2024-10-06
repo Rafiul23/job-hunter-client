@@ -22,7 +22,7 @@ const AdminSideBar = () => {
           <button>Manage Jobs</button>
         </Link>
         <hr />
-        <button onClick={() => signOut()} className="btn">
+        <button onClick={() => signOut()}>
             Log Out
           </button>
         <hr/>

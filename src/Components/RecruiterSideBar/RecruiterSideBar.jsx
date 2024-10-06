@@ -14,7 +14,7 @@ const RecruiterSideBar = () => {
           <button>My Jobs</button>
         </Link>
         <hr />
-        <button onClick={() => signOut()} className="btn">
+        <button onClick={() => signOut()}>
             Log Out
           </button>
         <hr/>

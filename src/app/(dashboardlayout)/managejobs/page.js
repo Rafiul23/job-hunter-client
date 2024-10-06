@@ -13,6 +13,8 @@ const ManageJobs = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  
+
   useEffect(() => {
     loadTotalCount();
   }, []);
