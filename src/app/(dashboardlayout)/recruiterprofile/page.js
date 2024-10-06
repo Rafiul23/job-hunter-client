@@ -1,14 +1,21 @@
 "use client";
 import useUser from "@/hooks/useUser";
 import Image from "next/image";
+import useAdmin from "@/hooks/useAdmin";
+import { signOut } from "next-auth/react";
+
 
 const RecruiterProfile = () => {
   const { user, loading } = useUser();
   const { name, email, image, role } = user || {};
+  const { loading:isLoading, isRecruiter } = useAdmin();
 
-  if (loading) {
+
+  if (loading || isLoading) {
     return <progress className="progress progress-success w-56"></progress>;
-  } else {
+  } else if(!isRecruiter){
+    return signOut();
+  } else{
     return (
       <div className="py-10 bg-[#387780] px-5">
         <div className="flex justify-between">

@@ -3,20 +3,25 @@ import { useState, useEffect } from "react";
 import useUser from "@/hooks/useUser";
 import axios from "axios";
 import Link from "next/link";
+import useAdmin from "@/hooks/useAdmin";
+import { signOut } from "next-auth/react";
 
 const MyJobsPage = () => {
   const [myJobs, setMyJobs] = useState([]);
   const { user, loading } = useUser();
   const { email } = user;
+  const { loading:isLoading, isRecruiter } = useAdmin();
 
   useEffect(() => {
     axios.get(`http://localhost:5000/my-jobs?email=${email}`)
       .then((res) => setMyJobs(res.data));
   }, [user, email]);
 
-  if (loading) {
+  if (loading || isLoading) {
     return <progress className="progress progress-success w-56"></progress>;
-  } else {
+  } else if(!isRecruiter){
+    return signOut();
+  } else{
     return (
       <div className="py-4">
         <h1 className="text-3xl text-[#033f63] font-bold text-center my-4">
