@@ -98,6 +98,15 @@ const JobDetailsPage = ({ params }) => {
       });
     };
 
+    if(user?.status === 'blocked'){
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong",
+        footer: "You have been blocked and won't be able to apply to any job!",
+      });
+    };
+
     if (userEmail === employer_email) {
       return Swal.fire({
         icon: "error",
@@ -144,6 +153,15 @@ const JobDetailsPage = ({ params }) => {
         footer: "You won't be able to add your job to your favourite list",
       });
     }
+
+    if(user?.status === 'blocked'){
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong",
+        footer: "You have been blocked and won't be able to add any job to favourite list!",
+      });
+    };
 
     const jobInfo = {
       company_name,

@@ -23,10 +23,11 @@ const SignUp = () => {
         name,
         email,
         password,
-        role: 'user'
+        role: 'user',
+        status: 'active'
       }
 
-      console.log(userInfo);
+      // console.log(userInfo);
        
       axios.post('http://localhost:5000/user', userInfo)
       .then(res=> {
