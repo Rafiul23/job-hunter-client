@@ -100,12 +100,12 @@ const ManageUsers = () => {
   const handleMakeAdmin = (_id)=>{
     Swal.fire({
         title: "Are you sure?",
-        text: "You can not revert this user!",
+        text: "You can revert this user later!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete this user!"
+        confirmButtonText: "Yes, Make this user an Admin!"
       }).then((result) => {
         if (result.isConfirmed) {
             axios.patch(`http://localhost:5000/users/admin/${_id}`)
@@ -113,8 +113,60 @@ const ManageUsers = () => {
                 if(res.data.modifiedCount > 0){
                     loadUsers();
                     Swal.fire({
-                        title: "Deleted!",
-                        text: "You have deleted this user.",
+                        title: "Success!",
+                        text: "You have made this user an Admin.",
+                        icon: "success"
+                      });
+                }
+            })
+        }
+      });
+  }
+
+  const handleMakeRecruiter = (_id)=>{
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You can revert this user later!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Make this user a Recruiter!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            axios.patch(`http://localhost:5000/users/recruiter/${_id}`)
+            .then(res =>{
+                if(res.data.modifiedCount > 0){
+                    loadUsers();
+                    Swal.fire({
+                        title: "Success!",
+                        text: "You have made this user a recruiter.",
+                        icon: "success"
+                      });
+                }
+            })
+        }
+      });
+  }
+
+  const handleMakeUser = (_id)=>{
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You can revert this user later!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Make this person a user!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            axios.patch(`http://localhost:5000/users/user/${_id}`)
+            .then(res =>{
+                if(res.data.modifiedCount > 0){
+                    loadUsers();
+                    Swal.fire({
+                        title: "Success!",
+                        text: "You have made this person a user.",
                         icon: "success"
                       });
                 }
@@ -187,12 +239,12 @@ const ManageUsers = () => {
                 </td>
                 <td className='text-[#033f63] text-center'>
                     {
-                      user?.role === 'recruiter' ? <p>Recruiter</p> : <button className='text-xl'><FaUserTie /></button>
+                      user?.role === 'recruiter' ? <p>Recruiter</p> : <button className='text-xl' onClick={()=> handleMakeRecruiter(user?._id)}><FaUserTie /></button>
                     }
                 </td>
                 <td className='text-center'>
                     {
-                      user?.role !== 'user' ? <button className='text-xl'><FaUser /></button> : <p>User</p> 
+                      user?.role !== 'user' ? <button className='text-xl' onClick={()=> handleMakeUser(user?._id)}><FaUser /></button> : <p>User</p> 
                     }    
                 </td>
                 <td>
