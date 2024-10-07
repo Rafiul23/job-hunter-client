@@ -7,10 +7,12 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from "axios";
 import Swal from 'sweetalert2';
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
 
     const [hidden, setHidden] = useState(true);
+    const router = useRouter();
 
     const handleSignUp = async (e)=>{
       e.preventDefault();
@@ -32,6 +34,7 @@ const SignUp = () => {
       axios.post('http://localhost:5000/user', userInfo)
       .then(res=> {
         if(res.data.insertedId){
+          router.push('/login');
           e.target.reset();
           Swal.fire({
             position: "top-end",

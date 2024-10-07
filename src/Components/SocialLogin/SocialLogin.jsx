@@ -1,15 +1,20 @@
 import { FcGoogle } from "react-icons/fc";
 import {signIn, useSession} from 'next-auth/react';
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const SocialLogin = () => {
-    const router = useRouter();
     const session = useSession();
+    const searchParams = useSearchParams();
+    const path = searchParams.get('redirect');
 
     const handleSocialLogIn = (provider)=>{
-        const res = signIn(provider);
+        const res = signIn(provider, {
+            redirect: true,
+            callbackUrl: path ? path : '/'
+        });
+
     }
 
     if(session.status === 'authenticated'){
@@ -20,7 +25,6 @@ const SocialLogin = () => {
             showConfirmButton: false,
             timer: 1500
           });
-          router.push('/');
     
 
     const userEmail = session ? session?.data?.user?.email : "";

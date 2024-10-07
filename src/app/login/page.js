@@ -5,13 +5,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
 
 const Login = () => {
   const [hidden, setHidden] = useState(true);
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const path = searchParams.get('redirect');
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,28 +20,28 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    console.log(email, password);
+    // console.log(email, password);
 
     const res = await signIn("credentials", {
       email,
       password,
-      redirect: false,
+      redirect: true,
+      callbackUrl: path ? path : '/'
     });
 
-    // const result = await res.json();
+    const result = await res.json();
 
     // console.log(result);
 
-    // if (res.status === 200) {
-    //   router.push("/");
-    //   Swal.fire({
-    //     position: "center",
-    //     icon: "success",
-    //     title: "Login successful",
-    //     showConfirmButton: false,
-    //     timer: 1500,
-    //   });
-    // }
+    if (res.status === 200) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login successful",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   return (
