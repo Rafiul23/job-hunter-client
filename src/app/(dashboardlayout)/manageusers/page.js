@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { FaRegTrashCan, FaUser, FaUserTie   } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import useAdmin from "@/hooks/useAdmin";
 import { signOut } from "next-auth/react";
@@ -97,6 +97,34 @@ const ManageUsers = () => {
       });
   }
 
+  const handleMakeAdmin = (_id)=>{
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You can not revert this user!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete this user!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            axios.patch(`http://localhost:5000/users/admin/${_id}`)
+            .then(res =>{
+                if(res.data.modifiedCount > 0){
+                    loadUsers();
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "You have deleted this user.",
+                        icon: "success"
+                      });
+                }
+            })
+        }
+      });
+  }
+
+
+
   if(loading){
     return <progress className="progress progress-success w-56"></progress>;
   }
@@ -118,6 +146,9 @@ const ManageUsers = () => {
               
               <th>Name</th>
               <th>Email</th>
+              <th>Make <br/> Admin</th>
+              <th>Make <br/> Recruiter</th>
+              <th>Make <br/> User</th>
               <th>Status</th>
               <th>Action</th>
               <th>Delete</th>
@@ -130,12 +161,14 @@ const ManageUsers = () => {
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="mask mask-squircle h-12 w-12">
-                        <Image
+                        {
+                          user?.image && <Image
                           src={user?.image}
                           width={100}
                           height={100}
                           alt="user"
                         />
+                        }
                       </div>
                     </div>
                     <div>
@@ -147,6 +180,21 @@ const ManageUsers = () => {
                   </div>
                 </td>
                 <td>{user?.email}</td>
+                <td className='text-green-600 text-center'>
+                    {
+                      user?.role === 'admin' ? <p>Admin</p> : <button onClick={()=>handleMakeAdmin(user?._id)} className='text-xl'><FaUser /></button>
+                    }    
+                </td>
+                <td className='text-[#033f63] text-center'>
+                    {
+                      user?.role === 'recruiter' ? <p>Recruiter</p> : <button className='text-xl'><FaUserTie /></button>
+                    }
+                </td>
+                <td className='text-center'>
+                    {
+                      user?.role !== 'user' ? <button className='text-xl'><FaUser /></button> : <p>User</p> 
+                    }    
+                </td>
                 <td>
                     {user?.status === 'active' ? <span className='font-bold text-green-600'>{user?.status}</span> :
                     <span className='font-bold text-red-500'>{user?.status}</span>
