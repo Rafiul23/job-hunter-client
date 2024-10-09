@@ -5,7 +5,7 @@ import JobCard from "@/Components/JobCard/JobCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Jobs = ({ params, searchParams }) => {
+const JobsByCategory = ({ params, searchParams }) => {
   const [jobsByCategory, setJobsByCategory] = useState([]);
   const [displayJobs, setDisplayJobs] = useState([]);
   const [active, setActive] = useState(0);
@@ -13,7 +13,7 @@ const Jobs = ({ params, searchParams }) => {
   useEffect(() => {
     axios.get(`http://localhost:5000/jobs?category=${searchParams?.category}`)
     .then((res) => {
-      setJobsByCategory(res.data)
+      setJobsByCategory(res.data);
       setDisplayJobs(res.data);
     });
   }, [searchParams]);
@@ -102,4 +102,4 @@ const Jobs = ({ params, searchParams }) => {
   );
 };
 
-export default Jobs;
+export default JobsByCategory;
