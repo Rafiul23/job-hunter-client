@@ -29,10 +29,7 @@ const UserSideBar = () => {
           <button>Applied Jobs</button>
         </Link>
         <hr />
-        <Link href={'/update/:id'}>
-          <button>Edit Profile</button>
-        </Link>
-        <hr />
+        
         <button onClick={handleSignOut}>
             Log Out
         </button>
