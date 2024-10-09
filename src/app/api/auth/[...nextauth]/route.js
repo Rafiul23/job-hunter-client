@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 
+
 const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   session: {
@@ -32,6 +33,7 @@ const handler = NextAuth({
           return null;
         }
         return currentUser;
+        
       }
       
     }),

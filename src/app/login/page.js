@@ -6,13 +6,17 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
-import Swal from "sweetalert2";
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
+import { useSession } from "next-auth/react";
+import Swal from "sweetalert2";
+
 
 const Login = () => {
   const [hidden, setHidden] = useState(true);
   const searchParams = useSearchParams();
   const path = searchParams.get('redirect');
+  const session = useSession();
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -29,11 +33,7 @@ const Login = () => {
       callbackUrl: path ? path : '/'
     });
 
-    const result = await res.json();
-
-    // console.log(result);
-
-    if (res.status === 200) {
+    if (session) {
       Swal.fire({
         position: "center",
         icon: "success",
