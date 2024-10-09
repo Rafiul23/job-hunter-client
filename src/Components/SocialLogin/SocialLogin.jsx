@@ -19,9 +19,9 @@ const SocialLogin = () => {
 
     if(session.status === 'authenticated'){
         Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "success",
-            title: "User login successful",
+            title: "Login successful",
             showConfirmButton: false,
             timer: 1500
           });

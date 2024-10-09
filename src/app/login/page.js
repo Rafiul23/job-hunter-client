@@ -33,7 +33,7 @@ const Login = () => {
       callbackUrl: path ? path : '/'
     });
 
-    if (session) {
+    if (session.status === 'authenticated') {
       Swal.fire({
         position: "center",
         icon: "success",
@@ -42,6 +42,8 @@ const Login = () => {
         timer: 1500,
       });
     }
+
+    
   };
 
   return (
