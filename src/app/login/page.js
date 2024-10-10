@@ -7,15 +7,13 @@ import { signIn } from "next-auth/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
-import { useSession } from "next-auth/react";
-import Swal from "sweetalert2";
-
+import axios from 'axios';
 
 const Login = () => {
   const [hidden, setHidden] = useState(true);
   const searchParams = useSearchParams();
   const path = searchParams.get('redirect');
-  const session = useSession();
+  
   
 
   const handleLogin = async (e) => {
@@ -32,17 +30,16 @@ const Login = () => {
       redirect: true,
       callbackUrl: path ? path : '/'
     });
-
-    if (session.status === 'authenticated') {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Login successful",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-
+  
+    const userInfo = {email};
+     axios.post('http://localhost:5000/jwt', userInfo, {
+      withCredentials: true
+     }).then(res => {
+      console.log(res.data)
+     }).catch(err=>{
+      console.log(err)
+     }) 
+    
     
   };
 

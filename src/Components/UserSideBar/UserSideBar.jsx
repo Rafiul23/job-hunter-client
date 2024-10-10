@@ -7,7 +7,9 @@ const UserSideBar = () => {
   const router = useRouter();
 
   const handleSignOut = ()=>{
-    signOut();
+    signOut()
+    .then(res =>res.json())
+    .then(data => console.log(data));
     router.push('/');
     Swal.fire({
       position: "top-end",

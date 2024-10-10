@@ -1,13 +1,27 @@
 "use client";
 import Link from "next/link";
 import useUser from '@/hooks/useUser';
+import { useSession } from "next-auth/react";
+import Swal from "sweetalert2";
 
 
 const Navbar = () => {
+  const { data: session, status } = useSession();  // console.log(session);
   const {user, loading} = useUser();
   //  console.log(user);
    const { name} = user;
   //  console.log(user);
+
+  if (status === 'authenticated') {
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Login successful",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+
 
   const navlinks = (
     <>
@@ -75,8 +89,8 @@ const Navbar = () => {
           <div className="mx-4 ">
           
           {
-            loading ? <progress className="progress progress-success w-56"></progress> :
-            <p>{name}</p>
+            status === 'loading' ? <progress className="progress progress-success w-56"></progress>: !session ? <p>No session found</p> : <p>{name}</p>
+
           }
          
         </div>
