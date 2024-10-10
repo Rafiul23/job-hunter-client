@@ -34,14 +34,15 @@ const SocialLogin = () => {
     const userInfo = {
         email: userEmail,
         name: userName,
-        image: userImage
+        image: userImage,
+        role: 'user'
     }
 
     axios.post(`http://localhost:5000/user?email=${userEmail}`, userInfo)
     .then(res =>{
         if(res.data.insertedId){
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
                 title: "New user created",
                 showConfirmButton: false,
@@ -49,7 +50,7 @@ const SocialLogin = () => {
               });
         } else {
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
                 title: "User already exists!",
                 showConfirmButton: false,
@@ -58,6 +59,15 @@ const SocialLogin = () => {
         }
     })
 
+    const user_Info = {email: userEmail};
+     axios.post('http://localhost:5000/jwt', user_Info, {
+      withCredentials: true
+     }).then(res => {
+      console.log(res.data)
+     }).catch(err=>{
+      console.log(err)
+     }) 
+     
     };
 
     
