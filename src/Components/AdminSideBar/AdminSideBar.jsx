@@ -1,14 +1,27 @@
+'use client';
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Swal from 'sweetalert2';
+import axios from 'axios';
+import useUser from '@/hooks/useUser';
 
 
 const AdminSideBar = () => {
   const router = useRouter();
-
+  const {user} = useUser();
+  const {email} = user;
   const handleSignOut = ()=>{
-    signOut();
+    axios.post('http://localhost:5000/logout', email, {
+      withCredentials: true
+    })
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err))
+    signOut()
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+
+
     router.push('/');
     Swal.fire({
       position: "top-end",
