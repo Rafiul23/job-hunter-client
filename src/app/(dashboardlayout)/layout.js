@@ -13,11 +13,15 @@ const Layout = ({ children }) => {
   } else {
     return (
       <div className="grid md:grid-cols-4 grid-cols-1 gap-2 my-1">
-        {isAdmin ? <AdminSideBar></AdminSideBar> : isRecruiter ? <RecruiterSideBar /> : <UserSideBar></UserSideBar>}
+        {isAdmin ? (
+          <AdminSideBar></AdminSideBar>
+        ) : isRecruiter ? (
+          <RecruiterSideBar />
+        ) : (
+          <UserSideBar></UserSideBar>
+        )}
         <div className="col-span-3">
-          <AuthProvider>
-          {children}
-          </AuthProvider>
+          <AuthProvider>{children}</AuthProvider>
         </div>
       </div>
     );
