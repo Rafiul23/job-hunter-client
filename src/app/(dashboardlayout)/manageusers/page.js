@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { FaRegTrashCan, FaUser, FaUserTie   } from "react-icons/fa6";
@@ -14,13 +14,14 @@ const ManageUsers = () => {
   const { isAdmin, loading } = useAdmin();
   const axiosSecure = useAxiosSecure();
 
+  const loadUsers = useCallback(() =>{
+    axiosSecure.get("/users")
+    .then(res => setUsers(res.data))
+  }, [axiosSecure]);
+
   useEffect(() => {
     loadUsers();
-  }, []);
-
-  const loadUsers = () =>{
-    axiosSecure.get("/users").then(res => setUsers(res.data))
-  };
+  }, [loadUsers]);
 
   const handleActiveUser = (_id)=>{
     Swal.fire({
@@ -33,7 +34,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, unblock this user!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.patch(`http://localhost:5000/user/active/${_id}`)
+          axiosSecure.patch(`http://localhost:5000/user/active/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
@@ -59,7 +60,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, block this user!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.patch(`http://localhost:5000/user/block/${_id}`)
+          axiosSecure.patch(`http://localhost:5000/user/block/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
@@ -85,7 +86,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, delete this user!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`http://localhost:5000/user/${_id}`)
+          axiosSecure.delete(`http://localhost:5000/user/${_id}`)
             .then(res =>{
                 if(res.data.deletedCount > 0){
                     loadUsers();
@@ -111,7 +112,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, Make this user an Admin!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.patch(`http://localhost:5000/users/admin/${_id}`)
+          axiosSecure.patch(`http://localhost:5000/users/admin/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
@@ -137,7 +138,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, Make this user a Recruiter!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.patch(`http://localhost:5000/users/recruiter/${_id}`)
+          axiosSecure.patch(`http://localhost:5000/users/recruiter/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
@@ -163,7 +164,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, Make this person a user!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.patch(`http://localhost:5000/users/user/${_id}`)
+          axiosSecure.patch(`http://localhost:5000/users/user/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
