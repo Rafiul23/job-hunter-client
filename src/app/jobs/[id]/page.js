@@ -2,7 +2,6 @@
 import Image from "next/image";
 import corporateImage from "../../../assets/globalisation-1014524_1280.png";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
 import useUser from "@/hooks/useUser";

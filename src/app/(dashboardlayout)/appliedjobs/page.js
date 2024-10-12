@@ -1,17 +1,20 @@
 'use client';
 import {useState, useEffect} from 'react';
 import { useSession } from "next-auth/react";
-import axios from "axios";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 
 
 const AppliedJobs = () => {
     const [appliedJobs, setAppliedJobs] = useState([]);
     const session = useSession();
     const userEmail = session ? session?.data?.user?.email : "";
+    const axiosSecure = useAxiosSecure();
 
     useEffect(()=>{
-        axios.get(`http://localhost:5000/applied-jobs?email=${userEmail}`)
+      if(userEmail){
+        axiosSecure.get(`http://localhost:5000/applied-jobs?email=${userEmail}`)
         .then(res =>setAppliedJobs(res.data))
+      }
     }, [session, userEmail])
 
     return (
