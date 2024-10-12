@@ -3,20 +3,21 @@ import Image from "next/image";
 import corporateImage from "../../assets/globalisation-1014524_1280.png";
 import JobCard from "@/Components/JobCard/JobCard";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
 
 const JobsByCategory = ({ params, searchParams }) => {
   const [jobsByCategory, setJobsByCategory] = useState([]);
   const [displayJobs, setDisplayJobs] = useState([]);
   const [active, setActive] = useState(0);
+  const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/jobs?category=${searchParams?.category}`)
+    axiosPublic.get(`/jobs?category=${searchParams?.category}`)
     .then((res) => {
       setJobsByCategory(res.data);
       setDisplayJobs(res.data);
     });
-  }, [searchParams]);
+  }, [searchParams, axiosPublic]);
 
 
 

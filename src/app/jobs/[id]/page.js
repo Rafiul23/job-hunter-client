@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
-import useUser from '@/hooks/useUser';
+import useUser from "@/hooks/useUser";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 
 const JobDetailsPage = ({ params }) => {
   const [jobDetails, setJobDetails] = useState([]);
@@ -14,11 +16,16 @@ const JobDetailsPage = ({ params }) => {
   const [favDisable, setFavDisable] = useState(false);
   const [applyDisable, setApplyDisable] = useState(false);
   const [resumeLink, setResumeLink] = useState("");
-  const [modalOpen, setModalOpen] = useState(false); 
-  const {user} = useUser();
-  const {name} = user;
-  axios.get(`http://localhost:5000/job/${params?.id}`)
-    .then((res) => setJobDetails(res.data));
+  const [modalOpen, setModalOpen] = useState(false);
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  const { user } = useUser();
+  const { name } = user;
+
+  useEffect(() => {
+    axiosPublic.get(`/job/${params?.id}`)
+      .then((res) => setJobDetails(res.data));
+  }, [axiosPublic, params]);
 
   const jobLink = `http://localhost:3000/jobs/${params?.id}`;
 
@@ -45,23 +52,22 @@ const JobDetailsPage = ({ params }) => {
   const currentDate = new Date();
   const deadlineDate = new Date(deadline);
 
- 
-  useEffect(()=>{
-    axios.get(`http://localhost:5000/fav-exist?email=${userEmail}&id=${params?.id}`)
-  .then((res) => {
-    if (res.data.message) {
-      setFavDisable(true);
-    } else {
-      setFavDisable(false);
-    }
-  });
-  }, [session, userEmail, params])
+  useEffect(() => {
+   if(userEmail){
+    axiosSecure.get(`/fav-exist?email=${userEmail}&id=${params?.id}`)
+    .then((res) => {
+      if (res.data.message) {
+        setFavDisable(true);
+      } else {
+        setFavDisable(false);
+      }
+    });
+   }
+  }, [session, userEmail, params, axiosSecure]);
 
-  
-   useEffect(()=>{
-    axios.get(
-      `http://localhost:5000/applied-exist?email=${userEmail}&id=${params?.id}`
-    )
+  useEffect(() => {
+   if(userEmail){
+    axiosSecure.get(`/applied-exist?email=${userEmail}&id=${params?.id}`)
     .then((res) => {
       if (res.data.message) {
         setApplyDisable(true);
@@ -69,17 +75,16 @@ const JobDetailsPage = ({ params }) => {
         setApplyDisable(false);
       }
     });
-   }, [userEmail, params, session])
-  
+   }
+  }, [userEmail, params, session, axiosSecure]);
 
-  const openModal = ()=>{
+  const openModal = () => {
     setModalOpen(true);
-  }  
+  };
 
-  const closeModal = ()=>{
+  const closeModal = () => {
     setModalOpen(false);
-  }  
-
+  };
 
   const handleSubmitResume = (e) => {
     e.preventDefault();
@@ -89,23 +94,23 @@ const JobDetailsPage = ({ params }) => {
   };
 
   const handleApplyJob = () => {
-    if(user?.role === 'admin'){
+    if (user?.role === "admin") {
       return Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Something went wrong",
         footer: "You won't be able to apply to any job!",
       });
-    };
+    }
 
-    if(user?.status === 'blocked'){
+    if (user?.status === "blocked") {
       return Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Something went wrong",
         footer: "You have been blocked and won't be able to apply to any job!",
       });
-    };
+    }
 
     if (userEmail === employer_email) {
       return Swal.fire({
@@ -114,8 +119,7 @@ const JobDetailsPage = ({ params }) => {
         text: "Something went wrong",
         footer: "You won't be able to apply to your own job!",
       });
-    };
-
+    }
 
     const appliedJobData = {
       userEmail,
@@ -129,19 +133,18 @@ const JobDetailsPage = ({ params }) => {
       jobLink,
     };
 
-    axios.post("http://localhost:5000/jobs-apply", appliedJobData)
-      .then((res) => {
-        if (res.data.insertedId) {
-          setApplyDisable(true);
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Job Applied Successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      });
+    axiosPublic.post("/jobs-apply", appliedJobData).then((res) => {
+      if (res.data.insertedId) {
+        setApplyDisable(true);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Job Applied Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
 
   const handleAddToFav = () => {
@@ -154,14 +157,15 @@ const JobDetailsPage = ({ params }) => {
       });
     }
 
-    if(user?.status === 'blocked'){
+    if (user?.status === "blocked") {
       return Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Something went wrong",
-        footer: "You have been blocked and won't be able to add any job to favourite list!",
+        footer:
+          "You have been blocked and won't be able to add any job to favourite list!",
       });
-    };
+    }
 
     const jobInfo = {
       company_name,
@@ -172,7 +176,7 @@ const JobDetailsPage = ({ params }) => {
       deadline,
     };
 
-    axios.post("http://localhost:5000/favourite", jobInfo).then((res) => {
+    axiosPublic.post("http://localhost:5000/favourite", jobInfo).then((res) => {
       if (res.data.insertedId) {
         setFavDisable(true);
         Swal.fire({
@@ -217,39 +221,37 @@ const JobDetailsPage = ({ params }) => {
             Send your resume at{" "}
             <span className="font-bold">{employer_email}</span>
           </p>
-          {
-            modalOpen && (
-              <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
-                <div className="bg-white rounded-lg shadow-lg p-8 relative w-96">
-                  <h2 className="text-2xl mb-4">Submit Resume</h2>
-                  <form onSubmit={handleSubmitResume}>
-                    <label className="block mb-4 text-lg font-medium">
-                      Resume Link:
-                      <input
-                        type="text"
-                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded"
-                        value={resumeLink}
-                        onChange={(e) => setResumeLink(e.target.value)}
-                        required
-                      />
-                    </label>
-                    <button
-                      type="submit"
-                      className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                    >
-                      Submit
-                    </button>
-                  </form>
+          {modalOpen && (
+            <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+              <div className="bg-white rounded-lg shadow-lg p-8 relative w-96">
+                <h2 className="text-2xl mb-4">Submit Resume</h2>
+                <form onSubmit={handleSubmitResume}>
+                  <label className="block mb-4 text-lg font-medium">
+                    Resume Link:
+                    <input
+                      type="text"
+                      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded"
+                      value={resumeLink}
+                      onChange={(e) => setResumeLink(e.target.value)}
+                      required
+                    />
+                  </label>
                   <button
-                    onClick={closeModal}
-                    className=" absolute bottom-8 left-32 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                    type="submit"
+                    className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                   >
-                    Close
+                    Submit
                   </button>
-                </div>
+                </form>
+                <button
+                  onClick={closeModal}
+                  className=" absolute bottom-8 left-32 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                >
+                  Close
+                </button>
               </div>
-            )
-          }
+            </div>
+          )}
         </div>
 
         <div className="col-span-1">

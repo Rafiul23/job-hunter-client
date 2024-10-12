@@ -12,8 +12,7 @@ const RecruiterSideBar = () => {
   const { user } = useUser();
   const { email } = user;
   const handleSignOut = () => {
-    axios
-      .post("http://localhost:5000/logout", email, {
+    axios.post("http://localhost:5000/logout", email, {
         withCredentials: true,
       })
       .then((res) => console.log(res.data))

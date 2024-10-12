@@ -3,11 +3,13 @@ import {signIn, useSession} from 'next-auth/react';
 import { useSearchParams } from "next/navigation";
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import useAxiosPublic from "@/hooks/useAxiosPublic";
 
 const SocialLogin = () => {
     const session = useSession();
     const searchParams = useSearchParams();
     const path = searchParams.get('redirect');
+    const axiosPublic = useAxiosPublic();
 
     const handleSocialLogIn = (provider)=>{
         const res = signIn(provider, {
@@ -38,7 +40,7 @@ const SocialLogin = () => {
         role: 'user'
     }
 
-    axios.post(`http://localhost:5000/user?email=${userEmail}`, userInfo)
+    axiosPublic.post(`/user?email=${userEmail}`, userInfo)
     .then(res =>{
         if(res.data.insertedId){
             Swal.fire({

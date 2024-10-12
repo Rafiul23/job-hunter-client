@@ -3,20 +3,22 @@
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import useAxiosPublic from './useAxiosPublic';
 
 const useUser = () => {
   const session = useSession();
   const email = session ? session?.data?.user?.email : "";
   const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(true);
+  const axiosPublic = useAxiosPublic();
 
   useEffect(()=>{
-    axios.get(`http://localhost:5000/user?email=${email}`)
+    axiosPublic.get(`/user?email=${email}`)
     .then(res=> {
         setUser(res.data);
         setLoading(false);
     })
-  }, [email])
+  }, [email, axiosPublic])
  
 
   return {user, loading};

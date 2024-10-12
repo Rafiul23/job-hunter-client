@@ -3,16 +3,18 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import {useState, useEffect} from 'react';
 import JobTab from "../JobTab/JobTab";
+import useAxiosPublic from './../../hooks/useAxiosPublic';
 
 const HotJobs =  () => {
   const [hotJobs, setHotjobs] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
+  const axiosPublic = useAxiosPublic();
 
   useEffect(()=>{
-    fetch("http://localhost:5000/hotjobs?status=hot")
-    .then(res => res.json())
-    .then(data => setHotjobs(data))
-  }, []);
+    axiosPublic.get("/hotjobs?status=hot")
+    .then(res => setHotjobs(res.data))
+    .catch(err => console.log(err))
+  }, [axiosPublic]);
 
   const onsite = hotJobs.filter(job => job.onsite_or_remote === 'Onsite');
   const remote = hotJobs.filter(job => job.onsite_or_remote === 'Remote');

@@ -27,6 +27,7 @@ const Search = () => {
         setMessage("No result found!");
       } else {
         setDisplayJobs(searchResult);
+        setMessage('');
       }
     }
   };

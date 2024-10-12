@@ -15,9 +15,10 @@ const useAxiosSecure = () => {
             return res;
         }, err =>{
             if(err.response.status === 401 || err.response.status === 403){
-                signOut()
-                .then(res => console.log(res))
-                .catch(err => console.log(err))
+                console.log(err.response);
+                // signOut()
+                // .then(res => console.log('Unauthorized access',res))
+                // .catch(err => console.log(err))
             }
         })
     }, [])

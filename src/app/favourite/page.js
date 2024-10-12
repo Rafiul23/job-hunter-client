@@ -3,9 +3,9 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import corporateImage from "../../assets/globalisation-1014524_1280.png";
-import axios from "axios";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Swal from 'sweetalert2';
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 
 
 const FavouritePage = () => {
@@ -13,16 +13,24 @@ const FavouritePage = () => {
 
   const session = useSession();
   const userEmail = session ? session?.data?.user?.email : "";
+  const axiosSecure = useAxiosSecure();
 
   useEffect(()=>{
-    loadFavjobs(userEmail);
-  }, [userEmail])
+    if(userEmail){
+      axiosSecure.get(`/favourite?email=${userEmail}`)
+        .then((res) => {
+      setFavouriteJobs(res.data);
+    });
+    }
+  }, [axiosSecure, userEmail])
 
   const loadFavjobs = (email) =>{
-    axios.get(`http://localhost:5000/favourite?email=${email}`)
+    if(email){
+      axiosSecure.get(`/favourite?email=${email}`)
     .then((res) => {
       setFavouriteJobs(res.data);
     });
+    }
   }
 
   const handleDeleteFavJobs = (_id)=>{
@@ -36,7 +44,7 @@ const FavouritePage = () => {
         confirmButtonText: "Yes, remove it!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`http://localhost:5000/favourite/${_id}`)
+          axiosSecure.delete(`/favourite/${_id}`)
             .then(res =>{
                 if(res.data.deletedCount > 0){
                     loadFavjobs(userEmail);
