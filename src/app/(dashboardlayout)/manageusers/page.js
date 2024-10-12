@@ -6,17 +6,20 @@ import { FaRegTrashCan, FaUser, FaUserTie   } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import useAdmin from "@/hooks/useAdmin";
 import { signOut } from "next-auth/react";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const { isAdmin, loading } = useAdmin();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     loadUsers();
   }, []);
 
   const loadUsers = () =>{
-    axios.get("http://localhost:5000/users").then(res => setUsers(res.data))
+    axiosSecure.get("/users").then(res => setUsers(res.data))
   };
 
   const handleActiveUser = (_id)=>{
