@@ -13,11 +13,13 @@ const useUser = () => {
   const axiosPublic = useAxiosPublic();
 
   useEffect(()=>{
-    axiosPublic.get(`/user?email=${email}`)
-    .then(res=> {
+    if(email){
+      axiosPublic.get(`/user?email=${email}`)
+      .then(res=> {
         setUser(res.data);
         setLoading(false);
     })
+    }
   }, [email, axiosPublic])
  
 

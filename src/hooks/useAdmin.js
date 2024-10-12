@@ -34,7 +34,7 @@ const useAdmin = () => {
       }
     };
     checkAdmin();
-  }, [session, status]);
+  }, [session, status, axiosSecure]);
 
   return {isAdmin, loading, isRecruiter};
 };

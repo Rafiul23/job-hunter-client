@@ -175,7 +175,7 @@ const JobDetailsPage = ({ params }) => {
       deadline,
     };
 
-    axiosPublic.post("http://localhost:5000/favourite", jobInfo).then((res) => {
+    axiosPublic.post("/favourite", jobInfo).then((res) => {
       if (res.data.insertedId) {
         setFavDisable(true);
         Swal.fire({

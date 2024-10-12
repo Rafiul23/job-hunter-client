@@ -12,10 +12,10 @@ const AppliedJobs = () => {
 
     useEffect(()=>{
       if(userEmail){
-        axiosSecure.get(`http://localhost:5000/applied-jobs?email=${userEmail}`)
+        axiosSecure.get(`/applied-jobs?email=${userEmail}`)
         .then(res =>setAppliedJobs(res.data))
       }
-    }, [session, userEmail])
+    }, [session, userEmail, axiosSecure])
 
     return (
         <div className='py-4'>

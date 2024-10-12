@@ -1,21 +1,25 @@
 "use client";
 import { useState, useEffect } from "react";
 import useUser from "@/hooks/useUser";
-import axios from "axios";
 import Link from "next/link";
 import useAdmin from "@/hooks/useAdmin";
 import { signOut } from "next-auth/react";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+
 
 const MyJobsPage = () => {
   const [myJobs, setMyJobs] = useState([]);
   const { user, loading } = useUser();
   const { email } = user;
   const { loading:isLoading, isRecruiter } = useAdmin();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/my-jobs?email=${email}`)
+    if(email){
+      axiosSecure.get(`/my-jobs?email=${email}`)
       .then((res) => setMyJobs(res.data));
-  }, [user, email]);
+    }
+  }, [user, email, axiosSecure]);
 
   if (loading || isLoading) {
     return <progress className="progress progress-success w-56"></progress>;

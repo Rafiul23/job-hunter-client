@@ -4,18 +4,23 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import useAdmin from "@/hooks/useAdmin";
 import { signOut } from "next-auth/react";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+
 
 const ResumesLinkPage = ({ params }) => {
   const { user, loading } = useUser();
   const { email } = user;
   const [applications, setApplications] = useState([]);
   const { loading:isLoading, isRecruiter } = useAdmin();
+  const axiosSecure = useAxiosSecure();
 
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/resumes?email=${email}&id=${params.id}`)
+    if(email){
+      axiosSecure.get(`/resumes?email=${email}&id=${params.id}`)
       .then((res) => setApplications(res.data));
-  }, [email, params]);
+    }
+  }, [email, params, axiosSecure]);
 
   if (loading || isLoading) {
     return <progress className="progress progress-success w-56"></progress>;
