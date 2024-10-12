@@ -1,9 +1,10 @@
 "use client";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
 import useAdmin from "@/hooks/useAdmin";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { signOut } from "next-auth/react";
+
 
 
 const AddJob = () => {
@@ -11,8 +12,8 @@ const AddJob = () => {
   const [category, setCategory] = useState('Accounting and Finance');
   const [nature, setNature] = useState('Onsite');
   const [type, setType] = useState('Full Time');
-
   const { isAdmin, loading } = useAdmin();
+  const axiosSecure = useAxiosSecure();
 
   const handleSetCategory = e =>{
     setCategory(e.target.value);
@@ -66,7 +67,7 @@ const handleAddJob = e =>{
         job_post
     };
 
-    axios.post('http://localhost:5000/job', newJob)
+    useAxiosSecure.post('http://localhost:5000/job', newJob)
     .then(res =>{
         if(res.data.insertedId){
             Swal.fire({

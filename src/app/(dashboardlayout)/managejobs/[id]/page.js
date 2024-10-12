@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Swal from 'sweetalert2';
 import useAdmin from "@/hooks/useAdmin";
 import { signOut } from "next-auth/react";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
+
 
 const UpdateJobPage = ({ params }) => {
   const [job, setJob] = useState([]);
@@ -12,15 +14,17 @@ const UpdateJobPage = ({ params }) => {
   const [newNature, setNewNature] = useState('Onsite');
   const [newType, setNewType] = useState('Full Time');
   const { isAdmin, loading } = useAdmin();
+  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
 
 
  useEffect(()=>{
-    axios.get(`http://localhost:5000/job/${params?.id}`)
+  axiosPublic.get(`/job/${params?.id}`)
     .then((res) => setJob(res.data))
     .catch(err =>{
         console.log(err);
     })
- }, [params])
+ }, [params, axiosPublic])
 
     const handleSetNewCategory = e =>{
         setNewCategory(e.target.value);
@@ -35,9 +39,9 @@ const UpdateJobPage = ({ params }) => {
       
     
     useEffect(() => {
-        axios.get("http://localhost:5000/categories")
+      axiosPublic.get("/categories")
           .then((res) => setCategories(res.data));
-      }, []);
+      }, [axiosPublic]);
 
   const {
     _id,
@@ -92,7 +96,7 @@ const UpdateJobPage = ({ params }) => {
 
 // console.log(updatedJobData);
 
-axios.put(`http://localhost:5000/jobs/${_id}`, updatedJobData)
+axiosSecure.put(`/jobs/${_id}`, updatedJobData)
 .then(res =>{
     if(res.data.modifiedCount > 0){
         Swal.fire({
