@@ -18,16 +18,16 @@ const Navbar = () => {
 
   const navlinks = (
     <>
-      <li className='p-2 max-lg:border-b-2'>
+      <li className='py-2 max-lg:border-b-2'>
         <Link href="/">Home</Link>
       </li>
-      <li className='p-2 max-lg:border-b-2'>
+      <li className='py-2 max-lg:border-b-2'>
         <Link href="/search">Search Jobs</Link>
       </li>
-      <li className='p-2 max-lg:border-b-2'>
+      <li className='py-2 max-lg:border-b-2'>
         <Link href="/favourite">Favourite Jobs</Link>
       </li>
-      <li className='p-2'>
+      <li className='py-2'>
       <Link href="/dashboard">Dashboard</Link>
       </li>
 
@@ -43,7 +43,7 @@ const Navbar = () => {
             role="button"
             className="bg-[#033f63] lg:hidden"
           >
-            <button onClick={()=> setHidden(!hidden)}>
+            <button className='text-xl' onClick={()=> setHidden(!hidden)}>
             {
               hidden ?  <LuMenu /> : <IoMdClose />
             }
@@ -51,7 +51,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className={ hidden ? `menu menu-sm hidden dropdown-content bg-[#033f63] border-white border-2 rounded-box z-[1] mt-3 w-52 p-2 shadow` : `menu menu-sm dropdown-content bg-[#033f63] border-white border-2 rounded-box z-[1] mt-3 w-52 p-2 shadow`}
+            className={ hidden ? `hidden` : `menu menu-sm dropdown-content bg-[#033f63] border-white border-2 rounded-box z-[1] mt-3 w-52 shadow`}
           >
             {navlinks}
           </ul>
