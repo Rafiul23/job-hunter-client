@@ -5,9 +5,9 @@ import { FaRegTrashCan, FaArrowUpLong, FaArrowDownLong  } from "react-icons/fa6"
 import Swal from "sweetalert2";
 import Link from "next/link";
 import useAdmin from "@/hooks/useAdmin";
-import { signOut } from "next-auth/react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
+import useHandleSignOut from "@/hooks/useHandleSignOut";
 
 
 const ManageJobs = () => {
@@ -21,6 +21,7 @@ const ManageJobs = () => {
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
   const [searchResult, setSearchResult] = useState([]);
+  const handleSignOut = useHandleSignOut();
 
   const loadTotalCount = useCallback(() => {
     axiosPublic.get("/jobsCount")
@@ -187,7 +188,7 @@ const ManageJobs = () => {
   if (loading || isLoading) {
     return <progress className="progress progress-success w-56"></progress>;
   } else if (!isAdmin){
-    return signOut();
+    return handleSignOut();
   }
 
   return (

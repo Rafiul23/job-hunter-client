@@ -1,10 +1,9 @@
 "use client";
 import useUser from "@/hooks/useUser";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import useAdmin from "@/hooks/useAdmin";
-import { signOut } from "next-auth/react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+import useHandleSignOut from "@/hooks/useHandleSignOut";
 
 
 const ResumesLinkPage = ({ params }) => {
@@ -13,7 +12,7 @@ const ResumesLinkPage = ({ params }) => {
   const [applications, setApplications] = useState([]);
   const { loading:isLoading, isRecruiter } = useAdmin();
   const axiosSecure = useAxiosSecure();
-
+  const handleSignOut = useHandleSignOut();
 
   useEffect(() => {
     if(email){
@@ -25,7 +24,7 @@ const ResumesLinkPage = ({ params }) => {
   if (loading || isLoading) {
     return <progress className="progress progress-success w-56"></progress>;
   } else if(!isRecruiter){
-    return signOut();
+    return handleSignOut();
   } else {
     return (
       <div className="py-4">

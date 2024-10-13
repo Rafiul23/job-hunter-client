@@ -3,15 +3,15 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import useUser from '@/hooks/useUser';
 
 const useHandleSignOut = ()=>{
     const router = useRouter();
     const {user} = useUser();
-  const {email} = user;
-  
+    const {email} = user;
+
     const handleSignOut = ()=>{
-    
-    
+
         axios.post('http://localhost:5000/logout', email, {
           withCredentials: true
         })

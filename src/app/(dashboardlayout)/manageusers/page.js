@@ -5,14 +5,15 @@ import Image from "next/image";
 import { FaRegTrashCan, FaUser, FaUserTie   } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import useAdmin from "@/hooks/useAdmin";
-import { signOut } from "next-auth/react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+import useHandleSignOut from "@/hooks/useHandleSignOut";
 
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const { isAdmin, loading } = useAdmin();
   const axiosSecure = useAxiosSecure();
+  const handleSignOut = useHandleSignOut();
 
   const loadUsers = useCallback(() =>{
     axiosSecure.get("/users")
@@ -186,7 +187,7 @@ const ManageUsers = () => {
   }
   
   if(!isAdmin){
-    return signOut();
+    return handleSignOut();
   }
 
   return (

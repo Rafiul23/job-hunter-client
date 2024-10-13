@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
 import useAdmin from "@/hooks/useAdmin";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
-import { signOut } from "next-auth/react";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
+import useHandleSignOut from "@/hooks/useHandleSignOut";
 
 
 
@@ -16,6 +16,7 @@ const AddJob = () => {
   const { isAdmin, loading } = useAdmin();
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
+  const handleSignOut = useHandleSignOut();
 
   const handleSetCategory = e =>{
     setCategory(e.target.value);
@@ -89,7 +90,7 @@ if(loading){
 }
 
 if(!isAdmin){
-  return signOut();
+  return handleSignOut();
 }
 
   return (

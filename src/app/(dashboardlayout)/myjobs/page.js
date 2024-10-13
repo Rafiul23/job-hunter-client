@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import useUser from "@/hooks/useUser";
 import Link from "next/link";
 import useAdmin from "@/hooks/useAdmin";
-import { signOut } from "next-auth/react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+import useHandleSignOut from "@/hooks/useHandleSignOut";
 
 
 const MyJobsPage = () => {
@@ -13,6 +13,7 @@ const MyJobsPage = () => {
   const { email } = user;
   const { loading:isLoading, isRecruiter } = useAdmin();
   const axiosSecure = useAxiosSecure();
+  const handleSignOut = useHandleSignOut();
 
   useEffect(() => {
     if(email){
@@ -24,7 +25,7 @@ const MyJobsPage = () => {
   if (loading || isLoading) {
     return <progress className="progress progress-success w-56"></progress>;
   } else if(!isRecruiter){
-    return signOut();
+    return handleSignOut();
   } else{
     return (
       <div className="py-4">

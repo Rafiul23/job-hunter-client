@@ -2,9 +2,9 @@
 import { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
 import useAdmin from "@/hooks/useAdmin";
-import { signOut } from "next-auth/react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
+import useHandleSignOut from "@/hooks/useHandleSignOut";
 
 
 const UpdateJobPage = ({ params }) => {
@@ -16,6 +16,7 @@ const UpdateJobPage = ({ params }) => {
   const { isAdmin, loading } = useAdmin();
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
+  const handleSignOut = useHandleSignOut();
 
 
  useEffect(()=>{
@@ -118,7 +119,7 @@ if(loading) {
   return <progress className="progress progress-success w-56"></progress>;
 } 
 if(!isAdmin) {
-  return signOut();
+  return handleSignOut();
 }
 
   return (
