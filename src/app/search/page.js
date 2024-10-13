@@ -3,10 +3,14 @@ import Image from "next/image";
 import corporateImage from "../../assets/globalisation-1014524_1280.png";
 import JobCard from "@/Components/JobCard/JobCard";
 import { useState } from "react";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
 
 const Search = () => {
   const [displayJobs, setDisplayJobs] = useState([]);
   const [message, setMessage] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const axiosPublic = useAxiosPublic();
+
 
   const handleSearchJobs = async (e) => {
     e.preventDefault();
@@ -16,11 +20,9 @@ const Search = () => {
     if (searchContent === "") {
       return;
     } else {
-      const res = await fetch(
-        `http://localhost:5000/search?title=${searchContent}`
-      );
-
-      const searchResult = await res.json();
+      
+      axiosPublic.get(`/search?title=${searchContent}`)
+      .then(res => setSearchResult(res.data));
 
       // console.log(searchResult);
       if (searchResult.length === 0) {
