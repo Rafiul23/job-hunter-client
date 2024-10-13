@@ -6,6 +6,9 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Router } from "next/router";
+
 
 
 const SocialLogin = () => {
@@ -13,6 +16,7 @@ const SocialLogin = () => {
   const searchParams = useSearchParams();
   const path = searchParams.get("redirect");
   const axiosPublic = useAxiosPublic();
+  const router = useRouter();
 
   const handleSocialLogIn = async(provider) => {
       
@@ -61,13 +65,16 @@ const SocialLogin = () => {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res.data);
+          
+          if(res.data.success){
+            router.push(path ? path : '/');
+          }
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [session, axiosPublic]);
+  }, [session, axiosPublic, router, path]);
   
   return (
     <div>

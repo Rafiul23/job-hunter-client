@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import useAdmin from "@/hooks/useAdmin";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { signOut } from "next-auth/react";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
 
 
 
@@ -14,6 +15,7 @@ const AddJob = () => {
   const [type, setType] = useState('Full Time');
   const { isAdmin, loading } = useAdmin();
   const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
 
   const handleSetCategory = e =>{
     setCategory(e.target.value);
@@ -28,9 +30,9 @@ const AddJob = () => {
 
 
   useEffect(() => {
-    axios.get("http://localhost:5000/categories")
+    axiosPublic.get("/categories")
       .then((res) => setCategories(res.data));
-  }, []);
+  }, [axiosPublic]);
 
 //   console.log(categories);
 
@@ -67,7 +69,7 @@ const handleAddJob = e =>{
         job_post
     };
 
-    useAxiosSecure.post('http://localhost:5000/job', newJob)
+    axiosSecure.post('/job', newJob)
     .then(res =>{
         if(res.data.insertedId){
             Swal.fire({

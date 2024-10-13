@@ -1,12 +1,14 @@
 "use client";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { MdOutlineSkipPrevious, MdOutlineSkipNext } from "react-icons/md";
 import { FaRegTrashCan, FaArrowUpLong, FaArrowDownLong  } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Link from "next/link";
 import useAdmin from "@/hooks/useAdmin";
 import { signOut } from "next-auth/react";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
+
 
 const ManageJobs = () => {
   const [totalCount, setTotalCount] = useState([]);
@@ -16,24 +18,19 @@ const ManageJobs = () => {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const { isAdmin, loading:isLoading } = useAdmin();
+  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
+  const [searchResult, setSearchResult] = useState([]);
 
-  useEffect(() => {
-    loadTotalCount();
-  }, []);
-
-  useEffect(() => {
-    loadJobs(currentPage, jobsPerPage);
-  }, [currentPage, jobsPerPage]);
-
-  const loadTotalCount = () => {
-    axios.get("http://localhost:5000/jobsCount")
+  const loadTotalCount = useCallback(() => {
+    axiosPublic.get("/jobsCount")
       .then((res) => setTotalCount(res.data))
       .catch((err) => console.log(err));
-  };
+  }, [axiosPublic]);
 
-  const loadJobs = (currentPage, jobsPerPage) => {
-    axios.get(
-        `http://localhost:5000/jobs/paginated?page=${currentPage}&size=${jobsPerPage}`
+  const loadJobs = useCallback((currentPage, jobsPerPage) => {
+    axiosPublic.get(
+        `/jobs/paginated?page=${currentPage}&size=${jobsPerPage}`
       )
       .then((res) => {
         setJobs(res.data);
@@ -43,7 +40,15 @@ const ManageJobs = () => {
         console.log(err);
         setLoading(false);
       });
-  };
+  }, [axiosPublic]);
+
+  useEffect(() => {
+    loadTotalCount();
+  }, [loadTotalCount]);
+
+  useEffect(() => {
+    loadJobs(currentPage, jobsPerPage);
+  }, [currentPage, jobsPerPage, loadJobs]);
 
   const { count } = totalCount;
   const numberOfPages = Math.ceil(count / jobsPerPage);
@@ -82,7 +87,7 @@ const ManageJobs = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/jobs/${_id}`).then((res) => {
+        axiosSecure.delete(`/jobs/${_id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             loadTotalCount();
             setCurrentPage(0);
@@ -110,7 +115,7 @@ const ManageJobs = () => {
       confirmButtonText: "Yes, upgrade it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.patch(`http://localhost:5000/jobs/hot/${_id}`).then((res) => {
+        axiosSecure.patch(`/jobs/hot/${_id}`).then((res) => {
           if (res.data.modifiedCount > 0) {
             loadTotalCount();
             // setCurrentPage(0);
@@ -138,14 +143,14 @@ const ManageJobs = () => {
       confirmButtonText: "Yes, downgrade it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.patch(`http://localhost:5000/jobs/gen/${_id}`).then((res) => {
+        axiosSecure.patch(`/jobs/gen/${_id}`).then((res) => {
           if (res.data.modifiedCount > 0) {
             loadTotalCount();
             setCurrentPage(0);
             setJobsPerPage(10);
             loadJobs(currentPage, jobsPerPage);
             Swal.fire({
-              title: "Upgraded!",
+              title: "Success!",
               text: "The job has become a general job.",
               icon: "success",
             });
@@ -163,11 +168,9 @@ const ManageJobs = () => {
     if (searchContent === "") {
       return;
     } else {
-      const res = await fetch(
-        `http://localhost:5000/search?title=${searchContent}`
-      );
 
-      const searchResult = await res.json();
+      axiosPublic.get(`/search?title=${searchContent}`)
+      .then(res => setSearchResult(res.data))
 
       // console.log(searchResult);
       if (searchResult.length === 0) {
