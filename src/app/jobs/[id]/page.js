@@ -68,7 +68,7 @@ const JobDetailsPage = ({ params }) => {
    if(userEmail){
     axiosSecure.get(`/applied-exist?email=${userEmail}&id=${params?.id}`)
     .then((res) => {
-      if (res.data.message) {
+      if (res?.data?.message) {
         setApplyDisable(true);
       } else {
         setApplyDisable(false);

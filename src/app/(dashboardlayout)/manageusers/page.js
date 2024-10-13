@@ -34,7 +34,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, unblock this user!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.patch(`http://localhost:5000/user/active/${_id}`)
+          axiosSecure.patch(`/user/active/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
@@ -60,7 +60,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, block this user!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.patch(`http://localhost:5000/user/block/${_id}`)
+          axiosSecure.patch(`/user/block/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
@@ -86,7 +86,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, delete this user!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.delete(`http://localhost:5000/user/${_id}`)
+          axiosSecure.delete(`/user/${_id}`)
             .then(res =>{
                 if(res.data.deletedCount > 0){
                     loadUsers();
@@ -112,7 +112,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, Make this user an Admin!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.patch(`http://localhost:5000/users/admin/${_id}`)
+          axiosSecure.patch(`/users/admin/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
@@ -138,7 +138,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, Make this user a Recruiter!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.patch(`http://localhost:5000/users/recruiter/${_id}`)
+          axiosSecure.patch(`/users/recruiter/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
@@ -164,7 +164,7 @@ const ManageUsers = () => {
         confirmButtonText: "Yes, Make this person a user!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.patch(`http://localhost:5000/users/user/${_id}`)
+          axiosSecure.patch(`/users/user/${_id}`)
             .then(res =>{
                 if(res.data.modifiedCount > 0){
                     loadUsers();
