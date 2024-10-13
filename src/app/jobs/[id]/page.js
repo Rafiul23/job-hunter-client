@@ -147,12 +147,22 @@ const JobDetailsPage = ({ params }) => {
   };
 
   const handleAddToFav = () => {
+
+    if (user?.role === "admin") {
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong",
+        footer: "You won't be able to add any job to favorite list!",
+      });
+    }
+
     if (userEmail === employer_email) {
       return Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Something went wrong",
-        footer: "You won't be able to add your job to your favourite list",
+        footer: "You won't be able to add your job to your favorite list",
       });
     }
 
@@ -162,7 +172,7 @@ const JobDetailsPage = ({ params }) => {
         title: "Oops...",
         text: "Something went wrong",
         footer:
-          "You have been blocked and won't be able to add any job to favourite list!",
+          "You have been blocked and won't be able to add any job to favorite list!",
       });
     }
 
@@ -188,6 +198,7 @@ const JobDetailsPage = ({ params }) => {
       }
     });
   };
+  
 
   return (
     <div className="py-10">

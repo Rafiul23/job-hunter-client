@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { signOut } from "next-auth/react";
+import useHandleSignOut from "./useHandleSignOut";
 
 
 const axiosSecure = axios.create({
@@ -9,6 +9,7 @@ const axiosSecure = axios.create({
 })
 
 const useAxiosSecure = () => {
+    const handleSignOut = useHandleSignOut();
 
     useEffect(()=>{
         axiosSecure.interceptors.response.use(res => {
@@ -16,12 +17,10 @@ const useAxiosSecure = () => {
         }, err =>{
             if(err.response.status === 401 || err.response.status === 403){
                 console.log(err.response);
-                // signOut()
-                // .then(res => console.log('Unauthorized access',res))
-                // .catch(err => console.log(err))
+                handleSignOut();
             }
         })
-    }, [])
+    }, [handleSignOut])
 
     return axiosSecure;
 };
