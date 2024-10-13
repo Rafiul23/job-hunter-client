@@ -22,13 +22,15 @@ const Search = () => {
     } else {
       
       axiosPublic.get(`/search?title=${searchContent}`)
-      .then(res => setSearchResult(res.data));
+      .then(res => {
+        setSearchResult(res.data);
+        setDisplayJobs(res.data);
+      });
 
       // console.log(searchResult);
       if (searchResult.length === 0) {
         setMessage("No result found!");
       } else {
-        setDisplayJobs(searchResult);
         setMessage('');
       }
     }
