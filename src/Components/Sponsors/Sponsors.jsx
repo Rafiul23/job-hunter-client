@@ -13,7 +13,7 @@ const Sponsors = () => {
             ></SectionTitle>
 
         <marquee behavior="scroll" direction="left">
-            <div className='flex gap-6 p-8 mt-8'>
+            <div className='flex lg:gap-16 md:gap-10 gap-6 p-8 mt-8'>
                 <Image src={airbnb} width={150} height={150} alt='airbnb'  />
                 <Image src={google} width={150} height={150} alt='google'  />
                 <Image src={netflix} width={150} height={150} alt='netflix'  />
