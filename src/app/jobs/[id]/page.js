@@ -7,6 +7,10 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import CoverImage from '@/Components/CoverImage/CoverImage'
 
+export const metadata = {
+  title: job_title,
+  description: job_description
+}
 
 const JobDetailsPage = ({ params }) => {
   const [jobDetails, setJobDetails] = useState([]);
