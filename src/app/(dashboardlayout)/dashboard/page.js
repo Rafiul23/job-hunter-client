@@ -3,6 +3,12 @@ import Image from 'next/image';
 import {useSession} from 'next-auth/react';
 import welcomeImage from '@/assets/welcomeImage.gif';
 
+export const metadata = {
+    title: 'Job Hunter | Dashboard',
+    description: 'This page is about dashboard'
+  }
+
+
 const Dashboard = () => {
 
     const session = useSession();

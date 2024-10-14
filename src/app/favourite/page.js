@@ -7,7 +7,7 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import CoverImage from '@/Components/CoverImage/CoverImage';
 
 export const metadata = {
-  title: 'Favorite Jobs',
+  title: 'Job Hunter | Favorite Jobs',
   description: 'This page is saving favorite jobs of a user'
 }
 

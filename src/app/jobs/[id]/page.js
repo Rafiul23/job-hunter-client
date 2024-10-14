@@ -8,7 +8,7 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import CoverImage from '@/Components/CoverImage/CoverImage'
 
 export const metadata = {
-  title: job_title,
+  title: `Job Hunter | ${job_title}`,
   description: job_description
 }
 

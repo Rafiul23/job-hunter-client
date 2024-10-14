@@ -5,7 +5,7 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import CoverImage from '@/Components/CoverImage/CoverImage'
 
 export const metadata = {
-  title: searchParams.category,
+  title: 'Job Hunter | Jobs by Category',
   description: 'This page is giving jobs by category'
 }
 

@@ -7,7 +7,10 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
 import SectionTitle from '@/Components/SectionTitle/SectionTitle'
 
-
+export const metadata = {
+  title: 'Job Hunter | Add Job',
+  description: 'This page is about add job'
+}
 
 const AddJob = () => {
   const [categories, setCategories] = useState([]);

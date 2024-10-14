@@ -9,6 +9,11 @@ import Swal from 'sweetalert2';
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
 import { useRouter } from "next/navigation";
 
+export const metadata = {
+  title: 'Job Hunter | Sign Up',
+  description: 'This page is for signing up a user'
+}
+
 const SignUp = () => {
 
     const [hidden, setHidden] = useState(true);

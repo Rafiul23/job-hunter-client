@@ -6,7 +6,7 @@ import { useState } from "react";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 
 export const metadata = {
-  title: 'Search Jobs',
+  title: 'Job Hunter | Search',
   description: 'Search any types of jobs by job title'
 }
 

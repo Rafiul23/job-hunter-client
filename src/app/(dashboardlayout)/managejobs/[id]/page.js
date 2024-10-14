@@ -6,6 +6,10 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
 
+export const metadata = {
+  title: `Job Hunter | Update Jobs: ${job_title}`,
+  description: job_description
+}
 
 const UpdateJobPage = ({ params }) => {
   const [job, setJob] = useState([]);

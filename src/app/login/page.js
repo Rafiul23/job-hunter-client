@@ -9,13 +9,17 @@ import { useSearchParams } from "next/navigation";
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
 import axios from 'axios';
 
+export const metadata = {
+  title: 'Job Hunter | Login',
+  description: 'This page is a login page'
+}
+
+
 const Login = () => {
   const [hidden, setHidden] = useState(true);
   const searchParams = useSearchParams();
   const path = searchParams.get('redirect');
   
-  
-
   const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;

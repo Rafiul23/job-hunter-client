@@ -6,6 +6,10 @@ import useAdmin from "@/hooks/useAdmin";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
 
+export const metadata = {
+  title: 'Job Hunter | My Jobs Page',
+  description: 'This page is giving jobs of a specific recruiter'
+}
 
 const MyJobsPage = () => {
   const [myJobs, setMyJobs] = useState([]);
