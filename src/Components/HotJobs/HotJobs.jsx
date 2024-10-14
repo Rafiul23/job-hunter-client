@@ -25,7 +25,7 @@ const HotJobs =  () => {
 
   return (
     <div className="py-10">
-      <h1 className="text-5xl text-[#033f63] font-bold text-center my-4">
+      <h1 className="lg:text-5xl md:text-4xl text-3xl text-[#033f63] font-bold text-center my-4">
         Hot Jobs: {hotJobs.length}
       </h1>
       <p className="text-center text-2xl mb-4">

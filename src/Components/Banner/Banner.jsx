@@ -28,7 +28,7 @@ const Banner = () => {
             Elevate your career <br/> to the next step with <br/> 
             exciting job offers!
           </h1>
-          <p className="py-6 md:text-2xl text-xl text-white">
+          <p className="py-6 md:text-2xl text-lg text-white">
             Your dream jobs are waiting for you...
           </p>
           <Link href='/signup'>

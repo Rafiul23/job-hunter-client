@@ -73,7 +73,9 @@ const Navbar = () => {
           <div className="mx-4 ">
           
           {
-            status === 'loading' ? <progress className="progress progress-success w-56"></progress>: !session ? <p>No session found</p> : <p>{name}</p>
+            status === 'loading' ? <progress className="progress progress-success w-56"></progress>: !session ? <Link href="/login" className="btn">
+            Login
+          </Link> : <p>{name}</p>
 
           }
          

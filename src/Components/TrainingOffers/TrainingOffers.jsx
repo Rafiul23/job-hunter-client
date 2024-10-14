@@ -1,9 +1,11 @@
+import SectionTitle from '../SectionTitle/SectionTitle';
+
+
 const TrainingOffers = () => {
   return (
     <div className="py-10">
-      <h1 className="text-5xl text-[#033f63] font-bold text-center my-4">
-        Training Offers
-      </h1>
+      <SectionTitle title='Training Offers'></SectionTitle>
+      
       <p className="text-center text-2xl mb-4">Get trained, get employed.</p>
 
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
