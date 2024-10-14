@@ -124,7 +124,7 @@ if(!isAdmin) {
 
   return (
     <div className="py-8">
-      <h2 className="text-3xl text-center font-bold mb-4 text-[#033f63]">
+      <h2 className="lg:text-5xl md:text-3xl text-2xl text-center font-bold mb-4 text-[#033f63]">
         Update {job_title} Job
       </h2>
       <p className='py-4 text-center text-red-500 font-bold'>Caution: When updating a job data, every time you need to select the category, job type and job nature. Otherwise, your job category, job nature and job type may be changed by default!!!</p>

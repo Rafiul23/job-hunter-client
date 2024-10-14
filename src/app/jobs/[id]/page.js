@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import useUser from "@/hooks/useUser";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
-import CoverImage from '@/Components/CoverImage'
+import CoverImage from '@/Components/CoverImage/CoverImage'
 
 
 const JobDetailsPage = ({ params }) => {
@@ -202,7 +202,7 @@ const JobDetailsPage = ({ params }) => {
     <div className="py-10">
       <CoverImage />
       <h1 className="lg:text-5xl md:text-4xl text-3xl text-[#033f63] font-bold text-center my-4">
-        Job Dtalis of: {job_title}
+        Job Detalis of: {job_title}
       </h1>
 
       <div className="grid md:grid-cols-4 grid-cols-1 mt-5 gap-6">

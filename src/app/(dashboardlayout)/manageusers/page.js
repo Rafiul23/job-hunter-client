@@ -192,7 +192,7 @@ const ManageUsers = () => {
 
   return (
     <div className="py-5 px-5">
-      <h2 className="text-center text-3xl font-bold text-[#033f63] py-4">
+      <h2 className="text-center lg:text-5xl md:text-3xl text-2xl font-bold text-[#033f63] py-4">
         Users: {users?.length}
       </h2>
       <div className="overflow-x-auto">

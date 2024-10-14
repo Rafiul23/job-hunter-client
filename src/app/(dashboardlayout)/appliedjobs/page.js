@@ -19,7 +19,7 @@ const AppliedJobs = () => {
 
     return (
         <div className='py-4'>
-             <h1 className="text-3xl text-[#033f63] font-bold text-center my-4">
+             <h1 className="lg:text-5xl md:text-3xl text-2xl text-[#033f63] font-bold text-center my-4">
                 Applied Jobs: {appliedJobs.length}
             </h1>
             <div>

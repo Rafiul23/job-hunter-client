@@ -5,7 +5,7 @@ import useAdmin from "@/hooks/useAdmin";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
-import SectionTitle from '@/Components/SectionTitle'
+import SectionTitle from '@/Components/SectionTitle/SectionTitle'
 
 
 

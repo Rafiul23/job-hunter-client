@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import useAxiosSecure from "@/hooks/useAxiosSecure";
-import CoverImage from '@/Components/CoverImage'
+import CoverImage from '@/Components/CoverImage/CoverImage';
 
 
 const FavouritePage = () => {

@@ -193,8 +193,8 @@ const ManageJobs = () => {
 
   return (
     <div className="py-5">
-      <h2 className="text-3xl text-center font-bold mb-2 text-[#033f63]">
-        Manage Jobs {count}
+      <h2 className="lg:text-5xl md:text-3xl text-2xl text-center font-bold mb-2 text-[#033f63]">
+        Manage Jobs: {count}
       </h2>
 
       <p className="py-2 text-center text-xl"> Search jobs by job title.</p>
