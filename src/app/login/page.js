@@ -9,10 +9,6 @@ import { useSearchParams } from "next/navigation";
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
 import axios from 'axios';
 
-export const metadata = {
-  title: 'Job Hunter | Login',
-  description: 'This page is a login page'
-}
 
 
 const Login = () => {

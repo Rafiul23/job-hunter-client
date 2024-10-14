@@ -8,10 +8,6 @@ import useAdmin from "@/hooks/useAdmin";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
 
-export const metadata = {
-  title: 'Job Hunter | Manage Users',
-  description: 'This page is about manage user'
-}
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);

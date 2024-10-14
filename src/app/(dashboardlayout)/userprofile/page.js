@@ -2,11 +2,6 @@
 import useUser from "@/hooks/useUser";
 import Image from "next/image";
 
-export const metadata = {
-  title: `Job Hunter | Profile of: ${name}`,
-  description: `This page is a profile page of ${name}`
-}
-
 
 const UserProfile = () => {
   const { user, loading } = useUser();

@@ -9,10 +9,6 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
 
-export const metadata = {
-  title: 'Job Hunter | Manage Jobs',
-  description: 'This page is about manage jobs'
-}
 
 const ManageJobs = () => {
   const [totalCount, setTotalCount] = useState([]);

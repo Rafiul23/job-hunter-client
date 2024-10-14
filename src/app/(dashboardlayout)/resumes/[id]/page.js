@@ -5,10 +5,6 @@ import useAdmin from "@/hooks/useAdmin";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
 
-export const metadata = {
-  title: 'Job Hunter | View Resume Page',
-  description: 'This page is for viewing resumes under a specific job'
-}
 
 const ResumesLinkPage = ({ params }) => {
   const { user, loading } = useUser();

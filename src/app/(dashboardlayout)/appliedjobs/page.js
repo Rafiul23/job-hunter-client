@@ -3,10 +3,6 @@ import {useState, useEffect} from 'react';
 import { useSession } from "next-auth/react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 
-export const metadata = {
-  title: 'Job Hunter | Applied Jobs',
-  description: 'This page is about applied jobs'
-}
 
 const AppliedJobs = () => {
     const [appliedJobs, setAppliedJobs] = useState([]);

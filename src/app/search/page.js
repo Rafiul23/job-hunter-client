@@ -5,10 +5,6 @@ import SectionTitle from '@/Components/SectionTitle/SectionTitle'
 import { useState } from "react";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 
-export const metadata = {
-  title: 'Job Hunter | Search',
-  description: 'Search any types of jobs by job title'
-}
 
 const Search = () => {
   const [displayJobs, setDisplayJobs] = useState([]);

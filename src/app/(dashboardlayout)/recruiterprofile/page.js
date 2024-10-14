@@ -4,10 +4,6 @@ import Image from "next/image";
 import useAdmin from "@/hooks/useAdmin";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
 
-export const metadata = {
-  title: `Job Hunter | Profile of: ${name}`,
-  description: `This page is a profile page of ${name}`
-}
 
 const RecruiterProfile = () => {
   const { user, loading } = useUser();

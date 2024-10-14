@@ -6,10 +6,6 @@ import Swal from 'sweetalert2';
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import CoverImage from '@/Components/CoverImage/CoverImage';
 
-export const metadata = {
-  title: 'Job Hunter | Favorite Jobs',
-  description: 'This page is saving favorite jobs of a user'
-}
 
 const FavouritePage = () => {
   const [favouriteJobs, setFavouriteJobs] = useState([]);

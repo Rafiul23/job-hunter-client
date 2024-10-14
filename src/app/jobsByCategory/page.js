@@ -4,10 +4,7 @@ import { useState, useEffect } from "react";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import CoverImage from '@/Components/CoverImage/CoverImage'
 
-export const metadata = {
-  title: 'Job Hunter | Jobs by Category',
-  description: 'This page is giving jobs by category'
-}
+
 
 const JobsByCategory = ({ params, searchParams }) => {
   const [jobsByCategory, setJobsByCategory] = useState([]);
