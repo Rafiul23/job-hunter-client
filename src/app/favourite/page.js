@@ -1,11 +1,10 @@
 "use client";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import corporateImage from "../../assets/globalisation-1014524_1280.png";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+import CoverImage from '@/Components/CoverImage'
 
 
 const FavouritePage = () => {
@@ -63,13 +62,8 @@ const FavouritePage = () => {
 
   return (
     <div className="py-10">
-      <Image
-        src={corporateImage}
-        className="w-full h-[250px]"
-        width={1200}
-        alt="corporate"
-      />
-      <h1 className="text-3xl text-[#033f63] font-bold text-center my-4">
+      <CoverImage />
+      <h1 className="lg:text-5xl md:text-4xl text-3xl text-[#033f63] font-bold text-center my-4">
         Favourite Jobs: {favouriteJobs.length}
       </h1>
 

@@ -1,12 +1,12 @@
 "use client";
-import Image from "next/image";
-import corporateImage from "../../../assets/globalisation-1014524_1280.png";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
 import useUser from "@/hooks/useUser";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+import CoverImage from '@/Components/CoverImage'
+
 
 const JobDetailsPage = ({ params }) => {
   const [jobDetails, setJobDetails] = useState([]);
@@ -28,8 +28,6 @@ const JobDetailsPage = ({ params }) => {
 
   const jobLink = `http://localhost:3000/jobs/${params?.id}`;
 
-  // const res = await fetch(`http://localhost:5000/job/${params.id}`);
-  // const jobDetails = await res.json();
 
   const {
     company_name,
@@ -202,13 +200,8 @@ const JobDetailsPage = ({ params }) => {
 
   return (
     <div className="py-10">
-      <Image
-        src={corporateImage}
-        className="w-full h-[250px]"
-        width={1200}
-        alt="corporate"
-      />
-      <h1 className="text-3xl text-[#033f63] font-bold text-center my-4">
+      <CoverImage />
+      <h1 className="lg:text-5xl md:text-4xl text-3xl text-[#033f63] font-bold text-center my-4">
         Job Dtalis of: {job_title}
       </h1>
 

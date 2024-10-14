@@ -1,7 +1,7 @@
 "use client";
-import Image from "next/image";
-import corporateImage from "../../assets/globalisation-1014524_1280.png";
 import JobCard from "@/Components/JobCard/JobCard";
+import CoverImage from '@/Components/CoverImage'
+import SectionTitle from '@/Components/SectionTitle'
 import { useState } from "react";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 
@@ -38,15 +38,11 @@ const Search = () => {
 
   return (
     <div className="py-10">
-      <Image
-        src={corporateImage}
-        className="w-full h-[250px]"
-        width={1200}
-        alt="corporate"
-      />
-      <h1 className="text-3xl text-[#033f63] font-bold text-center my-4">
-        Search Your Dream Jobs
-      </h1>
+      <CoverImage></CoverImage>
+      <SectionTitle
+      title='Search Your Dream Jobs'
+      ></SectionTitle>
+      
       <p className="py-2 text-center text-xl"> Search jobs by job title.</p>
       <div className="py-4 text-center">
         <form onSubmit={handleSearchJobs}>

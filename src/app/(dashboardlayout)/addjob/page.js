@@ -5,6 +5,7 @@ import useAdmin from "@/hooks/useAdmin";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
+import SectionTitle from '@/Components/SectionTitle'
 
 
 
@@ -95,9 +96,10 @@ if(!isAdmin){
 
   return (
     <div className="py-5">
-      <h2 className="text-3xl text-center font-bold mb-2 text-[#033f63]">
-        Add a Job
-      </h2>
+      <SectionTitle
+      title='Add a Job'
+      ></SectionTitle>
+      
       <form onSubmit={handleAddJob} className="p-4 bg-base-200">
         <div className="flex md:flex-row flex-col gap-4 mb-2">
           {/* input for company name */}

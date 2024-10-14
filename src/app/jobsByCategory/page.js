@@ -1,9 +1,9 @@
 "use client";
-import Image from "next/image";
-import corporateImage from "../../assets/globalisation-1014524_1280.png";
 import JobCard from "@/Components/JobCard/JobCard";
 import { useState, useEffect } from "react";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
+import CoverImage from '@/Components/CoverImage'
+
 
 const JobsByCategory = ({ params, searchParams }) => {
   const [jobsByCategory, setJobsByCategory] = useState([]);
@@ -65,18 +65,13 @@ const JobsByCategory = ({ params, searchParams }) => {
 
   return (
     <div className="py-10">
-      <Image
-        src={corporateImage}
-        className="w-full h-[250px]"
-        width={1200}
-        alt="corporate"
-      />
-      <h1 className="text-5xl text-[#033f63] font-bold text-center my-4">
-        Job Category:{searchParams.category}
+      <CoverImage></CoverImage>
+      <h1 className="lg:text-5xl md:text-4xl text-3xl text-[#033f63] font-bold text-center my-4">
+        Job Category: {searchParams.category}
       </h1>
       <p className="py-5 text-center text-2xl">
         <span className="font-bold">{displayJobs?.length}</span> jobs found
-        under <span className="font-bold">{searchParams.category} </span>{" "}
+        under <span className="font-bold">{searchParams.category} </span>
         category
       </p>
 
