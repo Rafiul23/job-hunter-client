@@ -23,12 +23,12 @@ const Banner = () => {
             className="w-full border-4"
           />
         </div>
-        <div className="w-1/2">
-          <h1 className="text-4xl font-bold text-[#033f63]">
+        <div className="md:w-1/2 w-full">
+          <h1 className="lg:text-4xl md:text-2xl text-xl font-bold text-[#033f63]">
             Elevate your career <br/> to the next step with <br/> 
             exciting job offers!
           </h1>
-          <p className="py-6 text-2xl text-white">
+          <p className="py-6 md:text-2xl text-xl text-white">
             Your dream jobs are waiting for you...
           </p>
           <Link href='/signup'>
