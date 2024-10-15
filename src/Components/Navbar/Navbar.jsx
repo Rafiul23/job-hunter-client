@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import {useState} from 'react';
 import { LuMenu } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
+import Image from 'next/image';
 
 const Navbar = () => {
   const { data: session, status } = useSession(); 
@@ -12,7 +13,7 @@ const Navbar = () => {
    const [hidden, setHidden] = useState(true);
   const {user, loading} = useUser();
   //  console.log(user);
-   const { name} = user;
+   const {image, name} = user;
   //  console.log(user);
 
 
@@ -75,7 +76,10 @@ const Navbar = () => {
           {
             status === 'loading' ? <progress className="progress progress-success w-56"></progress>: !session ? <Link href="/login" className="btn">
             Login
-          </Link> : <p>{name}</p>
+          </Link> : <div className='flex gap-3'>
+            <Image src={image} width={40} height={40} className=' my-auto rounded-full' alt='user image' />
+            <p>{name}</p>
+          </div> 
 
           }
          
