@@ -65,12 +65,12 @@ const SignUp = () => {
       const data = {image: imageFile};
 
       // console.log( data);
-
-     const imageRes = await axiosPublic.post(image_hosting_api, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-     });
+      
+      const imageRes = await axiosPublic.post(image_hosting_api, data, {
+               headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+          });
    
 
      if(imageRes.data.success){
@@ -98,7 +98,8 @@ const SignUp = () => {
           });
         }
       
-     }   
+     }  
+    
 }
   return (
     <div className="py-10">
