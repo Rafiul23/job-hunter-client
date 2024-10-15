@@ -8,13 +8,18 @@ import axios from "axios";
 import Swal from 'sweetalert2';
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
 import { useRouter } from "next/navigation";
+import useAxiosPublic from '@/hooks/useAxiosPublic';
 
+const image_hosting_key = process.env.NEXT_PUBLIC_ImageBB_API_key;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const SignUp = () => {
 
     const [hidden, setHidden] = useState(true);
-    const [image, setImage] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
     const router = useRouter();
+    const axiosPublic = useAxiosPublic();
+    
 
     const handleSignUp = async (e)=>{
       e.preventDefault();
@@ -23,36 +28,44 @@ const SignUp = () => {
       const email = form.email.value;
       const password = form.password.value;
 
-      const userInfo = {
-        image,
-        name,
-        email,
-        password,
-        role: 'user',
-        status: 'active'
+      const data = {image: imageFile};
+
+      // console.log( data);
+
+     const imageRes = await axiosPublic.post(image_hosting_api, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
       }
+     });
+    //  console.log(res.data);
 
-      console.log(userInfo);
-       
-      // axios.post('http://localhost:5000/user', userInfo)
-      // .then(res=> {
-      //   if(res.data.insertedId){
-      //     router.push('/login');
-      //     e.target.reset();
-      //     Swal.fire({
-      //       position: "top-end",
-      //       icon: "success",
-      //       title: "New user created successfully",
-      //       showConfirmButton: false,
-      //       timer: 1500
-      //     });
-      //   }
-      // })
-
+     if(imageRes.data.success){
       
-    }
+       const userInfo = {
+         image: imageRes.data.data.display_url,
+         name,
+         email,
+         password,
+         role: 'user',
+         status: 'active'
+       };
 
-
+      const userRes = await axiosPublic.post('/user', userInfo)
+    
+       if(userRes.data.insertedId){
+          router.push('/login');
+          e.target.reset();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "New user created successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      
+     }   
+}
   return (
     <div className="py-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -65,7 +78,7 @@ const SignUp = () => {
             <label className="label">
                 <span className="label-text">Your Image:</span>
               </label>
-            <input type="file" onChange={e=> setImage(e.target.files[0].name)} className="file-input file-input-bordered w-full max-w-xs" />
+            <input type="file" onChange={e=> setImageFile(e.target.files[0])} className="file-input file-input-bordered w-full max-w-xs" />
             </div>
             <div className="form-control">
               <label className="label">
