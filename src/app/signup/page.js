@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 const SignUp = () => {
 
     const [hidden, setHidden] = useState(true);
+    const [image, setImage] = useState(null);
     const router = useRouter();
 
     const handleSignUp = async (e)=>{
@@ -23,6 +24,7 @@ const SignUp = () => {
       const password = form.password.value;
 
       const userInfo = {
+        image,
         name,
         email,
         password,
@@ -63,7 +65,7 @@ const SignUp = () => {
             <label className="label">
                 <span className="label-text">Your Image:</span>
               </label>
-            <input type="file" className="file-input file-input-bordered w-full max-w-xs" />
+            <input type="file" onChange={e=> setImage(e.target.files[0].name)} className="file-input file-input-bordered w-full max-w-xs" />
             </div>
             <div className="form-control">
               <label className="label">
