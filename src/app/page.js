@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 import Banner from '@/Components/Banner/Banner';
-import Category from '@/Components/Category/Category';
+import CategoryList from '@/Components/CategoryList/CategoryList';
 import HotJobs from '@/Components/HotJobs/HotJobs';
 import Sponsors from '@/Components/Sponsors/Sponsors';
 import TrainingOffers from '@/Components/TrainingOffers/TrainingOffers';
@@ -10,7 +10,7 @@ const Home = () => {
     <div>
      <Banner /> 
      <Sponsors />
-     <Category />
+     <CategoryList />
      <HotJobs></HotJobs>
      <TrainingOffers></TrainingOffers>
     </div>

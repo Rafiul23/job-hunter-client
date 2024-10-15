@@ -1,14 +1,23 @@
+'use client';
 import SectionTitle from '../SectionTitle/SectionTitle';
-
+import AOS from 'aos';
+import 'aos/dist/aos.css'; 
+import { useEffect } from 'react';
 
 const TrainingOffers = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1500,
+      once: false
+    });
+  }, []);
   return (
     <div className="py-10">
       <SectionTitle title='Training Offers'></SectionTitle>
       
       <p className="text-center text-2xl mb-4">Get trained, get employed.</p>
 
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
+      <div data-aos='flip-right' className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
         <div className="card bg-base-100 border border-[#033f63]">
           <div className="card-body">
             <h2 className="card-title text-[#033f63]">
@@ -21,7 +30,7 @@ const TrainingOffers = () => {
             </div>
           </div>
         </div>
-        <div className="card bg-base-100 border border-[#033f63]">
+        <div data-aos='flip-right' className="card bg-base-100 border border-[#033f63]">
           <div className="card-body">
             <h2 className="card-title text-[#033f63]">
               Course on Ethical Hacking
@@ -33,7 +42,7 @@ const TrainingOffers = () => {
             </div>
           </div>
         </div>
-        <div className="card bg-base-100 border border-[#033f63]">
+        <div data-aos='flip-right' className="card bg-base-100 border border-[#033f63]">
           <div className="card-body">
             <h2 className="card-title text-[#033f63]">
               Course on Graphic Design
@@ -45,7 +54,7 @@ const TrainingOffers = () => {
             </div>
           </div>
         </div>
-        <div className="card bg-base-100 border border-[#033f63]">
+        <div data-aos='flip-right' className="card bg-base-100 border border-[#033f63]">
           <div className="card-body">
             <h2 className="card-title text-[#033f63]">
               Course on Game Development
