@@ -30,22 +30,22 @@ const SignUp = () => {
         status: 'active'
       }
 
-      // console.log(userInfo);
+      console.log(userInfo);
        
-      axios.post('http://localhost:5000/user', userInfo)
-      .then(res=> {
-        if(res.data.insertedId){
-          router.push('/login');
-          e.target.reset();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "New user created successfully",
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
-      })
+      // axios.post('http://localhost:5000/user', userInfo)
+      // .then(res=> {
+      //   if(res.data.insertedId){
+      //     router.push('/login');
+      //     e.target.reset();
+      //     Swal.fire({
+      //       position: "top-end",
+      //       icon: "success",
+      //       title: "New user created successfully",
+      //       showConfirmButton: false,
+      //       timer: 1500
+      //     });
+      //   }
+      // })
 
       
     }
@@ -59,9 +59,15 @@ const SignUp = () => {
 
           <form className="card-body" onSubmit={handleSignUp}>
             <h2 className='text-3xl text-center text-[#033f63] py-6 font-bold'>Sign Up Now!</h2>
+            <div className='form-control'>
+            <label className="label">
+                <span className="label-text">Your Image:</span>
+              </label>
+            <input type="file" className="file-input file-input-bordered w-full max-w-xs" />
+            </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Name</span>
+                <span className="label-text">Name:</span>
               </label>
               <input
                 type="text"
@@ -73,7 +79,7 @@ const SignUp = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text">Email:</span>
               </label>
               <input
                 type="email"
@@ -85,7 +91,7 @@ const SignUp = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text">Password:</span>
               </label>
               <input
                 type={ hidden ? "password" : "text"}
