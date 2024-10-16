@@ -2,13 +2,12 @@
 import Image from "next/image";
 import loginImage from "../../assets/login.png";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
 import axios from 'axios';
-import { Suspense } from 'react';
 
 
 const Login = () => {
@@ -102,9 +101,9 @@ const Login = () => {
           </div>
           <p className="text-center my-2">Or</p>
           <div className="py-5 text-center">
-          <Suspense fallback={<div>Loading...</div>}>
+          
             <SocialLogin></SocialLogin>
-            </Suspense>
+           
           </div>
         </div>
       </div>
@@ -114,4 +113,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default function LoginPage(){
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Login />
+    </Suspense>
+  );
+};

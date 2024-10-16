@@ -2,13 +2,12 @@
 import Image from "next/image";
 import loginImage from "../../assets/login.png";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, Suspense  } from "react";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
 import { useRouter } from "next/navigation";
 import useAxiosPublic from '@/hooks/useAxiosPublic';
-import { Suspense } from 'react';
 
 
 const image_hosting_key = process.env.NEXT_PUBLIC_ImageBB_API_key;
@@ -171,9 +170,9 @@ const SignUp = () => {
 
           <p className='text-center my-2'>Or</p>
           <div className='py-5 text-center'>
-          <Suspense fallback={<div>Loading...</div>}>
+          
             <SocialLogin></SocialLogin>
-          </Suspense>
+          
           </div>
 
         </div>
@@ -186,4 +185,10 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default function SignUpPage(){
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignUp />
+    </Suspense>
+  );
+} ;
