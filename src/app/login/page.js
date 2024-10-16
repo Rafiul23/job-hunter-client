@@ -8,7 +8,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
 import axios from 'axios';
-
+import { Suspense } from 'react';
 
 
 const Login = () => {
@@ -44,6 +44,7 @@ const Login = () => {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className="py-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="w-full flex justify-center items-center">
@@ -106,6 +107,8 @@ const Login = () => {
         </div>
       </div>
     </div>
+  </Suspense>
+    
   );
 };
 
