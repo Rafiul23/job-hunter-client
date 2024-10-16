@@ -7,14 +7,13 @@ import { signIn } from "next-auth/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
-import axios from 'axios';
-
+import axios from "axios";
 
 const Login = () => {
   const [hidden, setHidden] = useState(true);
   const searchParams = useSearchParams();
-  const path = searchParams.get('redirect');
-  
+  const path = searchParams.get("redirect");
+
   const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -27,23 +26,23 @@ const Login = () => {
       email,
       password,
       redirect: true,
-      callbackUrl: path ? path : '/'
+      callbackUrl: path ? path : "/",
     });
-  
-    const userInfo = {email};
-     axios.post('http://localhost:5000/jwt', userInfo, {
-      withCredentials: true
-     }).then(res => {
-      console.log(res.data)
-     }).catch(err=>{
-      console.log(err)
-     }) 
-    
-    
+
+    const userInfo = { email };
+    axios
+      .post("https://job-hunter-server-two.vercel.app/jwt", userInfo, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
-    
     <div className="py-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="w-full flex justify-center items-center">
@@ -101,22 +100,18 @@ const Login = () => {
           </div>
           <p className="text-center my-2">Or</p>
           <div className="py-5 text-center">
-          
             <SocialLogin></SocialLogin>
-           
           </div>
         </div>
       </div>
     </div>
-  
-    
   );
 };
 
-export default function LoginPage(){
+export default function LoginPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Login />
     </Suspense>
   );
-};
+}

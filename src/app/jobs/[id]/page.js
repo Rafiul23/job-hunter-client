@@ -26,7 +26,7 @@ const JobDetailsPage = ({ params }) => {
       .then((res) => setJobDetails(res.data));
   }, [axiosPublic, params]);
 
-  const jobLink = `http://localhost:3000/jobs/${params?.id}`;
+  const jobLink = `https://job-hunter-globe.vercel.app/jobs/${params?.id}`;
 
 
   const {

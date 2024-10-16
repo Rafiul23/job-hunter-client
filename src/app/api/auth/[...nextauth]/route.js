@@ -21,7 +21,9 @@ const handler = NextAuth({
       async authorize(credentials) {
         const { email, password } = credentials;
 
-        const res = await fetch(`http://localhost:5000/user?email=${email}`);
+        const res = await fetch(
+          `https://job-hunter-server-two.vercel.app/user?email=${email}`
+        );
         const currentUser = await res.json();
 
         if (!currentUser) {
@@ -54,7 +56,7 @@ const handler = NextAuth({
     async session({ session, token }) {
       session.user.id = token.id;
       return session;
-    }
+    },
   },
   pages: {
     signIn: "/login",

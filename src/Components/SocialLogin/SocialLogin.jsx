@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { FcGoogle } from "react-icons/fc";
 import { signIn, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
@@ -8,8 +8,6 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-
-
 const SocialLogin = () => {
   const session = useSession();
   const searchParams = useSearchParams();
@@ -17,14 +15,12 @@ const SocialLogin = () => {
   const axiosPublic = useAxiosPublic();
   const router = useRouter();
 
-  const handleSocialLogIn = async(provider) => {
-      
-      const res = await signIn(provider, {
-          redirect: true,  
-          callbackUrl: '/login'  
-      });
-      
-    }
+  const handleSocialLogIn = async (provider) => {
+    const res = await signIn(provider, {
+      redirect: true,
+      callbackUrl: "/login",
+    });
+  };
 
   useEffect(() => {
     if (session.status === "authenticated") {
@@ -60,13 +56,13 @@ const SocialLogin = () => {
       });
 
       const user_Info = { email: userEmail };
-      axios.post("http://localhost:5000/jwt", user_Info, {
+      axios
+        .post("https://job-hunter-server-two.vercel.app/jwt", user_Info, {
           withCredentials: true,
         })
         .then((res) => {
-          
-          if(res.data.success){
-            router.push(path ? path : '/');
+          if (res.data.success) {
+            router.push(path ? path : "/");
           }
         })
         .catch((err) => {
@@ -74,9 +70,8 @@ const SocialLogin = () => {
         });
     }
   }, [session, axiosPublic, router, path]);
-  
+
   return (
-    
     <div>
       <button
         onClick={() => handleSocialLogIn("google")}
@@ -85,7 +80,6 @@ const SocialLogin = () => {
         <FcGoogle></FcGoogle> Login with Gmail
       </button>
     </div>
-    
   );
 };
 

@@ -1,4 +1,6 @@
-export const getAllCategories = async () =>{
-    const res = await fetch('http://localhost:5000/categories');
-    return res.json();
-} 
+export const getAllCategories = async () => {
+  const res = await fetch(
+    "https://job-hunter-server-two.vercel.app/categories"
+  );
+  return res.json();
+};

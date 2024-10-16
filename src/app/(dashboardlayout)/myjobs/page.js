@@ -6,27 +6,27 @@ import useAdmin from "@/hooks/useAdmin";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
 
-
 const MyJobsPage = () => {
   const [myJobs, setMyJobs] = useState([]);
   const { user, loading } = useUser();
   const { email } = user;
-  const { loading:isLoading, isRecruiter } = useAdmin();
+  const { loading: isLoading, isRecruiter } = useAdmin();
   const axiosSecure = useAxiosSecure();
   const handleSignOut = useHandleSignOut();
 
   useEffect(() => {
-    if(email){
-      axiosSecure.get(`/my-jobs?email=${email}`)
-      .then((res) => setMyJobs(res.data));
+    if (email) {
+      axiosSecure
+        .get(`/my-jobs?email=${email}`)
+        .then((res) => setMyJobs(res.data));
     }
   }, [user, email, axiosSecure]);
 
   if (loading || isLoading) {
     return <progress className="progress progress-success w-56"></progress>;
-  } else if(!isRecruiter){
+  } else if (!isRecruiter) {
     return handleSignOut();
-  } else{
+  } else {
     return (
       <div className="py-4">
         <h1 className="lg:text-5xl md:text-3xl text-2xl text-[#033f63] font-bold text-center my-4">
@@ -55,14 +55,18 @@ const MyJobsPage = () => {
                     <td>{job?.job_title}</td>
                     <td className="text-red-500 font-bold">{job?.deadline}</td>
                     <td className="underline text-blue-500 font-semibold">
-                      <a href={`http://localhost:3000/jobs/${job?._id}`}>Link</a>
+                      <a
+                        href={`https://job-hunter-globe.vercel.app/jobs/${job?._id}`}
+                      >
+                        Link
+                      </a>
                     </td>
                     <td>
-                    <Link href={`/resumes/${job?._id}`}>
-                        <button className='btn btn-md bg-[#033f63] text-white'>
-                        View Applications    
+                      <Link href={`/resumes/${job?._id}`}>
+                        <button className="btn btn-md bg-[#033f63] text-white">
+                          View Applications
                         </button>
-                        </Link>
+                      </Link>
                     </td>
                   </tr>
                 ))}
