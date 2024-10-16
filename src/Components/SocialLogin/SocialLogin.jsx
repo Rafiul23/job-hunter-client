@@ -7,7 +7,7 @@ import axios from "axios";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Router } from "next/router";
+import { Suspense } from 'react';
 
 
 
@@ -77,6 +77,7 @@ const SocialLogin = () => {
   }, [session, axiosPublic, router, path]);
   
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div>
       <button
         onClick={() => handleSocialLogIn("google")}
@@ -85,6 +86,7 @@ const SocialLogin = () => {
         <FcGoogle></FcGoogle> Login with Gmail
       </button>
     </div>
+    </Suspense>
   );
 };
 
