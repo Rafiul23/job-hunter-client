@@ -1,10 +1,8 @@
 "use client";
-import JobCard from "@/Components/JobCard/JobCard";
+import JobCard from "@/components/JobCard/JobCard";
 import { useState, useEffect } from "react";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
-import CoverImage from '@/Components/CoverImage/CoverImage'
-
-
+import CoverImage from "@/components/CoverImage/CoverImage";
 
 const JobsByCategory = ({ params, searchParams }) => {
   const [jobsByCategory, setJobsByCategory] = useState([]);
@@ -13,14 +11,11 @@ const JobsByCategory = ({ params, searchParams }) => {
   const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
-    axiosPublic.get(`/jobs?category=${searchParams?.category}`)
-    .then((res) => {
+    axiosPublic.get(`/jobs?category=${searchParams?.category}`).then((res) => {
       setJobsByCategory(res.data);
       setDisplayJobs(res.data);
     });
   }, [searchParams, axiosPublic]);
-
-
 
   const TabArray = [
     "All Jobs",
@@ -48,8 +43,8 @@ const JobsByCategory = ({ params, searchParams }) => {
   const fullTime = jobsByCategory.filter((job) => job.job_type === "Full Time");
   const partTime = jobsByCategory.filter((job) => job.job_type === "Part Time");
 
-  const handleTabOption = (tab= 'All Jobs') => {
-    if(tab === 'All Jobs'){
+  const handleTabOption = (tab = "All Jobs") => {
+    if (tab === "All Jobs") {
       setDisplayJobs(jobsByCategory);
     } else if (tab === "On Site") {
       setDisplayJobs(onsite);
@@ -61,7 +56,7 @@ const JobsByCategory = ({ params, searchParams }) => {
       setDisplayJobs(fullTime);
     } else if (tab === "Part Time") {
       setDisplayJobs(partTime);
-    } 
+    }
   };
 
   return (

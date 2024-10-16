@@ -6,7 +6,7 @@ import { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
-import SocialLogin from "@/Components/SocialLogin/SocialLogin";
+import SocialLogin from "@/components/SocialLogin/SocialLogin";
 import axios from "axios";
 
 const Login = () => {

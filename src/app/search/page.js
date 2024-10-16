@@ -1,17 +1,15 @@
 "use client";
-import JobCard from "@/Components/JobCard/JobCard";
-import CoverImage from '@/Components/CoverImage/CoverImage'
-import SectionTitle from '@/Components/SectionTitle/SectionTitle'
+import JobCard from "@/components/JobCard/JobCard";
+import CoverImage from "@/components/CoverImage/CoverImage";
+import SectionTitle from "@/components/SectionTitle/SectionTitle";
 import { useState } from "react";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
-
 
 const Search = () => {
   const [displayJobs, setDisplayJobs] = useState([]);
   const [message, setMessage] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const axiosPublic = useAxiosPublic();
-
 
   const handleSearchJobs = async (e) => {
     e.preventDefault();
@@ -21,9 +19,7 @@ const Search = () => {
     if (searchContent === "") {
       return;
     } else {
-      
-      axiosPublic.get(`/search?title=${searchContent}`)
-      .then(res => {
+      axiosPublic.get(`/search?title=${searchContent}`).then((res) => {
         setSearchResult(res.data);
         setDisplayJobs(res.data);
       });
@@ -32,7 +28,7 @@ const Search = () => {
       if (searchResult.length === 0) {
         setMessage("No result found!");
       } else {
-        setMessage('');
+        setMessage("");
       }
     }
   };
@@ -40,10 +36,8 @@ const Search = () => {
   return (
     <div className="py-10">
       <CoverImage></CoverImage>
-      <SectionTitle
-      title='Search Your Dream Jobs'
-      ></SectionTitle>
-      
+      <SectionTitle title="Search Your Dream Jobs"></SectionTitle>
+
       <p className="py-2 text-center text-xl"> Search jobs by job title.</p>
       <div className="py-4 text-center">
         <form onSubmit={handleSearchJobs}>

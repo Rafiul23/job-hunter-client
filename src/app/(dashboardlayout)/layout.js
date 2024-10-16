@@ -1,7 +1,7 @@
 "use client";
-import AdminSideBar from "@/Components/AdminSideBar/AdminSideBar";
-import RecruiterSideBar from "@/Components/RecruiterSideBar/RecruiterSideBar";
-import UserSideBar from "@/Components/UserSideBar/UserSideBar";
+import AdminSideBar from "@/components/AdminSideBar/AdminSideBar";
+import RecruiterSideBar from "@/components/RecruiterSideBar/RecruiterSideBar";
+import UserSideBar from "@/components/UserSideBar/UserSideBar";
 import useAdmin from "@/hooks/useAdmin";
 import AuthProvider from "@/Providers/AuthProvider";
 

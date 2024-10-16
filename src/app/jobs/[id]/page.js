@@ -5,8 +5,7 @@ import { useSession } from "next-auth/react";
 import useUser from "@/hooks/useUser";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
-import CoverImage from '@/Components/CoverImage/CoverImage'
-
+import CoverImage from "@/components/CoverImage/CoverImage";
 
 const JobDetailsPage = ({ params }) => {
   const [jobDetails, setJobDetails] = useState([]);
@@ -22,12 +21,12 @@ const JobDetailsPage = ({ params }) => {
   const { name } = user;
 
   useEffect(() => {
-    axiosPublic.get(`/job/${params?.id}`)
+    axiosPublic
+      .get(`/job/${params?.id}`)
       .then((res) => setJobDetails(res.data));
   }, [axiosPublic, params]);
 
   const jobLink = `https://job-hunter-globe.vercel.app/jobs/${params?.id}`;
-
 
   const {
     company_name,
@@ -50,29 +49,31 @@ const JobDetailsPage = ({ params }) => {
   const deadlineDate = new Date(deadline);
 
   useEffect(() => {
-   if(userEmail){
-    axiosSecure.get(`/fav-exist?email=${userEmail}&id=${params?.id}`)
-    .then((res) => {
-      if (res.data.message) {
-        setFavDisable(true);
-      } else {
-        setFavDisable(false);
-      }
-    });
-   }
+    if (userEmail) {
+      axiosSecure
+        .get(`/fav-exist?email=${userEmail}&id=${params?.id}`)
+        .then((res) => {
+          if (res.data.message) {
+            setFavDisable(true);
+          } else {
+            setFavDisable(false);
+          }
+        });
+    }
   }, [session, userEmail, params, axiosSecure]);
 
   useEffect(() => {
-   if(userEmail){
-    axiosSecure.get(`/applied-exist?email=${userEmail}&id=${params?.id}`)
-    .then((res) => {
-      if (res?.data?.message) {
-        setApplyDisable(true);
-      } else {
-        setApplyDisable(false);
-      }
-    });
-   }
+    if (userEmail) {
+      axiosSecure
+        .get(`/applied-exist?email=${userEmail}&id=${params?.id}`)
+        .then((res) => {
+          if (res?.data?.message) {
+            setApplyDisable(true);
+          } else {
+            setApplyDisable(false);
+          }
+        });
+    }
   }, [userEmail, params, session, axiosSecure]);
 
   const openModal = () => {
@@ -145,7 +146,6 @@ const JobDetailsPage = ({ params }) => {
   };
 
   const handleAddToFav = () => {
-
     if (user?.role === "admin") {
       return Swal.fire({
         icon: "error",
@@ -196,7 +196,6 @@ const JobDetailsPage = ({ params }) => {
       }
     });
   };
-  
 
   return (
     <div className="py-10">
