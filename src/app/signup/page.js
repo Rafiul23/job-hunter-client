@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import SocialLogin from "@/Components/SocialLogin/SocialLogin";
 import { useRouter } from "next/navigation";
 import useAxiosPublic from '@/hooks/useAxiosPublic';
+import { Suspense } from 'react';
+
 
 const image_hosting_key = process.env.NEXT_PUBLIC_ImageBB_API_key;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -169,7 +171,9 @@ const SignUp = () => {
 
           <p className='text-center my-2'>Or</p>
           <div className='py-5 text-center'>
+          <Suspense fallback={<div>Loading...</div>}>
             <SocialLogin></SocialLogin>
+          </Suspense>
           </div>
 
         </div>

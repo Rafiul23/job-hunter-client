@@ -44,7 +44,7 @@ const Login = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    
     <div className="py-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="w-full flex justify-center items-center">
@@ -102,12 +102,14 @@ const Login = () => {
           </div>
           <p className="text-center my-2">Or</p>
           <div className="py-5 text-center">
+          <Suspense fallback={<div>Loading...</div>}>
             <SocialLogin></SocialLogin>
+            </Suspense>
           </div>
         </div>
       </div>
     </div>
-  </Suspense>
+  
     
   );
 };
