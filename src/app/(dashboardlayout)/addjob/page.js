@@ -5,7 +5,7 @@ import useAdmin from "@/hooks/useAdmin";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
-import SectionTitle from "../../../components/SectionTitle/SectionTitle";
+import SectionTitle from "../../../components/SectionTitle/SectionTitle.jsx";
 
 const AddJob = () => {
   const [categories, setCategories] = useState([]);

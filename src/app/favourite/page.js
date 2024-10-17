@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
-import CoverImage from "../../components/CoverImage/CoverImage";
+import CoverImage from "../../components/CoverImage/CoverImage.jsx";
 
 const FavouritePage = () => {
   const [favouriteJobs, setFavouriteJobs] = useState([]);
