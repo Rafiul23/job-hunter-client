@@ -1,5 +1,5 @@
 "use client";
-import AdminSideBar from "../../components/AdminSideBar/AdminSideBar.jsx";
+import AdminSideBar from '../../components/AdminSideBar/AdminSideBar.jsx';
 import RecruiterSideBar from "../../components/RecruiterSideBar/RecruiterSideBar.jsx";
 import UserSideBar from "../../components/UserSideBar/UserSideBar.jsx";
 import useAdmin from "@/hooks/useAdmin";
