@@ -1,21 +1,14 @@
-'use client';
+
 import Link from "next/link";
-import AOS from 'aos';
-import 'aos/dist/aos.css'; 
-import { useEffect } from 'react';
+
 
 const JobCard = ({ job }) => {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true
-    });
-  }, []);
+  
 
     const {company_name, job_title, _id, salary_range, job_type, deadline, onsite_or_remote } = job;
 
   return (
-    <div data-aos='flip-left' className="card bg-base-100 border-[#033f63] border">
+    <div className="card bg-base-100 border-[#033f63] border">
       <div className="card-body">
         <h2 className="card-title text-[#033f63]">Job Title: {job_title}</h2>
         <div className='flex gap-4'>

@@ -1,5 +1,5 @@
 import Category from "../Category/Category";
-import { getAllCategories } from "../Utilities/getAllCategories";
+import { getAllCategories } from "@/components/Utilities/getAllCategories";
 
 const CategoryList = async() => {
   
