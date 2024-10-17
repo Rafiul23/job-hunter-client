@@ -1,39 +1,43 @@
 "use client";
 import { useState, useEffect } from "react";
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 import useAdmin from "@/hooks/useAdmin";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useHandleSignOut from "@/hooks/useHandleSignOut";
-import SectionTitle from '../../../components/SectionTitle/SectionTitle.jsx'
+import SectionTitle from '@/Components/SectionTitle/SectionTitle'
+
 
 const AddJob = () => {
   const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState("Accounting and Finance");
-  const [nature, setNature] = useState("Onsite");
-  const [type, setType] = useState("Full Time");
+  const [category, setCategory] = useState('Accounting and Finance');
+  const [nature, setNature] = useState('Onsite');
+  const [type, setType] = useState('Full Time');
   const { isAdmin, loading } = useAdmin();
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
   const handleSignOut = useHandleSignOut();
 
-  const handleSetCategory = (e) => {
+  const handleSetCategory = e =>{
     setCategory(e.target.value);
   };
-  const handleSetNature = (e) => {
+  const handleSetNature = e =>{
     setNature(e.target.value);
   };
-  const handleSetType = (e) => {
+  const handleSetType = e =>{
     setType(e.target.value);
   };
 
+
+
   useEffect(() => {
-    axiosPublic.get("/categories").then((res) => setCategories(res.data));
+    axiosPublic.get("/categories")
+      .then((res) => setCategories(res.data));
   }, [axiosPublic]);
 
-  //   console.log(categories);
+//   console.log(categories);
 
-  const handleAddJob = (e) => {
+const handleAddJob = e =>{
     e.preventDefault();
     const form = e.target;
 
@@ -51,46 +55,50 @@ const AddJob = () => {
     const job_post = Number(form.job_post.value);
 
     const newJob = {
-      company_name,
-      job_title,
-      job_description,
-      location,
-      experience,
-      qualifications,
-      salary_range,
-      deadline,
-      category,
-      onsite_or_remote,
-      job_type,
-      employer_email,
-      job_post,
+        company_name,
+        job_title,
+        job_description,
+        location,
+        experience,
+        qualifications,
+        salary_range,
+        deadline,
+        category,
+        onsite_or_remote,
+        job_type,
+        employer_email,
+        job_post
     };
 
-    axiosSecure.post("/job", newJob).then((res) => {
-      if (res.data.insertedId) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Added a new job successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    });
-  };
+    axiosSecure.post('/job', newJob)
+    .then(res =>{
+        if(res.data.insertedId){
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Added a new job successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+        }
+    })
 
-  if (loading) {
-    return <progress className="progress progress-success w-56"></progress>;
-  }
+}
 
-  if (!isAdmin) {
-    return handleSignOut();
-  }
+if(loading){
+  return <progress className="progress progress-success w-56"></progress>;
+}
+
+if(!isAdmin){
+  return handleSignOut();
+}
 
   return (
     <div className="py-5">
-      <SectionTitle title="Add a Job"></SectionTitle>
-
+      <SectionTitle
+      title='Add a Job'
+      ></SectionTitle>
+      
       <form onSubmit={handleAddJob} className="p-4 bg-base-200">
         <div className="flex md:flex-row flex-col gap-4 mb-2">
           {/* input for company name */}
@@ -198,17 +206,14 @@ const AddJob = () => {
             <label className="label">
               <span className="label-text font-bold">Category:</span>
             </label>
-            <select
-              onChange={handleSetCategory}
-              value={category}
-              className="select select-bordered w-full max-w-xs"
-            >
-              <option disabled>Select Category</option>
-              {categories.map((category) => (
-                <option key={category._id} value={category.category}>
-                  {category.category}
-                </option>
-              ))}
+            <select onChange={handleSetCategory}  value={category} className="select select-bordered w-full max-w-xs">
+                <option disabled>Select Category</option>
+              {
+                categories.map(category =>
+                    <option key={category._id} value={category.category}>{category.category}</option>
+                )
+              }
+              
             </select>
           </div>
         </div>
@@ -219,14 +224,10 @@ const AddJob = () => {
             <label className="label">
               <span className="label-text font-bold">Job Nature:</span>
             </label>
-            <select
-              onChange={handleSetNature}
-              value={nature}
-              className="select select-bordered w-full max-w-xs"
-            >
-              <option value="Onsite">Onsite</option>
-              <option value="Remote">Remote</option>
-              <option value="Hybrid">Hybrid</option>
+            <select onChange={handleSetNature} value={nature} className='select select-bordered w-full max-w-xs'>
+              <option value='Onsite'>Onsite</option>
+              <option value='Remote'>Remote</option>
+              <option value='Hybrid'>Hybrid</option>
             </select>
           </div>
           {/* input for job_type */}
@@ -234,13 +235,9 @@ const AddJob = () => {
             <label className="label">
               <span className="label-text font-bold">Job Type:</span>
             </label>
-            <select
-              onChange={handleSetType}
-              value={type}
-              className="select select-bordered w-full max-w-xs"
-            >
-              <option value="Full Time">Full Time</option>
-              <option value="Part Time">Part Time</option>
+            <select onChange={handleSetType} value={type} className='select select-bordered w-full max-w-xs'>
+              <option value='Full Time'>Full Time</option>
+              <option value='Part Time'>Part Time</option>
             </select>
           </div>
         </div>
@@ -283,14 +280,14 @@ const AddJob = () => {
             cols="30"
             rows="6"
             type="text"
-            name="job_description"
+            name='job_description'
             placeholder="Job Description"
             className="textarea"
             required
           ></textarea>
         </div>
-        <div className="py-4 text-center">
-          <button className="btn bg-[#033f63] text-white w-1/2">Add Job</button>
+        <div className='py-4 text-center'>
+            <button className='btn bg-[#033f63] text-white w-1/2'>Add Job</button>
         </div>
       </form>
     </div>

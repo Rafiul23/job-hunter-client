@@ -1,18 +1,18 @@
-export const dynamic = "force-dynamic";
-import Banner from "@/components/Banner/Banner";
-import Category from "@/components/Category/Category";
-import HotJobs from "@/components/HotJobs/HotJobs";
-import Sponsors from "@/components/Sponsors/Sponsors";
-import TrainingOffers from "@/components/TrainingOffers/TrainingOffers";
+export const dynamic = 'force-dynamic';
+import Banner from '@/Components/Banner/Banner';
+import CategoryList from '@/Components/CategoryList/CategoryList';
+import HotJobs from '@/Components/HotJobs/HotJobs';
+import Sponsors from '@/Components/Sponsors/Sponsors';
+import TrainingOffers from '@/Components/TrainingOffers/TrainingOffers';
 
 const Home = () => {
   return (
     <div>
-      <Banner />
-      <Sponsors />
-      <Category />
-      <HotJobs></HotJobs>
-      <TrainingOffers></TrainingOffers>
+     <Banner /> 
+     <Sponsors />
+     <CategoryList />
+     <HotJobs></HotJobs>
+     <TrainingOffers></TrainingOffers>
     </div>
   );
 };
