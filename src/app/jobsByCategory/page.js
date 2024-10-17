@@ -2,7 +2,7 @@
 import JobCard from "@/components/JobCard/JobCard";
 import { useState, useEffect } from "react";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
-import CoverImage from "@/components/CoverImage/CoverImage";
+import CoverImage from "../../components/CoverImage/CoverImage";
 
 const JobsByCategory = ({ params, searchParams }) => {
   const [jobsByCategory, setJobsByCategory] = useState([]);

@@ -1,7 +1,7 @@
 "use client";
-import JobCard from "@/components/JobCard/JobCard";
-import CoverImage from "@/components/CoverImage/CoverImage";
-import SectionTitle from "@/components/SectionTitle/SectionTitle";
+import JobCard from "../../components/JobCard/JobCard";
+import CoverImage from "../../components/CoverImage/CoverImage";
+import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import { useState } from "react";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 

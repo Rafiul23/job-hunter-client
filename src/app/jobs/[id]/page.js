@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import useUser from "@/hooks/useUser";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
-import CoverImage from "@/components/CoverImage/CoverImage";
+import CoverImage from "../../../components/CoverImage/CoverImage";
 
 const JobDetailsPage = ({ params }) => {
   const [jobDetails, setJobDetails] = useState([]);
