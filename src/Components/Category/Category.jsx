@@ -1,19 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import AOS from 'aos';
-import 'aos/dist/aos.css'; 
-import { useEffect } from 'react';
+
 
 const Category = ({category}) => {
-    useEffect(() => {
-        AOS.init({
-          duration: 1000,
-          once: true
-        });
-      }, []);
+    
   return (
-    <div data-aos='flip-up'>
+    <div>
       <Link
         href={`/jobsByCategory?category=${category?.category}`}
       >
