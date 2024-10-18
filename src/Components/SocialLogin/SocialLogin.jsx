@@ -67,6 +67,7 @@ const SocialLogin = () => {
           withCredentials: true,
         })
         .then((res) => {
+          console.log(res.data);
           if (res.data.success) {
             Swal.fire({
               position: "center",
