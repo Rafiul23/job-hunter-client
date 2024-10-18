@@ -24,6 +24,13 @@ const SocialLogin = () => {
 
   useEffect(() => {
     if (session.status === "authenticated") {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login successful",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       const userEmail = session ? session?.data?.user?.email : "";
       const userName = session ? session?.data?.user?.name : "";
       const userImage = session ? session?.data?.user?.image : "";
@@ -56,13 +63,12 @@ const SocialLogin = () => {
       });
 
       const user_Info = { email: userEmail };
-      axios
-        .post("https://job-hunter-server-two.vercel.app/jwt", user_Info, {
+      axios.post("https://job-hunter-server-two.vercel.app/jwt", user_Info, {
           withCredentials: true,
         })
         .then((res) => {
           if (res.data.success) {
-            router.push(path ? path : "/");
+            router.push(path ? path : '/');
           }
         })
         .catch((err) => {
