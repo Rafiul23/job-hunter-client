@@ -74,9 +74,9 @@ const Navbar = () => {
           <div className="mx-4 ">
           
           {
-            status === 'loading' ? <progress className="progress progress-success w-56"></progress>: !session ? <Link href="/login" className="btn">
-            Login
-          </Link> : <div className='flex gap-3'>
+            status === 'loading' ? <progress className="progress progress-success w-56"></progress>: !session ? <Link href="/login">
+            <button className="btn">Login</button>
+          </Link> : <div className='flex items-center gap-3'>
             <Image src={image} width={40} height={40} className=' my-auto rounded-full' alt='user image' />
             <p>{name}</p>
           </div> 
