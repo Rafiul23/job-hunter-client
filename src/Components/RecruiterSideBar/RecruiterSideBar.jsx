@@ -13,7 +13,7 @@ const RecruiterSideBar = () => {
     return handleSignOut();
   } else {
     return (
-      <div className="col-span-1 z-10 bg-[#033f63] h-screen w-full text-center text-white">
+      <div className="col-span-1 z-[5] bg-[#033f63] h-screen w-full text-center text-white">
         <div className="grid grid-cols-1 gap-5 ">
           <hr />
           <Link href="/recruiterprofile">
