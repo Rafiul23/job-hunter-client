@@ -19,7 +19,7 @@ const Dashboard = () => {
         height={500}
         alt="welcome"
       />
-      <h2 className='text-2xl text-center py-4 text-[#033f63] font-bold'>Back <br/> {name}!</h2>
+      <h2 className='text-2xl text-center py-4 text-[#033f63] font-bold'>Back <br/> {name}</h2>
         </div>
     );
 };
