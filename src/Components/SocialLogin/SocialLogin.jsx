@@ -68,6 +68,13 @@ const SocialLogin = () => {
         })
         .then((res) => {
           if (res.data.success) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Token set successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             router.push(path ? path : '/');
           }
         })
